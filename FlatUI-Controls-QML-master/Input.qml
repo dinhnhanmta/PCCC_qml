@@ -6,7 +6,7 @@ TextField {
     id: textField
     height: 40;
     width: 175;
-
+    inputMethodHints:  Qt.ImhDigitsOnly
     Constants {
         id: constants;
     }

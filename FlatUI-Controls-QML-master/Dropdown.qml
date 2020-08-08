@@ -5,6 +5,8 @@ PrimaryButton {
     id: dropDown;
     text: "";
     textColor: "black"
+    signal dropPress()
+    onButton_press: dropDown.dropPress()
     Image {
 
         anchors {
@@ -12,8 +14,7 @@ PrimaryButton {
             rightMargin: 12;
             verticalCenter: parent.verticalCenter;
         }
-
-        source: "src/arrow-down-b.png";
+              source: "src/arrow-down-b.png";
 
         height: 20;
         width: 20;
@@ -46,7 +47,7 @@ PrimaryButton {
         ListElement {item: "Tree Bark"; separator: true}
         ListElement {item: "Llama"; separator: true}
     }
-
+    signal active()
     Component.onCompleted: parent.z = 100;
 
     ScrollView {
@@ -122,6 +123,7 @@ PrimaryButton {
                         hoverEnabled: !listView.itemChecked;
                         onClicked: {
                             dropDown.text = item;
+                            console.log(item)
                             if (dropDown.enableScrollView) {
                                 if (listView.itemChecked) {
                                     listView.itemChecked = false;
@@ -134,11 +136,11 @@ PrimaryButton {
                             }
                             dropDown.mouseField.clickedButton = false;
 
-
                         }
 
 
                         onEntered: {
+
                             listView.currentIndex = index;
                         }
                     }

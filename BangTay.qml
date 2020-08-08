@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.0
 import "FlatUI-Controls-QML-master"
@@ -47,10 +47,6 @@ Item
             else buttonImage2.source = "./Icon/switch-off.jpg";
     }
     }
-
-
-
-
     DialItem {
         id: speed
         objectName: "speed"
@@ -69,26 +65,29 @@ Item
             source: "./Icon/needle.png"
             scale: 0.8
             anchors.centerIn: parent
-            rotation: 39 + 30 + slider.value
+            rotation: 39 + 30 + inverter_slider.value
             Behavior on rotation { SpringAnimation { spring: 5; damping: 0.5 } }
         }
     }
-
     Slider {
-        id: slider
+        id: inverter_slider
         anchors.top: speed.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         width: 300
         minimumValue: 0
         maximumValue: 300
-
+        onValueChanged:
+        {
+            Bientan.q_frequency = inverter_slider.value
+            Bientan.write_friquency();
+        }
     }
     Text {
         id: element
         x: 498
         y: 494
         width: 39.525
-        text: (slider.value/300*(speed.stopValue-speed.startValue)).toFixed(0)
+        text: (inverter_slider.value/300*(speed.stopValue-speed.startValue)).toFixed(0)
         font.pixelSize: 20
     }
 
@@ -129,7 +128,7 @@ Item
         borderColor: "black"
         backgroundColor: "lightblue"
         disabled: true
-        text: (slider.value/300*(speed.stopValue-speed.startValue)).toFixed(0)
+        text: (inverter_slider.value/300*(speed.stopValue-speed.startValue)).toFixed(0)
         textColor: "black"
 
     }

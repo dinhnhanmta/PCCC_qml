@@ -1,4 +1,4 @@
-QT += quick virtualkeyboard
+QT += quick virtualkeyboard serialbus serialport
 
 CONFIG += c++11
 
@@ -17,7 +17,8 @@ SOURCES += \
         bientan.cpp \
         dialitem.cpp \
         main.cpp \
-        master.cpp
+        master.cpp \
+        modbus.cpp
 
 RESOURCES += qml.qrc
 
@@ -33,6 +34,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    bientan.h \
+    Modbus.hpp \
+    bientan.hpp \
     dialitem.h \
     master.h

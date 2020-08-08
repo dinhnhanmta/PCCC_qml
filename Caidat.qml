@@ -1,7 +1,8 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.0
 import "FlatUI-Controls-QML-master"
+import QtQml 2.0
 Item
 {
     id: window
@@ -9,6 +10,8 @@ Item
     height: 800
 
     visible: true
+    property string someNumber
+
     Clock{
         x: 340
         y: 141
@@ -66,15 +69,39 @@ Item
         y: 243
         text: qsTr("Port")
     }
+    WorkerScript {
+           id: worker
+           source: "addPort.mjs"
+           onMessage: myText.text = messageObject.reply
+       }
+    Timer {
+                id: timer
+                interval: 1000; repeat: true
+                running: true
+                triggeredOnStart: true
 
+                onTriggered: {
+                    Master.getPortAvalable();
+                    var msg = {'port':[],'model': listPort};
+                    for (var i = 0; i < Master.q_number_port; i++)
+                    {
+                        msg["port"].push(Master.q_port[i])
+                    }
+                    if (i===0)  dropdownMasterPort.text="";
+                    else dropdownMasterPort.text = Master.q_port[0];
+                     worker.sendMessage(msg);
+                }
+            }
     Dropdown {
         id: dropdownMasterPort
-        model: ListModel {
+        model:  ListModel {
+            id: listPort
+             ListElement {item: "";separator:false}
         }
         x: 127
         y: 232
         z: 5
-        highlightColor: "black"
+        objectName: "dropdownMasterPort"
     }
 
     Dropdown {
@@ -90,6 +117,7 @@ Item
         x: 127
         y: 312
         z: 4
+        objectName: "dropdownMasterBaudrate"
     }
 
     Dropdown {
@@ -97,11 +125,12 @@ Item
         model: ListModel {
                 ListElement {item: "None";}
                 ListElement {item: "Even"; separator: true}
-                ListElement {item: "Old"; separator: true}
+                ListElement {item: "Odd"; separator: true}
             }
         x: 127
         y: 551
         z: 1
+        objectName: "dropdownMasterParity"
     }
 
     Dropdown {
@@ -109,11 +138,11 @@ Item
         model: ListModel {
                 ListElement {item: "1";}
                 ListElement {item: "2"; separator: true}
-                ListElement {item: "None"; separator: true}
             }
         x: 127
         y: 471
         z: 2
+        objectName: "dropdownMasterStop"
     }
 
     Dropdown {
@@ -127,6 +156,7 @@ Item
         x: 127
         y: 392
         z: 3
+        objectName: "dropdownMasterDatabits"
     }
 
     Text {
@@ -163,6 +193,7 @@ Item
         x: 127
         y: 632
         z: 0
+        objectName: "dropdownMasterFlow"
     }
 
     Text {
@@ -177,6 +208,7 @@ Item
         initText: "8192"
         x: 449
         y: 392
+        objectName: "inverterAddress"
     }
 
     Input {
@@ -184,6 +216,7 @@ Item
         id: inverterID
         x: 449
         y: 471
+        objectName: "inverterID"
     }
 
     Input {
@@ -191,6 +224,7 @@ Item
         initText: "8193"
         x: 449
         y: 551
+        objectName: "inverterBaudrate"
     }
 
     Input {
@@ -198,6 +232,7 @@ Item
         initText: "8"
         x: 824
         y: 551
+        objectName: "sensorAddress"
     }
 
     Input {
@@ -205,6 +240,7 @@ Item
         initText: "2"
         x: 824
         y: 632
+        objectName: "sensorID"
     }
 
 
@@ -214,6 +250,7 @@ Item
         initText: "1"
         x: 824
         y: 232
+        objectName: "valveAddress1"
     }
 
     Input {
@@ -221,6 +258,7 @@ Item
         initText: "2"
         x: 824
         y: 311
+        objectName: "valveAddress2"
     }
 
     Input {
@@ -228,6 +266,7 @@ Item
         initText: "1"
         x: 824
         y: 392
+        objectName: "valveAddressID"
     }
 
     DangerButton{
@@ -238,11 +277,22 @@ Item
         text: "OK"
         MouseArea {
         anchors.fill: parent
-        onClicked: stack.pop("MainWindow.qml")
+
+        onClicked: {
+            Modbus.q_current_port = dropdownMasterPort.text
+            Modbus.q_baudrate = dropdownMasterBaudrate.text
+            Modbus.q_dataBits = dropdownMasterDatabits.text
+            Modbus.q_flow = dropdownMasterFlow.text
+            Modbus.q_parity = dropdownMasterParity.text
+            Modbus.q_stopBits = dropdownMasterStop.text
+
+            Bientan.q_ID = inverterID.text
+            Bientan.q_address = inverterAddress.text
+            Bientan.q_baudrate = inverterBaudrate.text
+            stack.pop("MainWindow.qml")
+        }
         }
     }
-
-
 
     Text {
         x: 446

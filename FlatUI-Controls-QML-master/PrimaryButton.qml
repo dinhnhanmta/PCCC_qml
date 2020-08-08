@@ -8,6 +8,7 @@ Rectangle {
     radius: 4;
     property alias flatColors: constants;
     property alias mouseField: mouseArea;
+    signal button_press()
       Constants {
         id: constants;
     }
@@ -18,6 +19,7 @@ Rectangle {
         property bool clickedButton: false;
 
         onClicked: {
+            root.button_press()
             if (clickedButton)
                 clickedButton = false;
             else

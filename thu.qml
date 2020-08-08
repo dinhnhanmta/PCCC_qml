@@ -1,40 +1,66 @@
 import QtQuick 2.0
-import QtQuick.Window 2.12
-import QtQuick.Controls 2.0
+import QtCharts 2.0
 
-Window  {
-    id: window
-    width: 1024
-    height: 800
-    visible: true
-    StackView {
-           id: stack
-           initialItem: "Caidat.qml"
-           anchors.fill: parent
-       }
+Item {
+    anchors.fill: parent
 
-       Component {
-           id: mainView
+    property double startTime: 0
 
-           Row {
-               spacing: 10
+    ChartView {
+        title: startTime
+        anchors.fill: parent
+        legend.visible: false
+        antialiasing: true
 
-               Button {
-                   text: "Push"
-                   onClicked: stack.push(mainView)
-               }
-               Button {
-                   text: "Pop"
-                   enabled: stack.depth > 1
-                   onClicked: stack.pop()
+        ValueAxis {
+            id: axisX
+            min: 0
+            max: 10
+            tickCount: 5
+        }
 
-               }
-               Text {
-                   text: stack.depth
-               }
-           }
-       }
+        ValueAxis {
+            id: axisY1
+            min: -0.5
+            max: 1.5
+        }
+        ValueAxis {
+            id: axisY2
+            min: 0
+            max: 1000
+        }
+
+        SplineSeries {
+            id: series1
+            axisX: axisX
+            axisY: axisY1
+        }
+
+        SplineSeries {
+            id: series2
+            axisX: axisX
+            axisY: axisY2
+        }
+    }
+
+    // Add data dynamically to the series
+    Timer{
+        property int amountOfData: 0 //So we know when we need to start scrolling
+        id: refreshTimer
+        interval: 25
+        running: true
+        repeat: true
+        onTriggered: {
+            series1.append(2, Dashboard.gpsSpeed);
+            series2.append(10, Dashboard.gpsAltitude);
+
+            if(amountOfData > axisX.max){
+                axisX.min++;
+                axisX.max++;
+            }else{
+                amountOfData++; //This else is just to stop incrementing the variable unnecessarily
+            }
+        }
+    }
 
 }
-
-
