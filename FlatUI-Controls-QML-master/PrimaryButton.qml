@@ -59,6 +59,7 @@ Rectangle {
             color: root.textColor;
             font {
                 pointSize: root.pointSize;
+                bold: false
             }
         }
 

@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtCharts 2.3
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.0
 import "FlatUI-Controls-QML-master"
@@ -8,60 +9,19 @@ Item {
     height: 800
     visible: true
 
-    Canvas{
-                id: drawingCanvas
-                anchors.rightMargin: 0
-                anchors.bottomMargin: 0
-                anchors.leftMargin: 1
-                anchors.topMargin: 12
-                anchors.fill: parent
-                onPaint:
-                {
-                    var ctx = getContext("2d")
-
-                    ctx.fillStyle = "white"
-                    ctx.fillRect(0,0,drawingCanvas.width ,drawingCanvas.height )
-
-                    ctx.lineWidth = 1;
-                    ctx.strokeStyle = "green"
-                    ctx.beginPath()
-                   /* ctx.moveTo(271, 300)
-                    ctx.lineTo(271, 700)
-
-
-                    ctx.moveTo(752, 300)
-                    ctx.lineTo(752, 700)*/
-
-                    ctx.moveTo(380, 408)
-                    ctx.lineTo(650, 408)
-
-                    ctx.moveTo(380, 560)
-                    ctx.lineTo(650, 560)
-                    //ctx.closePath()
-                    ctx.stroke()
-                }
-            }
-
-
-
-
-    Rectangle {
-        id: rectangle
-
-        y: 107
-        width: 481
-        height: 81
+    Rectangle{
+        anchors.fill: parent
         color: "lightblue"
-        anchors.horizontalCenterOffset: 1
-        anchors.horizontalCenter: parent.horizontalCenter
+
+
     Text {
-        id: element
-        x: 19
-        y: 24
-        text: qsTr("HE THONG PHONG CHAY CHUA CHAY")
+        y: 120
+
+        text: qsTr("THIET BI KIEM DINH VOI CHUA CHAY")
+        anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: 26
     }
-    }
+
 
 
 
@@ -70,51 +30,165 @@ Item {
         PrimaryButton{
         id: thuNghiem
         x: 137
-        y: 302
+        y: 289
+        width: 250
+        height: 64
         z: 1
-        text: "Tien hanh thu nghiem"
-        anchors.horizontalCenterOffset: 1
+        text: "               TIEN HANH THU NGHIEM"
+        anchors.horizontalCenterOffset: -221
 
         anchors.horizontalCenter: parent.horizontalCenter
 
+        Image {
+            source: "qrc:/Icon/play2.png"
+            anchors.left:  parent.left
+            scale: 0.7
         }
-
-
-        PrimaryButton{
-        id: thuNghiemBangTay
-        text: "Thu nghiem bang tay"
-        anchors.horizontalCenterOffset: 1
-        anchors.horizontalCenter: parent.horizontalCenter
-        y: 453
-        z: 1
         MouseArea {
-          anchors.fill: parent
-          onClicked: stack.push("BangTay.qml")
-      }
+        anchors.fill: parent
+        onClicked: stack.push("DangNhapTB.qml")
+        }
         }
 
-        PrimaryButton{
-            id: caidatButton
+
+        PrimaryButton {
+            id: thuNghiemBangTay
+            x: 127
+            y: 289
+            width: 250
+            height: 64
+            text: "              THU NGHIEM BANG TAY"
+
+
             anchors.horizontalCenter: parent.horizontalCenter
-            y: 609
             z: 1
-            text: "Cai dat"
-            anchors.horizontalCenterOffset: 1
+            anchors.horizontalCenterOffset: 247
 
-              MouseArea {
-                anchors.fill: parent
-            onClicked: stack.push("Caidat.qml")
+            Image {
+                 source: "qrc:/Icon/hand2.png"
+                 anchors.left: parent.left
+                 scale: 0.7
             }
-              Image {
-                  id: name
-                  anchors.left:  parent.left
-                  width: parent.width/3
-                  height: parent.height
-              }
+        }
+
+        PrimaryButton {
+            id: thuNghiem2
+            x: 139
+            y: 426
+            width: 250
+            height: 64
+            text: "             LICH SU KIEM DINH"
+            anchors.horizontalCenter: parent.horizontalCenter
+            z: 1
+            anchors.horizontalCenterOffset: 247
+
+            Image {
+                 source: "qrc:/Icon/history2.png"
+                 anchors.left: parent.left
+                 scale: 0.7
+            }
+        }
+
+        PrimaryButton {
+            id: capNhat
+            x: 146
+            y: 426
+            width: 250
+            height: 64
+            text: "             CAP NHAT THONG SO\n                     KIEM DINH"
+            anchors.horizontalCenter: parent.horizontalCenter
+            z: 1
+            anchors.horizontalCenterOffset: -221
+            Image {
+                 source: "qrc:/Icon/update2.png"
+                 anchors.left: parent.left
+                 scale: 0.7
+            }
 
         }
 
+        PrimaryButton {
+            id: thuNghiem4
+            x: 137
+            y: 554
+            width: 250
+            height: 64
+            text: "              HIEU CHINH THONG SO"
+            anchors.horizontalCenter: parent.horizontalCenter
+            z: 1
+            anchors.horizontalCenterOffset: 247
+
+            Image {
+                 source: "qrc:/Icon/adjust2.png"
+                 anchors.left: parent.left
+                 scale: 0.7
+            }
+        }
+
+        PrimaryButton {
+            id: thuNghiem5
+            x: 132
+            y: 554
+            width: 250
+            height: 64
+            text: "                CAI DAT HE THONG"
+            anchors.horizontalCenter: parent.horizontalCenter
+            z: 1
+            anchors.horizontalCenterOffset: -221
+
+            Image {
+                 source: "qrc:/Icon/setting2.png"
+                 anchors.left: parent.left
+                 scale: 0.7
+            }
+        }
 
 
+        Image {
+
+            source: "qrc:/Icon/account.png"
+            scale: 0.8
+            anchors.right: parent.right
+            anchors.top: parent.top
+
+        }
+
+        Rectangle {
+            color: "palegoldenrod"
+            width: 175
+            height: 64
+            anchors.right: parent.right
+            anchors.bottom:  parent.bottom
+        Image {
+            id: state_icon
+            source: Modbus.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
+            anchors.right: parent.right
+            scale: 0.8
+        }
+
+        Text {
+            anchors.left:  parent.left
+            anchors.verticalCenter: state_icon.verticalCenter
+            text: qsTr("     Trang thai \n     ket noi")
+            font.pixelSize: 18
+        }
+        }
+        DangerButton {
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            width: 175
+            height: 64
+            text: "      HOME"
+            color: "palegoldenrod"
+        Image {
+             source: "qrc:/Icon/home2.png"
+             anchors.left: parent.left
+             scale: 0.7
+        }
+
+        }
+
+}
+scale: 0.7
 
 }

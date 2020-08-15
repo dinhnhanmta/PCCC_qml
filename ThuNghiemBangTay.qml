@@ -11,6 +11,53 @@ Item
     height: 800
 
     visible: true
+    Rectangle {
+    anchors.fill: parent
+    color: "lightblue"
+    }
+
+    Image {
+
+        source: "qrc:/Icon/account.png"
+        scale: 0.8
+        anchors.right: parent.right
+        anchors.top: parent.top
+    }
+
+    Rectangle {
+        color: "palegoldenrod"
+        width: 175
+        height: 64
+        anchors.right: parent.right
+        anchors.bottom:  parent.bottom
+        Image {
+            id: state_icon
+            source: Modbus.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
+            anchors.right: parent.right
+            scale: 0.8
+        }
+
+        Text {
+            anchors.left:  parent.left
+            anchors.verticalCenter: state_icon.verticalCenter
+            text: qsTr("     Trang thai \n     ket noi")
+            font.pixelSize: 18
+        }
+    }
+    DangerButton {
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        width: 175
+        height: 64
+        text: "      HOME"
+        color: "palegoldenrod"
+        Image {
+             source: "qrc:/Icon/home2.png"
+             anchors.left: parent.left
+             scale: 0.7
+        }
+
+    }
     Button{
         id: vanXaButton
         x: 115
@@ -27,7 +74,6 @@ Item
             press= !press
             if (press) buttonImage.source = "./Icon/switch-on.jpg";
             else buttonImage.source = "./Icon/switch-off.jpg";
-            Vavle.writeVavleState1(press)
     }
     }
     Button{
@@ -47,8 +93,6 @@ Item
             if (press)
                 buttonImage2.source = "./Icon/switch-on.jpg";
             else buttonImage2.source = "./Icon/switch-off.jpg";
-            Vavle.writeVavleState2(press)
-
     }
     }
     DialItem {
@@ -60,7 +104,7 @@ Item
         startAngle: 30
         spanAngle: 300
         startValue: 0
-        stopValue: 100
+        stopValue: 300
         dialWidth: 4
         dialColor: "darkblue"
 
@@ -69,21 +113,34 @@ Item
             source: "./Icon/needle.png"
             scale: 0.8
             anchors.centerIn: parent
-            rotation: 39 + 30 + inverter_slider.value
+            rotation: 39 + 30 + slider.value
             Behavior on rotation { SpringAnimation { spring: 5; damping: 0.5 } }
         }
+
+        Slider {
+            id: slider
+            anchors.top: speed.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 300
+            minimumValue: 0
+            maximumValue: 300
+            value: 100
+            visible: false
+        }
     }
+
+
     Slider {
-        id: inverter_slider
-        anchors.top: speed.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
+        id: velocity_slider
+        x: 695
+        y: 602
         width: 300
         minimumValue: 0
         maximumValue: 300
         onValueChanged:
         {
-            Bientan.q_frequency = inverter_slider.value
-            Bientan.write_friquency();
+            Bientan.q_frequency = velocity_slider.value
+            //Bientan.write_friquency();
         }
     }
     Text {
@@ -91,109 +148,89 @@ Item
         x: 498
         y: 494
         width: 39.525
-        text: (inverter_slider.value/300*(speed.stopValue-speed.startValue)).toFixed(0)
+        text: slider.value
         font.pixelSize: 20
-    }
-
-    DangerButton{
-        x: 396
-        y: 703
-        width: 233
-        height: 64
-        text: "HOME"
-        MouseArea {
-        anchors.fill: parent
-        onClicked: stack.pop("MainWindow.qml")
-        }
     }
 
     Text {
         id: name
-        x: 751
-        y: 276
-        text: qsTr("AP SUAT")
+        x: 461
+        y: 217
+        text: qsTr("ÁP SUẤT")
         font.bold: true
         font.pointSize: 18
     }
     Input{
-        x: 751
-        y: 325
+        x: 757
+        y: 264
         borderColor: "black"
         backgroundColor: "lightblue"
-        disabled: true
-        text: Cambien.q_pressure
         textColor: "black"
 
     }
 
-    Input{
-        x: 751
-        y: 477
-        borderColor: "black"
-        backgroundColor: "lightblue"
-        disabled: true
-        text: (inverter_slider.value/300*(speed.stopValue-speed.startValue)).toFixed(0)
-        textColor: "black"
-
-    }
+    Text {
+        x: 840
+        y: 515
+        width: 108
+        height: 37
+        text: velocity_slider.value.toFixed(0)
+        font.weight: Font.Bold
+        font.pointSize: 36
+       }
 
     Text {
         id: name1
         x: 330
         y: 95
-        text: qsTr("THU NGHIEM BANG TAY")
+        text: qsTr("THỬ NGHIỆM BẰNG TAY")
         font.bold: true
         font.pointSize: 24
     }
 
     Text {
-        id: name2
-        x: 940
-        y: 351
+        x: 948
+        y: 290
         width: 62
         height: 14
-        text: qsTr("Bar")
+        text: qsTr("RPM")
         font.pointSize: 12
         font.bold: false
     }
 
     Text {
-        id: name3
-        x: 751
-        y: 428
-        text: qsTr("TAN SO")
-        font.pointSize: 18
-        font.bold: true
-    }
-
-    Text {
-        id: name4
-        x: 940
-        y: 503
-        width: 62
-        height: 14
-        text: qsTr("Hz")
-        font.pointSize: 12
-        font.bold: false
-    }
-
-    Text {
-        id: name5
         x: 115
         y: 457
-        text: qsTr("VAN DAU VAO")
-        font.bold: true
+        text: qsTr("VAN CẤP NƯỚC")
+        font.bold: false
         font.pointSize: 18
     }
 
     Text {
-        id: name6
         x: 121
         y: 188
-        text: qsTr("VAN XA NUOC")
-        font.bold: true
+        text: qsTr("VAN XẢ NƯỚC")
+        font.bold: false
         font.pointSize: 18
     }
+
+    Text {
+        x: 742
+        y: 457
+        text: qsTr("ĐIỀU KHIỂN TỐC ĐỘ")
+        font.pointSize: 18
+        font.bold: false
+    }
+
+    Text {
+        x: 757
+        y: 188
+        text: qsTr("ĐẶT TỐC ĐỘ")
+        font.pointSize: 18
+        font.bold: false
+    }
+
+    scale: 0.7
 
 
   }

@@ -25,7 +25,7 @@ TextField {
     onDisabledChanged: {
         if (disabled) {
             textField.borderColor = "#e1e6e6";
-            textField.textColor = "#e1e6e6";
+            textField.textColor = "black";
         }
 
         else {

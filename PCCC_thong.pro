@@ -1,4 +1,4 @@
-QT += quick virtualkeyboard serialbus serialport
+QT += quick virtualkeyboard serialbus serialport widgets sql
 
 CONFIG += c++11
 
@@ -15,10 +15,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         bientan.cpp \
+        cambienapsuat.cpp \
         dialitem.cpp \
+        login.cpp \
         main.cpp \
         master.cpp \
-        modbus.cpp
+        modbus.cpp \
+        vavle.cpp
 
 RESOURCES += qml.qrc
 
@@ -36,5 +39,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     Modbus.hpp \
     bientan.hpp \
+    cambienapsuat.hpp \
     dialitem.h \
-    master.h
+    login.hpp \
+    master.h \
+    vavle.hpp

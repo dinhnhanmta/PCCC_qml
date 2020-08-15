@@ -12,10 +12,9 @@ Window {
     title: qsTr("Hello World")
     StackView {
            id: stack
-           initialItem: "MainWindow.qml"
+           initialItem: "DangNhapKDV.qml"
            anchors.fill: parent
        }
-
 
     InputPanel {
         id: inputPanel
@@ -45,6 +44,6 @@ Window {
             }
         }
 
-
     }
+
 }

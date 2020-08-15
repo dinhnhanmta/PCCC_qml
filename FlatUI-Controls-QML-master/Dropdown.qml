@@ -80,8 +80,8 @@ PrimaryButton {
             highlightFollowsCurrentItem: true;
             property string highlightColor: dropDown.highlightColor;
             highlight: Rectangle {
-                width: listView.currentItem.width;
-                height: listView.currentItem.height;
+                //width: listView.currentItem.width;
+                //height: listView.currentItem.height;
                 color: listView.highlightColor;
                 radius: (listView.currentIndex !== listView.count-1 && listView.currentIndex !== 0) ? 0 : dropDown.dropdownRadius;
             }

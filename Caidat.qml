@@ -285,7 +285,7 @@ Item
             Modbus.q_flow = dropdownMasterFlow.text
             Modbus.q_parity = dropdownMasterParity.text
             Modbus.q_stopBits = dropdownMasterStop.text
-
+            //Modbus.readHoldingRegister(1,0,4)
             Bientan.q_ID = inverterID.text
             Bientan.q_address = inverterAddress.text
             Bientan.q_baudrate = inverterBaudrate.text
