@@ -34,7 +34,7 @@ Item {
         width: 250
         height: 64
         z: 1
-        text: "               TIEN HANH THU NGHIEM"
+        text: "               TIẾN HÀNH THỬ NGHIỆM"
         anchors.horizontalCenterOffset: -221
 
         anchors.horizontalCenter: parent.horizontalCenter
@@ -57,7 +57,7 @@ Item {
             y: 289
             width: 250
             height: 64
-            text: "              THU NGHIEM BANG TAY"
+            text: "              THỬ NGHIỆM BẰNG TAY"
 
 
             anchors.horizontalCenter: parent.horizontalCenter
@@ -69,6 +69,10 @@ Item {
                  anchors.left: parent.left
                  scale: 0.7
             }
+            MouseArea {
+            anchors.fill: parent
+            onClicked: stack.push("ThuNghiemBangTay.qml")
+            }
         }
 
         PrimaryButton {
@@ -77,7 +81,7 @@ Item {
             y: 426
             width: 250
             height: 64
-            text: "             LICH SU KIEM DINH"
+            text: "             LỊCH SỬ KIỂM ĐỊNH"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: 247
@@ -87,6 +91,10 @@ Item {
                  anchors.left: parent.left
                  scale: 0.7
             }
+            MouseArea {
+            anchors.fill: parent
+            onClicked: stack.push("LichSuKiemDinh.qml")
+            }
         }
 
         PrimaryButton {
@@ -95,7 +103,7 @@ Item {
             y: 426
             width: 250
             height: 64
-            text: "             CAP NHAT THONG SO\n                     KIEM DINH"
+            text: "             CẬP NHẬT THÔNG SỐ\n                     KIỂM ĐỊNH"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: -221
@@ -105,6 +113,7 @@ Item {
                  scale: 0.7
             }
 
+
         }
 
         PrimaryButton {
@@ -113,7 +122,7 @@ Item {
             y: 554
             width: 250
             height: 64
-            text: "              HIEU CHINH THONG SO"
+            text: "              HIỆU CHỈNH THÔNG SỐ"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: 247
@@ -123,6 +132,10 @@ Item {
                  anchors.left: parent.left
                  scale: 0.7
             }
+            MouseArea {
+            anchors.fill: parent
+            onClicked: stack.push("HieuChinhThamSo.qml")
+            }
         }
 
         PrimaryButton {
@@ -131,7 +144,7 @@ Item {
             y: 554
             width: 250
             height: 64
-            text: "                CAI DAT HE THONG"
+            text: "                CÀI ĐẶT HỆ THỐNG"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: -221
@@ -140,6 +153,10 @@ Item {
                  source: "qrc:/Icon/setting2.png"
                  anchors.left: parent.left
                  scale: 0.7
+            }
+            MouseArea {
+            anchors.fill: parent
+            onClicked: stack.push("CaiDatThongSo.qml")
             }
         }
 

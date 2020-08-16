@@ -9,6 +9,7 @@
 #include "cambienapsuat.hpp"
 #include "master.h"
 #include "login.hpp"
+#include "dangnhapthietbi.hpp"
 int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
@@ -18,7 +19,7 @@ int main(int argc, char *argv[])
     Vavle *m_vavle = new Vavle (m_modbus);
     camBienApSuat *m_cambien = new camBienApSuat();
     login *m_login = new login();
-
+    DangNhapThietBi *m_DangNhapThietBi = new DangNhapThietBi(m_login);
     qmlRegisterType<DialItem>("IVIControls", 1, 0, "DialItem");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -32,6 +33,7 @@ int main(int argc, char *argv[])
     context->setContextProperty("Vavle", m_vavle);
     context->setContextProperty("Cambien", m_cambien);
     context->setContextProperty("QLogin", m_login);
+    context->setContextProperty("LoginTB", m_DangNhapThietBi);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

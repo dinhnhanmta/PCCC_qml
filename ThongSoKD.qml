@@ -53,6 +53,10 @@ Item {
              anchors.left: parent.left
              scale: 0.7
         }
+        MouseArea {
+        anchors.fill: parent
+        onClicked: stack.pop("ThongSoKD.qml")
+        }
 
     }
 

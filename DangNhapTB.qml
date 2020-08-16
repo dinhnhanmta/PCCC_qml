@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import "FlatUI-Controls-QML-master"
+import QtQuick.Dialogs 1.1
 Item {
     width: 1024
     height: 800
@@ -7,6 +8,13 @@ Item {
     Rectangle{
         anchors.fill: parent
         color: "lightblue"
+
+        MessageDialog {
+            id: messageDialog
+            title: "Lỗi Đăng Nhập"
+            icon: StandardIcon.Critical
+            text: "Mã thiết bị không tồn tại! Hãy tạo mã mới!"
+        }
 
         Text {
             y: 120
@@ -23,7 +31,7 @@ Item {
             text: qsTr("MÃ THIẾT BỊ")
         }
         Input {
-            initText: "4"
+            id: maTB
             x: 436
             y: 380
             objectName: "inverterID"
@@ -35,6 +43,15 @@ Item {
             width: 227
             height: 51
             text: "ĐĂNG NHẬP MÃ KIỂM ĐỊNH"
+            MouseArea {
+            anchors.fill: parent
+            onClicked:
+                {
+                if (LoginTB.checkLogin(maTB.text))
+                stack.push("KiemDinhTD.qml")
+                else messageDialog.visible = true
+                }
+            }
         }
 
         PrimaryButton {
@@ -71,7 +88,7 @@ Item {
             Text {
                 anchors.left:  parent.left
                 anchors.verticalCenter: state_icon.verticalCenter
-                text: qsTr("     Trang thai \n     ket noi")
+                text: qsTr("     Trạng thái\n     kết nối")
                 font.pixelSize: 18
             }
         }
@@ -86,6 +103,11 @@ Item {
                  source: "qrc:/Icon/home2.png"
                  anchors.left: parent.left
                  scale: 0.7
+            }
+            MouseArea {
+            anchors.fill: parent
+            onClicked: stack.pop("DangNhapTB.qml")
+            }
             }
 
         }

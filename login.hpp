@@ -8,10 +8,11 @@ class login: public QObject {
 public:
     login();
     Q_INVOKABLE bool checkLogin(QString user,QString pass);
+    QSqlDatabase mydb=QSqlDatabase::addDatabase("QSQLITE");
 private:
     QString user;
     QString pass;
-    QSqlDatabase mydb=QSqlDatabase::addDatabase("QSQLITE");
+
 };
 
 #endif // LOGIN_H

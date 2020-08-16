@@ -77,5 +77,7 @@
         <file>FlatUI-Controls-QML-master/Textinput.qml</file>
         <file>ThuNghiemBangTay.qml</file>
         <file>CaiDatThongSo.qml</file>
+        <file>HieuChinhThamSo.qml</file>
+        <file>LichSuKiemDinh.qml</file>
     </qresource>
 </RCC>

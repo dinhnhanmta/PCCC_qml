@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         bientan.cpp \
         cambienapsuat.cpp \
+        dangnhapthietbi.cpp \
         dialitem.cpp \
         login.cpp \
         main.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     Modbus.hpp \
     bientan.hpp \
     cambienapsuat.hpp \
+    dangnhapthietbi.hpp \
     dialitem.h \
     login.hpp \
     master.h \

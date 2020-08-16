@@ -52,6 +52,10 @@ Item {
              anchors.left: parent.left
              scale: 0.7
         }
+        MouseArea {
+        anchors.fill: parent
+        onClicked: stack.pop("CaiDatThongSo.qml")
+        }
         }
 
 
@@ -208,16 +212,14 @@ Item {
 
 
         Input {
-            id: inverterAddress
-            initText: "8192"
+            id: inverterID
             x: 490
             y: 392
             objectName: "inverterAddress"
         }
 
         Input {
-            id: inverterBaudrate
-            initText: "8193"
+            id: vavleID
             x: 490
             y: 495
             objectName: "inverterBaudrate"
@@ -441,6 +443,20 @@ Item {
         height: 60
         text: "Kết nối"
         color: "lightgreen"
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                Modbus.q_current_port = dropdownMasterPort.text
+                Modbus.q_baudrate = dropdownMasterBaudrate.text
+                Modbus.q_dataBits = dropdownMasterDatabits.text
+                Modbus.q_flow = dropdownMasterFlow.text
+                Modbus.q_parity = dropdownMasterParity.text
+                Modbus.q_stopBits = dropdownMasterStop.text
+                //Modbus.readHoldingRegister(1,0,4)
+                Bientan.q_ID = inverterID.text
+                Vavle.q_ID = vavleID.text
+            }
+        }
     }
 
     DangerButton {
