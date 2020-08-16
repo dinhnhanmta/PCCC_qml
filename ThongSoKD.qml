@@ -2,14 +2,15 @@ import QtQuick 2.0
 import "FlatUI-Controls-QML-master"
 Item {
     width: 1024
-    height: 800
+    height: 600
     visible: true
     Rectangle{
         anchors.fill: parent
         color: "lightblue"
         Text {
-            y: 100
+            y: 37
             text: qsTr("THÔNG SỐ KIỂM ĐỊNH")
+            anchors.horizontalCenterOffset: -14
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: 26
         }
@@ -61,61 +62,61 @@ Item {
     }
 
     Text {
-        x: 165
-        y: 265
+        x: 160
+        y: 137
         text: qsTr("MÃ THIẾT BỊ")
     }
 
     Text {
-        x: 165
-        y: 348
+        x: 160
+        y: 220
         text: qsTr("KHỐI LƯỢNG")
     }
 
     Text {
-        x: 165
-        y: 428
+        x: 160
+        y: 300
         text: qsTr("CHIỀU DÀI")
     }
     Text {
-        x: 165
-        y: 508
+        x: 160
+        y: 380
         text: qsTr("KIỂU ĐẦU NỐI")
     }
     Text {
-        x: 165
-        y: 590
+        x: 160
+        y: 462
         text: qsTr("ÁP SUÂT LÀM VIỆC")
     }
     Text {
-        x: 560
-        y: 271
+        x: 555
+        y: 143
         text: qsTr("ÁP SUẤT THỬ")
     }
     Text {
-        x: 559
-        y: 348
+        x: 554
+        y: 220
         text: qsTr("LỚP BỘT TAN")
     }
     Text {
-        x: 559
-        y: 428
+        x: 554
+        y: 300
         text: qsTr("ĐƯỜNG KÍNH TRONG")
     }
     Text {
-        x: 560
-        y: 500
+        x: 555
+        y: 372
         text: qsTr("CHIỀU DÀI LỚP\nTRÁNG CAO SU")
     }
     Text {
-        x: 553
-        y: 581
+        x: 548
+        y: 453
         text: qsTr("SỐ KHUYẾT TẬP\n TRÊN BỀ MẶT NGOÀI")
     }
 
     Grid {
-        x: 290
-        y: 257
+        x: 285
+        y: 129
         columns: 2
         rows: 5
         rowSpacing: 40

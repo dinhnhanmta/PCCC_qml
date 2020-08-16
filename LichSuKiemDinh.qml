@@ -3,7 +3,7 @@ import "FlatUI-Controls-QML-master"
 import QtQuick.Layouts 1.12
 Item {
     width: 1024
-    height: 800
+    height: 600
     visible: true
     Rectangle{
         anchors.fill: parent

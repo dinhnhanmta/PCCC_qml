@@ -5,7 +5,7 @@ import "FlatUI-Controls-QML-master"
 import QtQml 2.0
 Item {
     width: 1024
-    height: 800
+    height: 600
     visible: true
     Rectangle{
         anchors.fill: parent
@@ -36,7 +36,7 @@ Item {
         Text {
             anchors.left:  parent.left
             anchors.verticalCenter: state_icon.verticalCenter
-            text: qsTr("     Trang thai \n     ket noi")
+            text: qsTr("     Trạng thái \n     kết nối")
             font.pixelSize: 18
         }
     }
@@ -60,21 +60,21 @@ Item {
 
 
     Clock{
-        x: 340
-        y: 141
+        x: 341
+        y: 101
         width: 361
         height: 166
         z: 1
         }
     Text {
-        x: 113
-        y: 118
+        x: 119
+        y: 74
         text: qsTr("UART MODBUS")
         font.pointSize: 16
     }
         Text {
-            x: 38
-            y: 185
+            x: 44
+            y: 120
             text: qsTr("Port")
         }
         WorkerScript {
@@ -106,8 +106,8 @@ Item {
                 id: listPort
                  ListElement {item: "";separator:false}
             }
-            x: 131
-            y: 173
+            x: 138
+            y: 108
             z: 5
             objectName: "dropdownMasterPort"
         }
@@ -122,8 +122,8 @@ Item {
                     ListElement {item: "38400"; separator: true}
                     ListElement {item: "115200"; separator: true}
                 }
-            x: 131
-            y: 253
+            x: 138
+            y: 164
             z: 4
             objectName: "dropdownMasterBaudrate"
         }
@@ -135,8 +135,8 @@ Item {
                     ListElement {item: "Even"; separator: true}
                     ListElement {item: "Odd"; separator: true}
                 }
-            x: 131
-            y: 493
+            x: 138
+            y: 337
             z: 1
             objectName: "dropdownMasterParity"
         }
@@ -147,8 +147,8 @@ Item {
                     ListElement {item: "1";}
                     ListElement {item: "2"; separator: true}
                 }
-            x: 131
-            y: 413
+            x: 138
+            y: 278
             z: 2
             objectName: "dropdownMasterStop"
         }
@@ -161,33 +161,33 @@ Item {
                     ListElement {item: "6"; separator: true}
                     ListElement {item: "5"; separator: true}
                 }
-            x: 131
-            y: 334
+            x: 138
+            y: 221
             z: 3
             objectName: "dropdownMasterDatabits"
         }
 
         Text {
-            x: 38
-            y: 265
+            x: 44
+            y: 176
             text: qsTr("Baudrate")
         }
 
         Text {
-            x: 38
-            y: 345
+            x: 44
+            y: 233
             text: qsTr("Data Bits")
         }
 
         Text {
-            x: 38
-            y: 495
+            x: 47
+            y: 349
             text: qsTr("Parity")
         }
 
         Text {
-            x: 38
-            y: 425
+            x: 47
+            y: 290
             text: qsTr("Stop bits")
         }
 
@@ -198,15 +198,15 @@ Item {
                     ListElement {item: "RTS/CTS"; separator: true}
                     ListElement {item: "XON/XOFF"; separator: true}
                 }
-            x: 131
-            y: 574
+            x: 138
+            y: 403
             z: 0
             objectName: "dropdownMasterFlow"
         }
 
         Text {
-            x: 38
-            y: 585
+            x: 47
+            y: 415
             text: qsTr("Flow Control")
         }
 
@@ -214,14 +214,14 @@ Item {
         Input {
             id: inverterID
             x: 490
-            y: 392
+            y: 337
             objectName: "inverterAddress"
         }
 
         Input {
             id: vavleID
             x: 490
-            y: 495
+            y: 403
             objectName: "inverterBaudrate"
         }
 
@@ -230,43 +230,44 @@ Item {
 
 
         Text {
-            x: 446
-            y: 337
+            x: 433
+            y: 293
             text: qsTr("CÀI ĐẶT ĐỊA CHỈ")
             font.pointSize: 16
         }
 
         Text {
             x: 347
-            y: 403
+            y: 349
             text: qsTr("ĐỊA CHỈ BIẾN TẦN")
         }
 
         Text {
             x: 347
-            y: 506
+            y: 415
             text: qsTr("ĐỊA CHỈ VAN")
         }
 
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
-            y: 65
+            y: 30
             text: qsTr("CÀI ĐẶT THÔNG SỐ HỆ THỐNG")
+            anchors.horizontalCenterOffset: 9
             font.pointSize: 24
             font.bold: true
         }
 
         Text {
-            x: 777
-            y: 118
+            x: 796
+            y: 74
             text: qsTr("UART MODBUS ICP")
             font.pointSize: 16
         }
 
         Dropdown {
             id: dropdownMasterPort1
-            x: 795
-            y: 173
+            x: 804
+            y: 109
             model: ListModel {
                 id: listPort1
                 ListElement {
@@ -280,8 +281,8 @@ Item {
 
         Dropdown {
             id: dropdownMasterBaudrate1
-            x: 795
-            y: 253
+            x: 804
+            y: 165
             model: ListModel {
                 ListElement {
                     item: "9600"
@@ -309,8 +310,8 @@ Item {
 
         Dropdown {
             id: dropdownMasterParity1
-            x: 795
-            y: 492
+            x: 804
+            y: 337
             model: ListModel {
                 ListElement {
                     item: "None"
@@ -332,8 +333,8 @@ Item {
 
         Dropdown {
             id: dropdownMasterStop1
-            x: 795
-            y: 412
+            x: 804
+            y: 280
             model: ListModel {
                 ListElement {
                     item: "1"
@@ -349,33 +350,33 @@ Item {
         }
 
         Text {
-            x: 702
-            y: 264
+            x: 706
+            y: 177
             text: qsTr("Baudrate")
         }
 
         Text {
-            x: 702
-            y: 344
+            x: 708
+            y: 233
             text: qsTr("Data Bits")
         }
 
         Text {
-            x: 702
-            y: 495
+            x: 710
+            y: 345
             text: qsTr("Parity")
         }
 
         Text {
-            x: 702
-            y: 184
+            x: 708
+            y: 120
             text: qsTr("Port")
         }
 
         Dropdown {
             id: dropdownMasterDatabits1
-            x: 795
-            y: 333
+            x: 804
+            y: 221
             model: ListModel {
                 ListElement {
                     item: "8"
@@ -401,15 +402,15 @@ Item {
         }
 
         Text {
-            x: 702
-            y: 424
+            x: 710
+            y: 292
             text: qsTr("Stop bits")
         }
 
         Dropdown {
             id: dropdownMasterFlow1
-            x: 795
-            y: 573
+            x: 804
+            y: 398
             model: ListModel {
                 ListElement {
                     item: "None"
@@ -430,20 +431,24 @@ Item {
         }
 
         Text {
-            x: 702
-            y: 585
+            x: 711
+            y: 410
             text: qsTr("Flow Control")
         }
 
 
     PrimaryButton {
-        x: 54
-        y: 648
+        x: 84
+        y: 471
         width: 150
-        height: 60
+        height: 46
         text: "Kết nối"
         color: "lightgreen"
         MouseArea{
+            anchors.rightMargin: -8
+            anchors.bottomMargin: 13
+            anchors.leftMargin: 8
+            anchors.topMargin: -13
             anchors.fill: parent
             onClicked: {
                 Modbus.q_current_port = dropdownMasterPort.text
@@ -460,27 +465,27 @@ Item {
     }
 
     DangerButton {
-        x: 227
-        y: 648
+        x: 254
+        y: 471
         width: 150
-        height: 60
+        height: 46
         text: "Ngắt kết nối"
     }
 
     PrimaryButton {
-        x: 683
-        y: 648
+        x: 693
+        y: 478
         width: 150
-        height: 60
+        height: 46
         text: "Kết nối"
         color: "lightgreen"
     }
 
     DangerButton {
-        x: 856
-        y: 648
+        x: 862
+        y: 478
         width: 150
-        height: 60
+        height: 46
         text: "Ngắt kết nối"
     }
 

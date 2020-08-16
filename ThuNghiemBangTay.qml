@@ -8,7 +8,7 @@ Item
 {
     id: window
     width: 1024
-    height: 800
+    height: 600
 
     visible: true
     Rectangle {
@@ -64,8 +64,8 @@ Item
     }
     Button{
         id: vanXaButton
-        x: 115
-        y: 234
+        x: 122
+        y: 157
         width: 133
         height: 99
         property bool press: false
@@ -82,8 +82,8 @@ Item
     }
     Button{
         id: vanBomButton
-        x: 115
-        y: 503
+        x: 122
+        y: 346
         width: 133
         height: 99
         property bool press: false
@@ -114,6 +114,8 @@ Item
 
         Image {
             id: needle
+            anchors.verticalCenterOffset: -26
+            anchors.horizontalCenterOffset: 0
             source: "./Icon/needle.png"
             scale: 0.8
             anchors.centerIn: parent
@@ -136,8 +138,8 @@ Item
 
     Slider {
         id: velocity_slider
-        x: 695
-        y: 602
+        x: 691
+        y: 423
         width: 300
         minimumValue: 0
         maximumValue: 300
@@ -149,8 +151,8 @@ Item
     }
     Text {
         id: element
-        x: 498
-        y: 494
+        x: 499
+        y: 389
         width: 39.525
         text: slider.value
         font.pixelSize: 20
@@ -158,15 +160,15 @@ Item
 
     Text {
         id: name
-        x: 461
-        y: 217
+        x: 467
+        y: 117
         text: qsTr("ÁP SUẤT")
         font.bold: true
         font.pointSize: 18
     }
     Input{
-        x: 757
-        y: 264
+        x: 753
+        y: 186
         borderColor: "black"
         backgroundColor: "lightblue"
         textColor: "black"
@@ -174,8 +176,8 @@ Item
     }
 
     Text {
-        x: 840
-        y: 515
+        x: 820
+        y: 349
         width: 108
         height: 37
         text: velocity_slider.value.toFixed(0)
@@ -185,8 +187,8 @@ Item
 
     Text {
         id: name1
-        x: 330
-        y: 95
+        x: 331
+        y: 41
         text: qsTr("THỬ NGHIỆM BẰNG TAY")
         font.bold: true
         font.pointSize: 24
@@ -194,7 +196,7 @@ Item
 
     Text {
         x: 948
-        y: 290
+        y: 212
         width: 62
         height: 14
         text: qsTr("RPM")
@@ -203,8 +205,8 @@ Item
     }
 
     Text {
-        x: 115
-        y: 457
+        x: 107
+        y: 286
         text: qsTr("VAN CẤP NƯỚC")
         font.bold: false
         font.pointSize: 18
@@ -212,23 +214,23 @@ Item
 
     Text {
         x: 121
-        y: 188
+        y: 117
         text: qsTr("VAN XẢ NƯỚC")
         font.bold: false
         font.pointSize: 18
     }
 
     Text {
-        x: 742
-        y: 457
+        x: 733
+        y: 293
         text: qsTr("ĐIỀU KHIỂN TỐC ĐỘ")
         font.pointSize: 18
         font.bold: false
     }
 
     Text {
-        x: 757
-        y: 188
+        x: 759
+        y: 117
         text: qsTr("ĐẶT TỐC ĐỘ")
         font.pointSize: 18
         font.bold: false

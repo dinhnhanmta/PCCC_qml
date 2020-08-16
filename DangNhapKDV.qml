@@ -9,7 +9,7 @@ import QtQuick.Window 2.0
 Item {
     visible: true
     width: 1024
-    height: 800
+    height: 600
     id: loginPage
 
     Rectangle{
@@ -24,9 +24,9 @@ Item {
 
         Text {
             id: element
-            x: 332
-            y: 70
-            text: "DANG NHAP KIEM DINH VIEN"
+            x: 328
+            y: 14
+            text: "ĐĂNG NHẬP KIỂM ĐỊNH VIÊN"
             font.pixelSize: 26
             color: "white"
         }

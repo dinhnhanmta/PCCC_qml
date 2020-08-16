@@ -31,8 +31,8 @@ import QtQuick 2.0
 import QtCharts 2.0
 
 Item {
-    width: 600
-    height: 400
+    width: 500
+    height: 300
 
     //![1]
     ChartView {

@@ -3,7 +3,7 @@ import "FlatUI-Controls-QML-master"
 import QtQuick.Dialogs 1.1
 Item {
     width: 1024
-    height: 800
+    height: 600
     visible: true
     Rectangle{
         anchors.fill: parent
@@ -26,20 +26,20 @@ Item {
 
         Text {
             id: name
-            x: 481
-            y: 334
+            x: 487
+            y: 244
             text: qsTr("MÃ THIẾT BỊ")
         }
         Input {
             id: maTB
-            x: 436
-            y: 380
+            x: 442
+            y: 290
             objectName: "inverterID"
         }
 
         PrimaryButton {
-            x: 201
-            y: 511
+            x: 181
+            y: 447
             width: 227
             height: 51
             text: "ĐĂNG NHẬP MÃ KIỂM ĐỊNH"
@@ -55,8 +55,8 @@ Item {
         }
 
         PrimaryButton {
-            x: 638
-            y: 511
+            x: 660
+            y: 447
             width: 227
             height: 51
             text: "TẠO MÃ KIỂM ĐỊNH"
@@ -113,8 +113,6 @@ Item {
         }
 
 
-    }
-
-    scale: 0.7
-
 }
+
+

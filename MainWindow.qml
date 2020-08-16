@@ -6,7 +6,7 @@ import "FlatUI-Controls-QML-master"
 Item {
     id: window
     width: 1024
-    height: 800
+    height: 600
     visible: true
 
     Rectangle{
@@ -15,9 +15,10 @@ Item {
 
 
     Text {
-        y: 120
+        y: 33
 
         text: qsTr("THIET BI KIEM DINH VOI CHUA CHAY")
+        anchors.horizontalCenterOffset: 0
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: 26
     }
@@ -30,7 +31,7 @@ Item {
         PrimaryButton{
         id: thuNghiem
         x: 137
-        y: 289
+        y: 159
         width: 250
         height: 64
         z: 1
@@ -54,7 +55,7 @@ Item {
         PrimaryButton {
             id: thuNghiemBangTay
             x: 127
-            y: 289
+            y: 159
             width: 250
             height: 64
             text: "              THỬ NGHIỆM BẰNG TAY"
@@ -78,7 +79,7 @@ Item {
         PrimaryButton {
             id: thuNghiem2
             x: 139
-            y: 426
+            y: 289
             width: 250
             height: 64
             text: "             LỊCH SỬ KIỂM ĐỊNH"
@@ -100,7 +101,7 @@ Item {
         PrimaryButton {
             id: capNhat
             x: 146
-            y: 426
+            y: 289
             width: 250
             height: 64
             text: "             CẬP NHẬT THÔNG SỐ\n                     KIỂM ĐỊNH"
@@ -119,7 +120,7 @@ Item {
         PrimaryButton {
             id: thuNghiem4
             x: 137
-            y: 554
+            y: 420
             width: 250
             height: 64
             text: "              HIỆU CHỈNH THÔNG SỐ"
@@ -141,7 +142,7 @@ Item {
         PrimaryButton {
             id: thuNghiem5
             x: 132
-            y: 554
+            y: 420
             width: 250
             height: 64
             text: "                CÀI ĐẶT HỆ THỐNG"

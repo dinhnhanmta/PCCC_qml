@@ -5,20 +5,21 @@ import QtQuick.Controls 1.2
 import IVIControls 1.0
 Item {
     width: 1024
-    height: 800
+    height: 600
     visible: true
     Rectangle{
         anchors.fill: parent
         color: "lightblue"
         Text {
-            y: 80
+            y: 35
             text: qsTr("QUY TRÌNH KIỂM ĐỊNH TỰ ĐỘNG")
+            anchors.horizontalCenterOffset: 1
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: 26
         }
         DoThi{
             x: 400
-            y: 160
+            y: 80
 
         }
         Image {
@@ -69,22 +70,22 @@ Item {
         }
 
         PrimaryButton {
-            x: 649
-            y: 631
+            x: 616
+            y: 447
             width: 206
             height: 93
             text: "BẮT ĐẦU KIỂM ĐỊNH"
         }
 
         Text {
-            x: 177
-            y: 631
+            x: 170
+            y: 447
             text: qsTr("TRẠNG THÁI VAN CÁP NƯỚC")
         }
 
         Rectangle {
-            x: 222
-            y: 665
+            x: 215
+            y: 481
             width: 108
             height: 59
             Image {
@@ -95,14 +96,14 @@ Item {
         }
 
         Text {
-            x: 417
-            y: 631
+            x: 400
+            y: 447
             text: qsTr("TRẠNG THÁI VAN XẢ NƯỚC")
         }
 
         Rectangle {
-            x: 458
-            y: 665
+            x: 441
+            y: 481
             width: 108
             height: 59
             Image {
@@ -114,13 +115,13 @@ Item {
 
         Text {
             x: 135
-            y: 481
+            y: 317
             text: qsTr("TỐC ĐỘ ĐỘNG CƠ")
         }
 
         Input {
-            x: 135
-            y: 515
+            x: 117
+            y: 351
             width: 164
             height: 65
             text: "100"
@@ -133,13 +134,13 @@ Item {
 
         Text {
             x: 135
-            y: 170
+            y: 94
             text: qsTr("ÁP SUẤT")
         }
         DialItem {
             x: 100
-            y: 200
-            width: 250
+            y: 120
+            width: 200
             height: width
             startAngle: 30
             spanAngle: 300
@@ -168,5 +169,6 @@ Item {
         }
     }
 
-     scale: 0.7
+
+
 }
