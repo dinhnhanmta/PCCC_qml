@@ -55,10 +55,11 @@ public:
 
 public:
    Q_INVOKABLE bool startConnection();   // khoi tao
+   Q_INVOKABLE void stopConnection();
    Q_INVOKABLE void writeSingleHoldingRegister(int add, int value,int server);
    void writeSingleHoldingRegisterCompleted();
 
-   void writeSingleCoil (int add, bool value, int server);
+   Q_INVOKABLE void writeSingleCoil (int add, bool value, int server);
    void writeSingleCoilComleted();
 
    Q_INVOKABLE void readSingleHoldingRegister (int add, int ID);

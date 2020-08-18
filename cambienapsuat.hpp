@@ -8,7 +8,7 @@ class camBienApSuat: public QObject
     Q_OBJECT
     //Q_PROPERTY(int q_address READ getAddress WRITE setAddress NOTIFY varChanged)
    // Q_PROPERTY(int q_ID READ getID WRITE setID NOTIFY varChanged)
-    Q_PROPERTY(float q_pressure READ getPressure WRITE setPressure NOTIFY varChanged)
+    Q_PROPERTY(float q_pressure READ getPressure WRITE setPressure NOTIFY pressureChanged)
 
     Q_PROPERTY(QString q_portName READ getPortName WRITE setPortName NOTIFY varChanged)
     Q_PROPERTY(QString q_flow READ getFlow WRITE setFlow NOTIFY varChanged)
@@ -19,6 +19,7 @@ class camBienApSuat: public QObject
 
 signals:
     void varChanged ();
+    void pressureChanged ();
 public:
     camBienApSuat();
     float getPressure (){return pressure;}
@@ -39,12 +40,15 @@ public:
 public:
     //void readPressure();
     //void readPressureCompleted(int value);
-
+signals:
+    void receiveCompleted();
+public slots:
+    void OnReceiveCompleted();
 public:
     Q_INVOKABLE void openSerialPort();
-    void closeSerialPort();
+    Q_INVOKABLE void closeSerialPort();
     Q_INVOKABLE void writeData(const QByteArray &data);
-    Q_INVOKABLE void writeData1();
+    Q_INVOKABLE void sendRequest();
     void readData();
     void handleError(QSerialPort::SerialPortError error);
 private:
@@ -56,6 +60,8 @@ private:
     QString m_flow;
     QString m_parity;
     int m_stopBits;
+
+    QString m_receiveText;
 };
 
 #endif // CAMBIENAPSUAT_HPP

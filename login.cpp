@@ -8,7 +8,7 @@ login::login()
 bool login::checkLogin(QString user,QString pass)
 {
     bool success = false;
-    mydb.setDatabaseName("/home/nhan/Documents/QT/project/PCCC_thong/pccc.db");
+    mydb.setDatabaseName("/home/nhan/Downloads/PCCC_qml/pccc.db");
 
     if (mydb.open()){
         qDebug() << "Open successfully";

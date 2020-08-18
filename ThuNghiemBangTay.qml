@@ -12,8 +12,8 @@ Item
 
     visible: true
     Rectangle {
-    anchors.fill: parent
-    color: "lightblue"
+        anchors.fill: parent
+        color: "lightblue"
     }
 
     Image {
@@ -78,12 +78,13 @@ Item
             press= !press
             if (press) buttonImage.source = "./Icon/switch-on.jpg";
             else buttonImage.source = "./Icon/switch-off.jpg";
+            Modbus.writeSingleCoil(3,press,11)
     }
     }
     Button{
         id: vanBomButton
         x: 122
-        y: 346
+        y: 357
         width: 133
         height: 99
         property bool press: false
@@ -97,7 +98,36 @@ Item
             if (press)
                 buttonImage2.source = "./Icon/switch-on.jpg";
             else buttonImage2.source = "./Icon/switch-off.jpg";
+            Modbus.writeSingleCoil(2,press,11)
+        }
     }
+
+
+    Button{
+        id: startButton
+        x: 759
+        y: 409
+        width: 133
+        height: 99
+        property bool press: false
+        Image {
+            id: startButtonImage
+            source: "./Icon/switch-off.jpg"
+            anchors.fill: parent
+        }
+        onClicked: {
+            press= !press
+            if (press)
+            {
+                startButtonImage.source = "./Icon/switch-on.jpg";
+                Bientan.setStart(1);
+            }
+            else
+            {
+                Bientan.setStart(5);
+                startButtonImage.source = "./Icon/switch-off.jpg";
+            }
+        }
     }
     DialItem {
         id: speed
@@ -130,7 +160,7 @@ Item
             width: 300
             minimumValue: 0
             maximumValue: 300
-            value: 100
+            value: q_pressure
             visible: false
         }
     }
@@ -138,23 +168,23 @@ Item
 
     Slider {
         id: velocity_slider
-        x: 691
-        y: 423
+        x: 692
+        y: 350
         width: 300
         minimumValue: 0
-        maximumValue: 300
+        maximumValue: 50
         onValueChanged:
         {
-            Bientan.q_frequency = velocity_slider.value
-            //Bientan.write_friquency();
+            ///Bientan.q_frequency = velocity_slider.value
+//            Bientan.write_friquency(velocity_slider.value.toFixed(0));
         }
     }
     Text {
-        id: element
+        id: txtTanSo
         x: 499
         y: 389
         width: 39.525
-        text: slider.value
+        text:  Modbus.readHoldingRegister(1,12288, 1)
         font.pixelSize: 20
     }
 
@@ -167,17 +197,28 @@ Item
         font.pointSize: 18
     }
     Input{
-        x: 753
-        y: 186
+        id: txtSpeed
+        x: 837
+        y: 170
+        width: 100
+        height: 40
         borderColor: "black"
         backgroundColor: "lightblue"
         textColor: "black"
 
     }
-
+    PrimaryButton {
+        id: btnSpeed
+        x: 641
+        y: 175
+        MouseArea {
+        anchors.fill: parent
+        onClicked: Bientan.write_friquency(parseInt(txtSpeed.text)*100)
+        }
+    }
     Text {
-        x: 820
-        y: 349
+        x: 815
+        y: 297
         width: 108
         height: 37
         text: velocity_slider.value.toFixed(0)
@@ -195,8 +236,8 @@ Item
     }
 
     Text {
-        x: 948
-        y: 212
+        x: 949
+        y: 189
         width: 62
         height: 14
         text: qsTr("RPM")
@@ -221,8 +262,8 @@ Item
     }
 
     Text {
-        x: 733
-        y: 293
+        x: 728
+        y: 241
         text: qsTr("ĐIỀU KHIỂN TỐC ĐỘ")
         font.pointSize: 18
         font.bold: false
@@ -236,7 +277,19 @@ Item
         font.bold: false
     }
 
-    scale: 0.7
+    Text {
+        x: 537
+        y: 471
+        text: qsTr("START")
+        font.bold: false
+        font.pointSize: 18
+    }
+
+    Timer {
+            interval: 500; running: true; repeat: true
+            onTriggered: Cambien.sendRequest()
+        }
+
 
 
   }

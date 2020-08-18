@@ -10,6 +10,7 @@
 #include "master.h"
 #include "login.hpp"
 #include "dangnhapthietbi.hpp"
+
 int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
@@ -21,6 +22,8 @@ int main(int argc, char *argv[])
     login *m_login = new login();
     DangNhapThietBi *m_DangNhapThietBi = new DangNhapThietBi(m_login);
     qmlRegisterType<DialItem>("IVIControls", 1, 0, "DialItem");
+
+    qmlRegisterType<camBienApSuat>("camBienApSuat", 1, 0, "CamBienApSuat");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication app(argc, argv);

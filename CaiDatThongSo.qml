@@ -96,8 +96,16 @@ Item {
                             msg["port"].push(Master.q_port[i])
                         }
                         if (i===0)  dropdownMasterPort.text="";
-                        else dropdownMasterPort.text = Master.q_port[0];
+                        else
+                        {
+                            dropdownMasterPort.text = Master.q_port[0]
+                            dropdownMasterPort1.text = Master.q_port[0]
+                            timer.stop()
+                        }
                          worker.sendMessage(msg);
+                         msg['model'] =  listPort1;
+                        worker.sendMessage(msg);
+
                     }
                 }
         Dropdown {
@@ -109,7 +117,6 @@ Item {
             x: 138
             y: 108
             z: 5
-            objectName: "dropdownMasterPort"
         }
 
         Dropdown {
@@ -445,21 +452,18 @@ Item {
         text: "Kết nối"
         color: "lightgreen"
         MouseArea{
-            anchors.rightMargin: -8
-            anchors.bottomMargin: 13
-            anchors.leftMargin: 8
-            anchors.topMargin: -13
             anchors.fill: parent
             onClicked: {
                 Modbus.q_current_port = dropdownMasterPort.text
-                Modbus.q_baudrate = dropdownMasterBaudrate.text
-                Modbus.q_dataBits = dropdownMasterDatabits.text
+                Modbus.q_baudrate = parseInt(dropdownMasterBaudrate.text)
+                Modbus.q_dataBits = parseInt(dropdownMasterDatabits.text)
                 Modbus.q_flow = dropdownMasterFlow.text
                 Modbus.q_parity = dropdownMasterParity.text
-                Modbus.q_stopBits = dropdownMasterStop.text
+                Modbus.q_stopBits = parseInt(dropdownMasterStop.text)
+                Modbus.startConnection();
                 //Modbus.readHoldingRegister(1,0,4)
-                Bientan.q_ID = inverterID.text
-                Vavle.q_ID = vavleID.text
+                Bientan.q_ID = parseInt(inverterID.text)
+                Vavle.q_ID = parseInt(vavleID.text)
             }
         }
     }
@@ -470,6 +474,12 @@ Item {
         width: 150
         height: 46
         text: "Ngắt kết nối"
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                Modbus.stopConnection()
+            }
+        }
     }
 
     PrimaryButton {
@@ -479,6 +489,19 @@ Item {
         height: 46
         text: "Kết nối"
         color: "lightgreen"
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                Cambien.q_portName = dropdownMasterPort1.text
+                Cambien.q_baudrate = parseInt(dropdownMasterBaudrate1.text)
+                Cambien.q_dataBits = parseInt(dropdownMasterDatabits1.text)
+                Cambien.q_flow = dropdownMasterFlow1.text
+                Cambien.q_parity = dropdownMasterParity1.text
+                Cambien.q_stopBits = parseInt(dropdownMasterStop1.text)
+                Cambien.openSerialPort();
+
+            }
+        }
     }
 
     DangerButton {
@@ -487,9 +510,14 @@ Item {
         width: 150
         height: 46
         text: "Ngắt kết nối"
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                Cambien.closeSerialPort()
+            }
+        }
     }
 
 
-    scale: 0.7
 
 }

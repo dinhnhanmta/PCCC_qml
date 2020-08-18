@@ -28,7 +28,9 @@ public:
     void setFrequency (int fred){frequency = fred;}
 
 public:
-    Q_INVOKABLE void write_friquency();
+    Q_INVOKABLE void write_friquency(int freq);
+
+    Q_INVOKABLE void setStart(int val);
 private:
     Modbus *bientan_modbus;
     int address;

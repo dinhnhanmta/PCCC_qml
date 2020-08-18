@@ -45,7 +45,6 @@ bool Modbus::startConnection() {
     modbusDevice->setConnectionParameter(QModbusDevice::SerialDataBitsParameter, m_dataBits);
     // STOP BITS
     modbusDevice->setConnectionParameter(QModbusDevice::SerialStopBitsParameter, m_stopBits);
-
     if (!modbusDevice->connectDevice())
     {
       qDebug() << "cannot connect ";
@@ -66,7 +65,7 @@ bool Modbus::startConnection() {
 
 void Modbus::writeSingleHoldingRegister(int add, int value,int server)
 {
-    startConnection();
+    //startConnection();
     QModbusDataUnit reg(QModbusDataUnit::HoldingRegisters,add,1);
     reg.setValue(0,value);
     QModbusReply *reply;
@@ -84,7 +83,7 @@ void Modbus::writeSingleHoldingRegisterCompleted()
 
 void Modbus::readSingleHoldingRegister (int add, int ID)
 {
-    startConnection();
+    //startConnection();
     QModbusDataUnit readUnit(QModbusDataUnit::HoldingRegisters, add,1);
     if (auto *reply = modbusDevice->sendReadRequest(readUnit, ID)) {
        qDebug()<<"Reading single holding register ...";
@@ -108,7 +107,7 @@ void Modbus::readSingleHoldingRegisterRecieved()
 
 void Modbus::writeSingleCoil (int add, bool value, int server)
 {
-    startConnection();
+    //startConnection();
     QModbusDataUnit reg(QModbusDataUnit::Coils,add,1);
     reg.setValue(0,value);
     QModbusReply *reply;
@@ -127,7 +126,7 @@ void Modbus::writeSingleCoilComleted()
 
 void Modbus::readHoldingRegister(int server,int start_add, int number_register)
 {
-    startConnection();
+   // startConnection();
     nBytes = number_register;
     start_address = start_add;
     ID = server;
@@ -154,6 +153,15 @@ void Modbus::readHoldingRegisterCompleted() const {
 
   for (int j = 0; j < nBytes; j++)
     qDebug() << QString("The value of %1 is %2").arg(j).arg(result.value(j));
+}
+
+void Modbus::stopConnection()
+{
+    modbusDevice->disconnectDevice();
+    connection_state = false;
+    qDebug() << "Ngat ket noi!";
+    emit varChanged();
+
 }
 Modbus::~Modbus() {
   modbusDevice->disconnectDevice();

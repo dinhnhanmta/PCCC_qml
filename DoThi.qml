@@ -29,7 +29,7 @@
 
 import QtQuick 2.0
 import QtCharts 2.0
-
+import camBienApSuat 1.0
 Item {
     width: 500
     height: 300
@@ -48,13 +48,13 @@ Item {
             id: axisX
             min: 0
             max: 20
-            tickCount: 21
+            tickCount: 11
         }
 
         ValueAxis {
             id: axisY
-            min: -0.5
-            max: 1.5
+            min: 0
+            max: 25
         }
 
         LineSeries {
@@ -62,28 +62,36 @@ Item {
             axisX: axisX
             axisY: axisY
         }
-
     }
 
-    // Add data dynamically to the series
     Component.onCompleted: {
         for (var i = 0; i <= 19; i++) {
-            series1.append(i, Math.random());
+            series1.append(i, 0);
         }
     }
 
+    CamBienApSuat {
+        onPressureChanged:
+        {
+            axisX.min = axisX.min + 1
+            axisX.max = axisX.max + 1
+            var count = series1.count
+            series1.remove(0);
+            series1.insert(count,axisX.max-1,Cambien.q_pressure);
+        }
+    }
 
-
-        Timer {
+    /*
+       Timer {
             interval: 1000; running: true; repeat: true
             onTriggered: {
                 axisX.min = axisX.min + 1
                 axisX.max = axisX.max + 1
                 var count = series1.count
                 series1.remove(0);
-                series1.insert(count,axisX.max-1,Math.random());
-
+                series1.insert(count,axisX.max-1,Cambien.q_pressure);
             }
         }
+        */
 
 }
