@@ -7,24 +7,28 @@
 class AppSetting: public QSettings {
     Q_OBJECT
 public:
-    AppSetting(QString savedPath = CONFIG_PATH);
-    QString databasePath();
-    QString userToken();
+    AppSetting(const QString savedPath);
+    QString getServerUrl() const;
+    void setServerUrl(const QString &value);
+
+    int getBaudrate() const;
+    void setBaudrate(int value);
+
+    QString getUserName() const;
+    void setUserName(const QString &value);
+
+    QString getPassword() const;
+    void setPassword(const QString &value);
+
+    QString getToken() const;
+    void setToken(const QString &value);
 
 private:
-    QString savedPath;
-
-protected:
-    const QString baseGroup = "Base";
-    const QString database = "database";
-
-    const QString valveGroup = "Valve";
-    const QString baudrate = "baudrate";
-
-    const QString authGroup = "Auth";
-    const QString userName = "userName";
-    const QString password = "password";
-    const QString token = "token";
+    QString serverUrl;
+    int baudrate;
+    QString userName;
+    QString password;
+    QString token;
 };
 
 #endif // CONFIG_H

@@ -14,16 +14,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        baseobject.cpp \
         bientan.cpp \
         cambienapsuat.cpp \
         config.cpp \
         dangnhapthietbi.cpp \
+        deviceparameter.cpp \
         dialitem.cpp \
         logger.cpp \
         login.cpp \
         main.cpp \
         master.cpp \
         modbus.cpp \
+        network.cpp \
         vavle.cpp
 
 RESOURCES += qml.qrc
@@ -40,14 +43,17 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    baseobject.h \
     bientan.hpp \
     cambienapsuat.hpp \
     config.h \
     constant.h \
     dangnhapthietbi.hpp \
+    deviceparameter.h \
     dialitem.h \
     logger.h \
     login.hpp \
     master.h \
     modbus.hpp \
+    network.h \
     vavle.hpp

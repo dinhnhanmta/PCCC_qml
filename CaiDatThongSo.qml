@@ -232,10 +232,6 @@ Item {
             objectName: "inverterBaudrate"
         }
 
-
-
-
-
         Text {
             x: 433
             y: 293

@@ -78,13 +78,6 @@ void DialItem::paint(QPainter *painter)
     const int radius = rect.width()/2 - 45;
     QFontMetrics fontMat(painter->font());
     QString numbr;
-    /*for (double i = 0; i <= m_SpanAngle; i += m_SpanAngle/10)
-    {
-        QPoint p(rect.center().x() + radius * cos(-90-i * PI / 180.0), rect.center().y() - radius * sin(-90-i * PI / 180.0));
-        numbr = QString::number((m_StopValue-m_StartValue)/10*i/m_SpanAngle*10);
-        QRect bound = fontMat.boundingRect(numbr);
-        painter->drawText(QPointF((p.x() - bound.width()/2), (p.y() + bound.height()/2)), numbr);
-    }*/
 
     for (double i = 0; i <= m_SpanAngle; i += m_SpanAngle/10)
         {

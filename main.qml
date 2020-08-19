@@ -9,8 +9,6 @@ Window {
     visible: true
     width: 1024
     height: 600
-//    visibility: Window.FullScreen
-//    title: qsTr("Hello World")
     StackView {
            id: stack
            initialItem: "DangNhapKDV.qml"

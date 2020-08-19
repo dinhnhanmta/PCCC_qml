@@ -22,7 +22,6 @@ int main(int argc, char *argv[])
     Login *m_login = new Login();
     DangNhapThietBi *m_DangNhapThietBi = new DangNhapThietBi();
     qmlRegisterType<DialItem>("IVIControls", 1, 0, "DialItem");
-
     qmlRegisterType<CamBienApSuat>("camBienApSuat", 1, 0, "CamBienApSuat");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);

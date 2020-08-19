@@ -38,10 +38,9 @@ void Logger::printLog(LoggerLevel level, QString log)
                return;
            }
              txt += QString("{Fatal} \t\t %1").arg(log);
-             abort();
        }
 
-       QFile outFile("LogFile.log");
+       QFile outFile(LOG_PATH);
        outFile.open(QIODevice::WriteOnly | QIODevice::Append);
 
        QTextStream textStream(&outFile);

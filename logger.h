@@ -7,6 +7,7 @@
 #include <QTextStream>
 #include <QTime>
 #include <QDebug>
+#include "constant.h"
 
 enum class LoggerLevel
 {

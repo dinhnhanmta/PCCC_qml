@@ -62,10 +62,7 @@ Item {
             text: "TẠO MÃ KIỂM ĐỊNH"
         }
 
-
-
         Image {
-
             source: "qrc:/Icon/account.png"
             scale: 0.8
             anchors.right: parent.right

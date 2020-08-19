@@ -2,7 +2,7 @@ import QtQuick 2.12
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.1
 import QtQuick.Window 2.0
-
+import QtQuick.Dialogs 1.1
 
 Item {
     visible: true
@@ -15,8 +15,32 @@ Item {
     property color mainTextCOlor: "#f0f0f0"
     property color popupBackGroundColor: "#b44"
     property color popupTextCOlor: "#ffffff"
-    property var dataBase
-    signal registerClicked()
+
+    MessageDialog {
+        id: messageDialog
+        icon: StandardIcon.Critical
+        title: "Đăng nhập thất bại"
+        text: "Vui lòng kiểm tra lại tài khoản hoặc mật khẩu"
+        onAccepted: {
+            messageDialog.visible = false
+        }
+    }
+
+    Connections {
+        target: QLogin
+        onLoginSuccess: {
+           stack.push("MainWindow.qml")
+        }
+        onLoginFailed: {
+            messageDialog.visible = true
+        }
+    }
+
+    Component.onCompleted: {
+        if (QLogin.logged()){
+            stack.push("MainWindow.qml")
+        }
+    }
 
     Rectangle {
     anchors.fill: parent
@@ -57,6 +81,7 @@ Item {
             font.pointSize: 14
             font.family: "fontawesome"
             leftPadding: 30
+            text: QLogin.loggedUsername()
             background: Rectangle {
                 implicitWidth: 200
                 implicitHeight: 50
@@ -93,6 +118,7 @@ Item {
             font.family: "fontawesome"
             leftPadding: 30
             echoMode: TextField.Password
+            text: QLogin.loggedPassword()
             background: Rectangle {
                 implicitWidth: 200
                 implicitHeight: 50
@@ -129,24 +155,8 @@ Item {
             name: "Log In"
             baseColor: mainAppColor
             borderColor: mainAppColor
-            onClicked: {
-                if(QLogin.checkLogin(loginUsername.text,loginPassword.text) === true)
-                    stack.push("MainWindow.qml")
-
-            }
+            onClicked: QLogin.onClick(loginUsername.text,loginPassword.text)
         }
-
-        CButton{
-            height: 50
-            Layout.preferredWidth: loginPage.width - 20
-            Layout.alignment: Qt.AlignHCenter
-            name: "Sign Up"
-            baseColor: mainAppColor
-            borderColor: mainAppColor
-           // onClicked: stackView.push("qrc:/RegisterScreen.qml", {"uname": "arun", "pword": "some"}) //registerClicked()
-        }
-
-
     }
   }
 }
