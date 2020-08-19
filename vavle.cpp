@@ -1,9 +1,5 @@
 #include "vavle.hpp"
 
-Vavle::Vavle()
-{
-
-}
 
 Vavle::Vavle(Modbus *modbus)
 {

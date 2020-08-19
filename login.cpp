@@ -1,42 +1,42 @@
 #include "login.hpp"
 
-login::login()
-{
-
+Login::Login(){
+    network = new Network();
 }
 
-bool login::checkLogin(QString user,QString pass)
+void Login::onClick(QString userName,QString password)
 {
-    bool success = false;
-    mydb.setDatabaseName("/home/nhan/Downloads/PCCC_qml/pccc.db");
-
-    if (mydb.open()){
-        qDebug() << "Open successfully";
-        QSqlQuery q;
-        success = q.exec("SELECT * FROM user;");
-           if(!success)
-           {
-               qDebug() << "ERROR:"
-                        << q.lastError();
-           }
-
-        while (q.next()){
-            qDebug()<<"read value from database";
-            if (q.value(0)==user && q.value(1)==pass)
-            {
-                qDebug()<<"Login successfully";
-                mydb.close();
-                return true;
+    this->settings->setUserName(userName);
+    this->settings->setPassword(password);
+    network->login(userName, password);
+    connect(network->reply, &QNetworkReply::finished, [=]() {
+        if(network->reply->error() == QNetworkReply::NoError){
+            QJsonObject obj = QJsonDocument::fromJson(network->reply->readAll()).object();
+            if (obj.value("code").toInt() == 0){
+                settings->setToken(obj.value("data").toObject().value("token").toString());
+                emit loginSuccess();
+            } else {
+                emit loginFailed();
             }
+        } else {
+            settings->setToken("");
+            logger->printLog(LoggerLevel::FATAL, network->reply->errorString());
+            emit loginFailed();
         }
-        qDebug() << "Login Failed";
-        mydb.close();
-        return false;
-    }
-    else
-    {
-        qDebug() << "Open failed";
-        return false;
-    }
+    });
+}
 
+QString Login::loggedUsername()
+{
+    return settings->getUserName();
+}
+
+QString Login::loggedPassword()
+{
+    return settings->getPassword();
+}
+
+bool Login::logged()
+{
+    return settings->getToken() != "";
 }

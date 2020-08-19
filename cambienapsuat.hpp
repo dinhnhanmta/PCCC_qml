@@ -3,7 +3,7 @@
 #include "Modbus.hpp"
 
 
-class camBienApSuat: public QObject
+class CamBienApSuat: public QObject
 {
     Q_OBJECT
     //Q_PROPERTY(int q_address READ getAddress WRITE setAddress NOTIFY varChanged)
@@ -21,7 +21,7 @@ signals:
     void varChanged ();
     void pressureChanged ();
 public:
-    camBienApSuat();
+    CamBienApSuat();
     float getPressure (){return pressure;}
     void setPressure (float p){pressure = p;}
 

@@ -1,4 +1,4 @@
-#include "Modbus.hpp"
+#include "modbus.hpp"
 #include <QObject>
 #include <QModbusRtuSerialMaster>
 #include <QThread>
@@ -13,20 +13,6 @@ Modbus::Modbus() {
 }
 
 bool Modbus::startConnection() {
-    /*
-    QQmlApplicationEngine engine;
-    QQmlComponent component(&engine, QUrl(QLatin1String("qrc:/Caidat.qml")));
-    QObject *mainPage = component.create();
-    QObject* item = mainPage->findChild<QObject *>("dropdownMasterBaudrate");
-    */
-    /*
-    qDebug() << "Port:"<<m_portName<<endl;
-    qDebug() << "Parity:"<<m_parity<<endl;
-    qDebug() << "DataBits:"<<m_dataBits<<endl;
-    qDebug() << "Stopbits:"<<m_stopBits<<endl;
-    qDebug() << "Baudrate"<<m_baudrate<<endl;
-    */
-
     // CAI DAT THONG SO CHO MODBUS
     if (modbusDevice->state()==QModbusDevice::ConnectedState)
     {

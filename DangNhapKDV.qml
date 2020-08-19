@@ -19,7 +19,6 @@ Item {
         Login { x: 356;y: 160
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
-
         }
 
         Text {
