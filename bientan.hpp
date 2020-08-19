@@ -2,7 +2,7 @@
 #define BIENTAN_H
 #include "Modbus.hpp"
 
-class bientan: public QObject {
+class Bientan: public QObject {
     Q_OBJECT
     Q_PROPERTY(int q_address READ getAddress WRITE setAddress NOTIFY varChanged)
     Q_PROPERTY(int q_ID READ getID WRITE setID NOTIFY varChanged)
@@ -11,8 +11,7 @@ class bientan: public QObject {
 signals:
     void varChanged ();
 public:
-    bientan();
-    bientan(Modbus *modbus);
+    Bientan(Modbus *modbus);
 
 public:
     int getAddress (){return address;}

@@ -1,6 +1,6 @@
 #ifndef VAVLE_HPP
 #define VAVLE_HPP
-#include "Modbus.hpp"
+#include "modbus.hpp"
 
 class Vavle: public QObject
 {
@@ -13,7 +13,6 @@ class Vavle: public QObject
 signals:
     void varChanged ();
 public:
-    Vavle();
     Vavle(Modbus *modbus);
 
     int getAddress2 (){return address2;}

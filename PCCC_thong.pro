@@ -16,8 +16,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         bientan.cpp \
         cambienapsuat.cpp \
+        config.cpp \
         dangnhapthietbi.cpp \
         dialitem.cpp \
+        logger.cpp \
         login.cpp \
         main.cpp \
         master.cpp \
@@ -38,11 +40,14 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    Modbus.hpp \
     bientan.hpp \
     cambienapsuat.hpp \
+    config.h \
+    constant.h \
     dangnhapthietbi.hpp \
     dialitem.h \
+    logger.h \
     login.hpp \
     master.h \
+    modbus.hpp \
     vavle.hpp

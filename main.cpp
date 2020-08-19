@@ -3,7 +3,7 @@
 #include <QQmlEngine>
 #include <QQmlContext>
 #include "dialitem.h"
-#include "Modbus.hpp"
+#include "modbus.hpp"
 #include "bientan.hpp"
 #include "vavle.hpp"
 #include "cambienapsuat.hpp"
@@ -15,15 +15,15 @@ int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     Modbus * m_modbus = new Modbus;
-    master * m_master = new master(m_modbus);
-    bientan *m_bientan = new bientan(m_modbus);
+    Master * m_master = new Master(m_modbus);
+    Bientan *m_bientan = new Bientan(m_modbus);
     Vavle *m_vavle = new Vavle (m_modbus);
-    camBienApSuat *m_cambien = new camBienApSuat();
-    login *m_login = new login();
-    DangNhapThietBi *m_DangNhapThietBi = new DangNhapThietBi(m_login);
+    CamBienApSuat *m_cambien = new CamBienApSuat();
+    Login *m_login = new Login();
+    DangNhapThietBi *m_DangNhapThietBi = new DangNhapThietBi();
     qmlRegisterType<DialItem>("IVIControls", 1, 0, "DialItem");
 
-    qmlRegisterType<camBienApSuat>("camBienApSuat", 1, 0, "CamBienApSuat");
+    qmlRegisterType<CamBienApSuat>("camBienApSuat", 1, 0, "CamBienApSuat");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication app(argc, argv);

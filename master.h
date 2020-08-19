@@ -2,8 +2,8 @@
 #define MASTER_H
 #include <QString>
 #include <QObject>
-#include <Modbus.hpp>
-class master: public QObject {
+#include <modbus.hpp>
+class Master: public QObject {
   Q_OBJECT
     Q_PROPERTY( int q_number_port READ getNumberPort  NOTIFY varChanged)
     Q_PROPERTY(QStringList q_port READ getPort NOTIFY varChanged)
@@ -12,8 +12,7 @@ signals:
     void varChanged ();
 public:
     Modbus *master_modbusDevice;
-    master();
-    master(Modbus *modbus_device);
+    Master(Modbus *modbus_device);
     Q_INVOKABLE void getPortAvalable (void);
     int getNumberPort(){return m_number_port;}
     Q_INVOKABLE bool startConnection();
@@ -30,7 +29,6 @@ private:
      QString  m_port_name;       // danh sach cong com
      int m_number_port;               // so luong cong com
      QStringList m_port;
-
 
 };
 

@@ -1,11 +1,11 @@
 #include "cambienapsuat.hpp"
 
-camBienApSuat::camBienApSuat()
+CamBienApSuat::CamBienApSuat()
 {
     m_serial=new QSerialPort(this);
-    connect(m_serial, &QSerialPort::errorOccurred, this, &camBienApSuat::handleError);
-    connect(m_serial, &QSerialPort::readyRead, this, &camBienApSuat::readData);
-    connect(this,&camBienApSuat::receiveCompleted,this,&camBienApSuat::OnReceiveCompleted);
+    connect(m_serial, &QSerialPort::errorOccurred, this, &CamBienApSuat::handleError);
+    connect(m_serial, &QSerialPort::readyRead, this, &CamBienApSuat::readData);
+    connect(this,&CamBienApSuat::receiveCompleted,this,&CamBienApSuat::OnReceiveCompleted);
     pressure = 0;
     m_baudrate = 9600;
     m_stopBits = 1;
@@ -16,7 +16,7 @@ camBienApSuat::camBienApSuat()
     m_receiveText="";
 }
 
-void camBienApSuat::openSerialPort()
+void CamBienApSuat::openSerialPort()
 {
     m_serial->setPortName(m_portName);
     m_serial->setBaudRate(m_baudrate);
@@ -39,7 +39,7 @@ void camBienApSuat::openSerialPort()
     }
 }
 
-void camBienApSuat::closeSerialPort()
+void CamBienApSuat::closeSerialPort()
 {
     if (m_serial->isOpen())
         m_serial->close();
@@ -47,20 +47,17 @@ void camBienApSuat::closeSerialPort()
 }
 
 
-void camBienApSuat::writeData(const QByteArray &data)
+void CamBienApSuat::writeData(const QByteArray &data)
 {
     m_serial->write(data);
 }
 
-void camBienApSuat::sendRequest()
+void CamBienApSuat::sendRequest()
 {
-
         m_serial->write("#01\r");
 }
 
-
-
-void camBienApSuat::readData()
+void CamBienApSuat::readData()
 {
     const QByteArray data = m_serial->readAll();
     //qDebug()<<"dulieu... "<<data;
@@ -70,59 +67,20 @@ void camBienApSuat::readData()
     }
 }
 
-void camBienApSuat::OnReceiveCompleted()
+void CamBienApSuat::OnReceiveCompleted()
 {
    QStringList splitted;
     qDebug()<< "receive complete"<< m_receiveText;
      qDebug()<< "splitted";
     splitted = m_receiveText.split("+");
-    /*for (int i=0;i<splitted.size();i++) {
-        qDebug()<<splitted[i];
-    }*/
     pressure = splitted[6].toFloat()/2.5*10;
     emit pressureChanged();
 
 }
-void camBienApSuat::handleError(QSerialPort::SerialPortError error)
+void CamBienApSuat::handleError(QSerialPort::SerialPortError error)
 {
     if (error == QSerialPort::ResourceError) {
         qDebug()<< m_serial->errorString();
         closeSerialPort();
     }
 }
-
-
-/*
-camBienApSuat::camBienApSuat(Modbus *modbus)
-{
-
-     m_serial=new QSerialPort(this);
-    connect(m_serial, &QSerialPort::errorOccurred, this, &camBienApSuat::handleError);
-    connect(m_serial, &QSerialPort::readyRead, this, &camBienApSuat::readData);
-
-    camBienModbus = modbus;
-    address = 8;
-    ID = 2;
-    pressure = 0;
-    baudrate= 9600;
-
-    m_baudrate = 9600;
-    m_stopBits = 1;
-    m_parity = "None";
-    m_dataBits = 8;
-    m_portName = "/dev/ttyACM0";
-}
-
-void camBienApSuat::readPressure()
-{
-    camBienModbus->setBaudrate(baudrate);
-    connect(camBienModbus,&Modbus::readSingleHoldingRegisterCompleted,this,&camBienApSuat::readPressureCompleted);
-    camBienModbus->readSingleHoldingRegister(address,ID);
-}
-void camBienApSuat::readPressureCompleted(int value)
-{
-    pressure = value;
-    qDebug() << "Receive Pressure Value: " << value;
-}
-
-*/

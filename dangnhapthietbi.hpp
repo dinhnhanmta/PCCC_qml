@@ -3,16 +3,11 @@
 #include <QString>
 #include <QtSql>
 #include <QObject>
-#include "login.hpp"
 class DangNhapThietBi: public QObject {
     Q_OBJECT
 public:
 
-    Q_INVOKABLE bool checkLogin(int maTB);
-    DangNhapThietBi();
-    DangNhapThietBi(login *log);
-private:
-    login *m_login;
+    Q_INVOKABLE bool checkLogin(QString code);
 };
 
 #endif // DANGNHAPTHIETBI_H
