@@ -2,7 +2,7 @@
 #define DEVICEPARAMETER_H
 #include "baseobject.h"
 #include <QTime>
-#include "network.h"
+#include <QJsonObject>
 
 class DeviceParameter : BaseObject
 {
@@ -25,6 +25,8 @@ public:
 
     QString getSyncAt() const;
     void setSyncAt(const QString &value);
+
+    QJsonObject toJsonObject();
 
 private:
     QString code;

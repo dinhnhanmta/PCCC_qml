@@ -1,7 +1,5 @@
 #include "deviceparameter.h"
 
-
-
 DeviceParameter::DeviceParameter(QString code, QString jsonData) :
     code(code), jsonData(jsonData), sync(false)
 {
@@ -11,12 +9,6 @@ DeviceParameter::DeviceParameter(QString code, QString jsonData) :
 void DeviceParameter::localSave()
 {
 
-}
-
-bool DeviceParameter::uploadDeviceParameter()
-{
-    Network *network = new Network();
-    return network->uploadDeviceParameter();
 }
 
 QString DeviceParameter::getCode() const
@@ -67,4 +59,12 @@ QString DeviceParameter::getSyncAt() const
 void DeviceParameter::setSyncAt(const QString &value)
 {
     syncAt = value;
+}
+
+QJsonObject DeviceParameter::toJsonObject()
+{
+    QVariantMap mapData;
+    mapData["code"] = code;
+    mapData["jsonData"] = jsonData;
+    return QJsonObject::fromVariantMap(mapData);
 }

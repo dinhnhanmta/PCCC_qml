@@ -21,6 +21,7 @@ SOURCES += \
         dangnhapthietbi.cpp \
         deviceparameter.cpp \
         dialitem.cpp \
+        localdatabase.cpp \
         logger.cpp \
         login.cpp \
         main.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
     dangnhapthietbi.hpp \
     deviceparameter.h \
     dialitem.h \
+    localdatabase.h \
     logger.h \
     login.hpp \
     master.h \
