@@ -1,6 +1,6 @@
 #ifndef BIENTAN_H
 #define BIENTAN_H
-#include "Modbus.hpp"
+#include "modbus.hpp"
 
 class Bientan: public QObject {
     Q_OBJECT

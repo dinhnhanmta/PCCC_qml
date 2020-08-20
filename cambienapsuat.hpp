@@ -1,6 +1,6 @@
 #ifndef CAMBIENAPSUAT_HPP
 #define CAMBIENAPSUAT_HPP
-#include "Modbus.hpp"
+#include "modbus.hpp"
 
 
 class CamBienApSuat: public QObject
