@@ -45,11 +45,59 @@ bool LocalDatabase::insertRecord(QString table, QVariantMap data)
     return query.exec();
 }
 
+bool LocalDatabase::updateRecord(QString table, QVariantMap data, QVariantMap condition)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE :table SET (:set_list) "
+                  "WHERE :condition");
+    query.bindValue(":table", table);
+
+    QList<QString> setLists;
+    for(QVariantMap::const_iterator iter = data.begin(); iter != data.end(); ++iter) {
+        switch (iter.value().userType())
+        {
+            case QMetaType::Bool:
+                setLists.append(iter.key() + "=" + (iter.value().toBool()?"1":"0"));
+                break;
+            case QMetaType::Int:
+            case QMetaType::UInt:
+            case QMetaType::LongLong:
+            case QMetaType::ULongLong:
+                setLists.append(iter.key() + "=" + iter.value().toString());
+                break;
+            case QMetaType::QString:
+                setLists.append(iter.key() + "=" + '"' + iter.value().toString() + '"');
+        }
+    }
+    query.bindValue(":set_list", setLists.join(", "));
+
+    QList<QString> listConditions;
+    for (QVariantMap::const_iterator it = condition.begin(); it != condition.end(); ++it) {
+        switch (it.value().userType())
+        {
+            case QMetaType::Bool:
+                listConditions.append(it.key() + "=" + (it.value().toBool()?"1":"0"));
+                break;
+            case QMetaType::Int:
+            case QMetaType::UInt:
+            case QMetaType::LongLong:
+            case QMetaType::ULongLong:
+                listConditions.append(it.key() + "=" + it.value().toString());
+                break;
+            case QMetaType::QString:
+                listConditions.append(it.key() + "=" + '"' + it.value().toString() + '"');
+        }
+    }
+    query.bindValue(":condition", listConditions.join(" AND "));
+
+    return query.exec();
+}
+
 bool LocalDatabase::deleteRecord(QString table, QVariantMap condition)
 {
     QSqlQuery query;
     query.prepare("DELETE FROM :table  "
-                  "WHERE (:list_condition)");
+                  "WHERE :list_condition");
     query.bindValue(":table", table);
     QList<QString> listConditions;
     for (QVariantMap::const_iterator it = condition.begin(); it != condition.end(); ++it) {
@@ -113,8 +161,8 @@ QSqlQuery LocalDatabase::buildQueryCmd(
 
 QList<QVariantMap> LocalDatabase::queryRecords(
         QString table, QStringList fields,
-        QVariantMap condition, QString order_by="",
-        bool ascOrder = false)
+        QVariantMap condition, QString order_by,
+        bool ascOrder)
 {
     QSqlQuery query = buildQueryCmd(table, fields, condition, order_by, ascOrder);
     query.exec();

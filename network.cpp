@@ -30,12 +30,8 @@ void Network::login(QString username, QString password)
     reply = manager->post(request, jsonData);
 }
 
-void Network::uploadDeviceParameter(DeviceParameter deviceParameter)
+void Network::uploadDeviceParameter(QByteArray jsonData)
 {
-    QByteArray jsonData = QJsonDocument(
-                deviceParameter.toJsonObject()
-        ).toJson();
-
     request.setUrl(QUrl::fromUserInput(settings->getServerUrl() + dataPath));
     request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
     request.setHeader(QNetworkRequest::ContentLengthHeader,QByteArray::number(jsonData.size()));
