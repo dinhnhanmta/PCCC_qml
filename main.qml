@@ -9,19 +9,24 @@ Window {
     visible: true
     width: 1024
     height: 600
-    StackView {
-           id: stack
-           initialItem: "DangNhapKDV.qml"
-           anchors.fill: parent
-       }
+
+    Flickable {
+        id: flickable
+        anchors.fill: parent
+        flickableDirection: Flickable.VerticalFlick
+        StackView {
+               id: stack
+               initialItem: "Login.qml"
+               anchors.fill: parent
+           }
+    }
 
     InputPanel {
         id: inputPanel
         z: 99
         x: 0
-        y: window.height
+        y: Qt.inputMethod.visible ? window.height - inputPanel.height : window.height
         width: window.width
-
         states: State {
             name: "visible"
             when: inputPanel.active
@@ -42,6 +47,13 @@ Window {
                 }
             }
         }
-
+        onActiveChanged: {
+            var posWithinFlickable = mapToItem(stack, 0, height / 2);
+            if (active){
+                flickable.contentY = height / 2;
+            } else {
+                flickable.contentY = 0;
+            }
+        }
     }
 }
