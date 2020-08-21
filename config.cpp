@@ -10,6 +10,7 @@ AppSetting::AppSetting(const QString savedPath): QSettings(savedPath, QSettings:
     this->userName = this->value("userName").toString();
     this->password = this->value("password").toString();
     this->token = this->value("token").toString();
+    this->endGroup();
 }
 
 QString AppSetting::getServerUrl() const
@@ -19,8 +20,10 @@ QString AppSetting::getServerUrl() const
 
 void AppSetting::setServerUrl(const QString &value)
 {
-    this->setValue("serverUrl", serverUrl);
+    this->beginGroup("default");
+    this->setValue("serverUrl", value);
     serverUrl = value;
+    this->endGroup();
 }
 
 int AppSetting::getBaudrate() const
@@ -30,8 +33,10 @@ int AppSetting::getBaudrate() const
 
 void AppSetting::setBaudrate(int value)
 {
-    this->setValue("baudrate", baudrate);
+    this->beginGroup("default");
+    this->setValue("baudrate", value);
     baudrate = value;
+    this->endGroup();
 }
 
 QString AppSetting::getUserName() const
@@ -41,8 +46,10 @@ QString AppSetting::getUserName() const
 
 void AppSetting::setUserName(const QString &value)
 {
-    this->setValue("userName", userName);
+    this->beginGroup("default");
+    this->setValue("userName", value);
     userName = value;
+    this->endGroup();
 }
 
 QString AppSetting::getPassword() const
@@ -52,8 +59,10 @@ QString AppSetting::getPassword() const
 
 void AppSetting::setPassword(const QString &value)
 {
-    this->setValue("password", password);
+    this->beginGroup("default");
+    this->setValue("password", value);
     password = value;
+    this->endGroup();
 }
 
 QString AppSetting::getToken() const
@@ -63,6 +72,8 @@ QString AppSetting::getToken() const
 
 void AppSetting::setToken(const QString &value)
 {
-    this->setValue("token", token);
+    this->beginGroup("default");
+    this->setValue("token", value);
     token = value;
+    this->endGroup();
 }
