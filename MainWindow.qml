@@ -12,67 +12,49 @@ Item {
     Rectangle{
         anchors.fill: parent
         color: "lightblue"
-
-
-    Text {
-        y: 33
-
-        text: qsTr("THIET BI KIEM DINH VOI CHUA CHAY")
-        anchors.horizontalCenterOffset: 0
-        anchors.horizontalCenter: parent.horizontalCenter
-        font.pixelSize: 26
-    }
-
-
-
-
-
+        Text {
+            y: 33
+            text: qsTr("THIẾT BỊ KIỂM ĐỊNH VÒI CHỮA CHÁY")
+            anchors.horizontalCenterOffset: 0
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.pixelSize: 26
+        }
 
         PrimaryButton{
-        id: thuNghiem
-        x: 137
-        y: 159
-        width: 250
-        height: 64
-        z: 1
-        text: "               TIẾN HÀNH THỬ NGHIỆM"
-        anchors.horizontalCenterOffset: -221
-
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        Image {
-            source: "qrc:/Icon/play2.png"
-            anchors.left:  parent.left
-            scale: 0.7
+            id: thuNghiem
+            x: 137
+            y: 159
+            z: 1
+            text: "TIẾN HÀNH THỬ NGHIỆM"
+            anchors.horizontalCenterOffset: -221
+            anchors.horizontalCenter: parent.horizontalCenter
+            Image {
+                source: "qrc:/Icon/play2.png"
+                anchors.left:  parent.left
+                scale: 0.7
+            }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: stack.push("DangNhapTB.qml")
+            }
         }
-        MouseArea {
-        anchors.fill: parent
-        onClicked: stack.push("DangNhapTB.qml")
-        }
-        }
-
 
         PrimaryButton {
             id: thuNghiemBangTay
             x: 127
             y: 159
-            width: 250
-            height: 64
-            text: "              THỬ NGHIỆM BẰNG TAY"
-
-
+            text: "THỬ NGHIỆM BẰNG TAY"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: 247
-
             Image {
                  source: "qrc:/Icon/hand2.png"
                  anchors.left: parent.left
                  scale: 0.7
             }
             MouseArea {
-            anchors.fill: parent
-            onClicked: stack.push("ThuNghiemBangTay.qml")
+                anchors.fill: parent
+                onClicked: stack.push("ThuNghiemBangTay.qml")
             }
         }
 
@@ -80,9 +62,7 @@ Item {
             id: thuNghiem2
             x: 139
             y: 289
-            width: 250
-            height: 64
-            text: "             LỊCH SỬ KIỂM ĐỊNH"
+            text: "LỊCH SỬ KIỂM ĐỊNH"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: 247
@@ -93,8 +73,8 @@ Item {
                  scale: 0.7
             }
             MouseArea {
-            anchors.fill: parent
-            onClicked: stack.push("LichSuKiemDinh.qml")
+                anchors.fill: parent
+                onClicked: stack.push("LichSuKiemDinh.qml")
             }
         }
 
@@ -102,9 +82,7 @@ Item {
             id: capNhat
             x: 146
             y: 289
-            width: 250
-            height: 64
-            text: "             CẬP NHẬT THÔNG SỐ\n                     KIỂM ĐỊNH"
+            text: "CẬP NHẬT THÔNG SỐ\n         KIỂM ĐỊNH"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: -221
@@ -113,17 +91,13 @@ Item {
                  anchors.left: parent.left
                  scale: 0.7
             }
-
-
         }
 
         PrimaryButton {
             id: thuNghiem4
             x: 137
             y: 420
-            width: 250
-            height: 64
-            text: "              HIỆU CHỈNH THÔNG SỐ"
+            text: "HIỆU CHỈNH THÔNG SỐ"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: 247
@@ -134,8 +108,8 @@ Item {
                  scale: 0.7
             }
             MouseArea {
-            anchors.fill: parent
-            onClicked: stack.push("HieuChinhThamSo.qml")
+                anchors.fill: parent
+                onClicked: stack.push("HieuChinhThamSo.qml")
             }
         }
 
@@ -143,9 +117,7 @@ Item {
             id: thuNghiem5
             x: 132
             y: 420
-            width: 250
-            height: 64
-            text: "                CÀI ĐẶT HỆ THỐNG"
+            text: "CÀI ĐẶT HỆ THỐNG"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: -221
@@ -161,51 +133,37 @@ Item {
             }
         }
 
-
         Image {
-
             source: "qrc:/Icon/account.png"
             scale: 0.8
             anchors.right: parent.right
             anchors.top: parent.top
-
         }
 
-        Rectangle {
+        DangerButton {
+            text: "Modbus"
             color: "palegoldenrod"
-            width: 175
-            height: 64
+            width: 200
             anchors.right: parent.right
             anchors.bottom:  parent.bottom
-        Image {
-            id: state_icon
-            source: Modbus.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
-            anchors.right: parent.right
-            scale: 0.8
-        }
-
-        Text {
-            anchors.left:  parent.left
-            anchors.verticalCenter: state_icon.verticalCenter
-            text: qsTr("     Trang thai \n     ket noi")
-            font.pixelSize: 18
-        }
+            Image {
+                id: state_icon
+                 source: Modbus.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
+                 anchors.right: parent.right
+                 scale: 0.7
+            }
         }
         DangerButton {
-            anchors.left: parent.left
-            anchors.bottom: parent.bottom
-            width: 175
-            height: 64
-            text: "      HOME"
+            text: "Quay lại"
             color: "palegoldenrod"
-        Image {
-             source: "qrc:/Icon/home2.png"
-             anchors.left: parent.left
-             scale: 0.7
+            width: 200
+            anchors.left: parent.left
+            anchors.bottom:  parent.bottom
+            Image {
+                 source: "qrc:/Icon/home2.png"
+                 anchors.left: parent.left
+                 scale: 0.7
+            }
         }
-
-        }
-
-}
-
+    }
 }
