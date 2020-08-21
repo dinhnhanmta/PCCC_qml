@@ -48,7 +48,7 @@ Window {
             }
         }
         onActiveChanged: {
-            var posWithinFlickable = mapToItem(stack, 0, height / 2);
+            flickable.interactive = !active;
             if (active){
                 flickable.contentY = height / 2;
             } else {
