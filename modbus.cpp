@@ -4,9 +4,9 @@
 #include <QThread>
 Modbus::Modbus() {
     modbusDevice = new QModbusRtuSerialMaster();
-    m_baudrate =19200;
+    m_baudrate =9600;
     m_dataBits = 8;
-    m_portName = "ttyUSB0";
+    m_portName = "ttyACM0";
     m_parity = "None";
     m_stopBits =1;
     nBytes= 0;
@@ -67,7 +67,7 @@ void Modbus::writeSingleHoldingRegisterCompleted()
     qDebug() << "Write Single Holding Resister Completed!";
 }
 
-void Modbus::readSingleHoldingRegister (int add, int ID)
+void Modbus::readSingleHoldingRegister (int add, int ID,int *data)
 {
     //startConnection();
     QModbusDataUnit readUnit(QModbusDataUnit::HoldingRegisters, add,1);
@@ -80,6 +80,7 @@ void Modbus::readSingleHoldingRegister (int add, int ID)
       //      delete reply; // broadcast replies return immediately
     } else
       qDebug() << "request error";
+    holding_register_result= data;
 }
 void Modbus::readSingleHoldingRegisterRecieved()
 {
@@ -88,7 +89,8 @@ void Modbus::readSingleHoldingRegisterRecieved()
     qDebug() << "read ";
     qDebug() << "";
     qDebug() << QString("The value is %1").arg(result.value(0));
-    emit readSingleHoldingRegisterCompleted(result.value(0));
+    *holding_register_result = result.value(0);
+    emit readSingleHoldingRegisterCompleted();
 }
 
 void Modbus::writeSingleCoil (int add, bool value, int server)
@@ -139,6 +141,41 @@ void Modbus::readHoldingRegisterCompleted() const {
 
   for (int j = 0; j < nBytes; j++)
     qDebug() << QString("The value of %1 is %2").arg(j).arg(result.value(j));
+}
+
+void Modbus::readMultiCoils(int server,int start_add, int number_coils, bool *data)
+{
+    nBytes = number_coils;
+    start_address = start_add;
+
+
+    QModbusDataUnit readUnit(QModbusDataUnit::Coils, start_address,
+                             static_cast<unsigned short>(nBytes));
+
+    if (auto *reply = modbusDevice->sendReadRequest(readUnit, server)) {
+      if (!reply->isFinished())
+        //      connect the finished signal of the request to your read slot
+        connect(reply, &QModbusReply::finished, this, &Modbus::readCoilsCompleted);
+      //    else
+      //      delete reply; // broadcast replies return immediately
+    } else
+      qDebug() << "request error";
+
+    coil_result = data;
+}
+
+void Modbus::readCoilsCompleted()  {
+  QModbusReply *reply = qobject_cast<QModbusReply *>(sender());
+  const QModbusDataUnit result = reply->result();
+  qDebug() << "read ";
+  qDebug() << "";
+
+  for (int j = 0; j < nBytes; j++)
+  {
+    coil_result[j] = result.value(j);
+    qDebug() << QString("The coil value of %1 is %2").arg(j).arg(result.value(j));
+  }
+  emit readCoilsCompletedSignal ();
 }
 
 void Modbus::stopConnection()

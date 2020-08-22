@@ -79,5 +79,7 @@
         <file>CaiDatThongSo.qml</file>
         <file>HieuChinhThamSo.qml</file>
         <file>LichSuKiemDinh.qml</file>
+        <file>Icon/on_state.png</file>
+        <file>Icon/off_state.png</file>
     </qresource>
 </RCC>

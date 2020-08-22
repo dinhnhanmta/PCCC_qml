@@ -10,7 +10,7 @@
 #include "master.h"
 #include "login.hpp"
 #include "dangnhapthietbi.hpp"
-
+#include "relay.hpp"
 int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     Master * m_master = new Master(m_modbus);
     Bientan *m_bientan = new Bientan(m_modbus);
     Vavle *m_vavle = new Vavle (m_modbus);
+    Relay *m_relay = new Relay (m_modbus);
     CamBienApSuat *m_cambien = new CamBienApSuat();
     Login *m_login = new Login();
     DangNhapThietBi *m_DangNhapThietBi = new DangNhapThietBi();
@@ -36,6 +37,7 @@ int main(int argc, char *argv[])
     context->setContextProperty("Cambien", m_cambien);
     context->setContextProperty("QLogin", m_login);
     context->setContextProperty("LoginTB", m_DangNhapThietBi);
+    context->setContextProperty("Relay", m_relay);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

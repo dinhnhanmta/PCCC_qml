@@ -11,7 +11,7 @@ Window {
     height: 600
     StackView {
            id: stack
-           initialItem: "DangNhapKDV.qml"
+           initialItem: "ThuNghiemBangTay.qml"
            anchors.fill: parent
        }
 

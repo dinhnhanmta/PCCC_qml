@@ -16,6 +16,7 @@ class CamBienApSuat: public QObject
     Q_PROPERTY(int q_baudrate READ getBaudrate WRITE setBaudrate NOTIFY varChanged)
     Q_PROPERTY(int q_dataBits READ getDatabits WRITE setDatabis NOTIFY varChanged)
     Q_PROPERTY(int q_stopBits READ getStopbits WRITE setStopbits NOTIFY varChanged)
+    Q_PROPERTY(bool q_connectionState READ getState NOTIFY varChanged)
 
 signals:
     void varChanged ();
@@ -37,6 +38,8 @@ public:
     void setDatabis (int p){m_dataBits = p;}
     int getStopbits (){return m_stopBits;}
     void setStopbits (int p){m_stopBits = p;}
+
+    bool getState () {return connection_state;}
 public:
     //void readPressure();
     //void readPressureCompleted(int value);
@@ -60,7 +63,7 @@ private:
     QString m_flow;
     QString m_parity;
     int m_stopBits;
-
+    bool connection_state;
     QString m_receiveText;
 };
 

@@ -12,7 +12,7 @@ CamBienApSuat::CamBienApSuat()
     m_parity = "None";
     m_dataBits = 8;
     m_portName = "/dev/ttyUSB0";
-
+    connection_state = false;
     m_receiveText="";
 }
 
@@ -30,12 +30,12 @@ void CamBienApSuat::openSerialPort()
         qDebug()<<(tr("Connected to %1 : %2, %3, %4, %5, %6")
                           .arg(m_portName).arg(m_baudrate).arg(m_dataBits)
                           .arg(m_parity).arg(m_stopBits).arg(m_flow));
-
-    sendRequest();
+    connection_state = true;
+    emit varChanged();
     } else {
         qDebug()<< m_serial->errorString();
-
-
+        connection_state = false;
+        emit varChanged();
     }
 }
 
@@ -43,6 +43,8 @@ void CamBienApSuat::closeSerialPort()
 {
     if (m_serial->isOpen())
         m_serial->close();
+    connection_state = false;
+    emit varChanged();
 
 }
 
