@@ -6,6 +6,8 @@ PrimaryButton {
     text: "";
     textColor: "black"
     signal dropPress()
+    width: 175
+    height: 40
     onButton_press: dropDown.dropPress()
     Image {
 
@@ -48,7 +50,7 @@ PrimaryButton {
         ListElement {item: "Llama"; separator: true}
     }
     signal active()
-    Component.onCompleted: parent.z = 100;
+    Component.onCompleted: parent.z = z + 100;
 
     ScrollView {
         id: scrollView;
