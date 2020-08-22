@@ -1,7 +1,9 @@
+#include "localdatabase.h"
 #include "login.hpp"
 
 Login::Login(){
     network = new Network();
+    LocalDatabase *localdatabase = new LocalDatabase();
 }
 
 void Login::onClick(QString userName,QString password)
@@ -24,6 +26,10 @@ void Login::onClick(QString userName,QString password)
             emit loginFailed();
         }
     });
+}
+
+void Login::onClick(){
+    emit loginSuccess();
 }
 
 QString Login::loggedUsername()

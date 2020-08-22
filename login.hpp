@@ -11,6 +11,7 @@ class Login: public QObject, BaseObject {
 public:
     Login();
     Q_INVOKABLE void onClick(QString user,QString pass);
+    Q_INVOKABLE void onClick();
     Q_INVOKABLE QString loggedUsername();
     Q_INVOKABLE QString loggedPassword();
     Q_INVOKABLE bool logged();

@@ -2,12 +2,12 @@
 
 LocalDatabase::LocalDatabase(const QString dbPath)
 {
-    db = QSqlDatabase::database(DB_NAME);
+    db = QSqlDatabase::addDatabase(DB_NAME);
     db.setDatabaseName(dbPath);
     db.open();
+    query = new QSqlQuery(db);
     if (db.tables().length() == 0){
-        QSqlQuery query;
-        query.exec("create table devices "
+        query->exec("create table devices "
                   "(id integer primary key AUTOINCREMENT, "
                   "code varchar(20), "
                   "jsonData varchar(1024), "
@@ -19,11 +19,10 @@ LocalDatabase::LocalDatabase(const QString dbPath)
 
 bool LocalDatabase::insertRecord(QString table, QVariantMap data)
 {
-    QSqlQuery query;
-    query.prepare("INSERT INTO :table (:list_column) "
+    query->prepare("INSERT INTO :table (:list_column) "
                   "VALUES (:list_value)");
-    query.bindValue(":table", table);
-    query.bindValue(":list_column", data.keys().join(","));
+    query->bindValue(":table", table);
+    query->bindValue(":list_column", data.keys().join(","));
     QList<QString> listValues;
     for (QList<QVariant>::iterator it = data.values().begin(); it != data.values().end(); ++it) {
         switch (it->userType())
@@ -41,16 +40,15 @@ bool LocalDatabase::insertRecord(QString table, QVariantMap data)
                 listValues.append('"' + it->toString() + '"');
         }
     }
-    query.bindValue(":list_value", listValues.join(","));
-    return query.exec();
+    query->bindValue(":list_value", listValues.join(","));
+    return query->exec();
 }
 
 bool LocalDatabase::updateRecord(QString table, QVariantMap data, QVariantMap condition)
 {
-    QSqlQuery query;
-    query.prepare("UPDATE :table SET (:set_list) "
+    query->prepare("UPDATE :table SET (:set_list) "
                   "WHERE :condition");
-    query.bindValue(":table", table);
+    query->bindValue(":table", table);
 
     QList<QString> setLists;
     for(QVariantMap::const_iterator iter = data.begin(); iter != data.end(); ++iter) {
@@ -69,7 +67,7 @@ bool LocalDatabase::updateRecord(QString table, QVariantMap data, QVariantMap co
                 setLists.append(iter.key() + "=" + '"' + iter.value().toString() + '"');
         }
     }
-    query.bindValue(":set_list", setLists.join(", "));
+    query->bindValue(":set_list", setLists.join(", "));
 
     QList<QString> listConditions;
     for (QVariantMap::const_iterator it = condition.begin(); it != condition.end(); ++it) {
@@ -88,17 +86,16 @@ bool LocalDatabase::updateRecord(QString table, QVariantMap data, QVariantMap co
                 listConditions.append(it.key() + "=" + '"' + it.value().toString() + '"');
         }
     }
-    query.bindValue(":condition", listConditions.join(" AND "));
+    query->bindValue(":condition", listConditions.join(" AND "));
 
-    return query.exec();
+    return query->exec();
 }
 
 bool LocalDatabase::deleteRecord(QString table, QVariantMap condition)
 {
-    QSqlQuery query;
-    query.prepare("DELETE FROM :table  "
+    query->prepare("DELETE FROM :table  "
                   "WHERE :list_condition");
-    query.bindValue(":table", table);
+    query->bindValue(":table", table);
     QList<QString> listConditions;
     for (QVariantMap::const_iterator it = condition.begin(); it != condition.end(); ++it) {
         switch (it.value().userType())
@@ -116,8 +113,8 @@ bool LocalDatabase::deleteRecord(QString table, QVariantMap condition)
                 listConditions.append(it.key() + "=" + '"' + it.value().toString() + '"');
         }
     }
-    query.bindValue(":list_condition", listConditions.join(" AND "));
-    return query.exec();
+    query->bindValue(":list_condition", listConditions.join(" AND "));
+    return query->exec();
 }
 
 QSqlQuery LocalDatabase::buildQueryCmd(
@@ -149,7 +146,7 @@ QSqlQuery LocalDatabase::buildQueryCmd(
     sqlCmd += order_by != "" ? " ORDER BY " + order_by + " " + (ascOrder? "ASC" : "DESC"): "";
     sqlCmd += limit > 0 ? ";" : " limit " + QString::number(limit) + ";";
 
-    QSqlQuery query;
+    QSqlQuery query(db);
     query.prepare(sqlCmd);
     query.bindValue(":table", table);
     query.bindValue(":fields", fields.join(", "));
