@@ -1,5 +1,7 @@
 #ifndef MODBUS_HPP
 #define MODBUS_HPP
+#include "baseobject.h"
+
 #include <QString>
 #include <QQmlEngine>
 #include <QQmlComponent>
@@ -16,15 +18,15 @@
 #include <QTimer>
 #include <QtSerialPort/QSerialPort>
 
-class Modbus: public QObject {
+class Modbus: public QObject, BaseObject {
     Q_OBJECT
-    Q_PROPERTY(QString q_current_port READ getPort WRITE setPort NOTIFY varChanged)
-    Q_PROPERTY(int q_baudrate READ getBaudrate WRITE setBaudrate NOTIFY varChanged)
-    Q_PROPERTY(int q_dataBits READ getDataBits WRITE setDataBits NOTIFY varChanged)
-    Q_PROPERTY(QString q_flow READ getFlow WRITE setFlow NOTIFY varChanged)
-    Q_PROPERTY(QString q_parity READ getParity WRITE setParity NOTIFY varChanged)
-    Q_PROPERTY(int q_stopBits READ getStopBits WRITE setStopBits NOTIFY varChanged)
     Q_PROPERTY(bool q_connectionState READ getState WRITE setState NOTIFY varChanged)
+    Q_PROPERTY(QString portname READ getPortName WRITE setPortName NOTIFY varChanged)
+    Q_PROPERTY(int baudrate READ getBaudrate WRITE setBaudrate NOTIFY varChanged)
+    Q_PROPERTY(QString flow READ getFlow WRITE setFlow NOTIFY varChanged)
+    Q_PROPERTY(QString parity READ getParity WRITE setParity NOTIFY varChanged)
+    Q_PROPERTY(int stopbits READ getStopBits WRITE setStopBits NOTIFY varChanged)
+    Q_PROPERTY(int databits READ getDataBits WRITE setDatabits NOTIFY varChanged)
 
 signals:
     void varChanged ();
@@ -32,28 +34,27 @@ public:
   Modbus();
   ~Modbus();
 public:
-   void setPort(QString port){ m_portName = port;}
-   QString getPort(){return m_portName;}
-
-   void setBaudrate(int baudrate){ m_baudrate = baudrate;}
-   int getBaudrate(){return m_baudrate;}
-
-   void setDataBits(int databits){ m_dataBits = databits;}
-   int getDataBits(){return m_dataBits;}
-
-   void setFlow(QString flow){ m_flow = flow;}
-   QString getFlow(){return m_flow;}
-
-   void setParity(QString parity){ m_parity = parity;}
-   QString getParity(){return m_parity;}
-
-   void setStopBits(int stopbits){ m_stopBits = stopbits;}
-   int getStopBits(){return m_stopBits;}
-
    void setState(bool state){ connection_state = state;}
    bool getState(){return connection_state;}
 
-public:
+   void setPortName(QString value){ settings->modbusParam.setPortName(value);}
+   QString getPortName(){return settings->modbusParam.getPortName();}
+
+   void setBaudrate(int value){ settings->modbusParam.setBaudrate(value);}
+   int getBaudrate(){return settings->modbusParam.getBaudrate();}
+
+   void setFlow(QString value){ settings->modbusParam.setFlow(value);}
+   QString getFlow(){return settings->modbusParam.getFlow();}
+
+   void setParity(QString value){ settings->modbusParam.setParity(value);}
+   QString getParity(){return settings->modbusParam.getParity();}
+
+   void setStopBits(int value){ settings->modbusParam.setStopBits(value);}
+   int getStopBits(){return settings->modbusParam.getStopBits();}
+
+   void setDatabits(int value){ settings->modbusParam.setDataBits(value);}
+   int getDataBits(){return settings->modbusParam.getDataBits();}
+
    Q_INVOKABLE bool startConnection();   // khoi tao
    Q_INVOKABLE void stopConnection();
    Q_INVOKABLE void writeSingleHoldingRegister(int add, int value,int server);
@@ -67,23 +68,17 @@ public:
 
    Q_INVOKABLE void readHoldingRegister(int ID,int start_add, int number_register);
    void readHoldingRegisterCompleted() const;
+
+
 signals:
    void readSingleHoldingRegisterCompleted(int value);
 private:
    QModbusRtuSerialMaster *modbusDevice;
-   // parameter
-   QString m_portName;
-   int m_baudrate;
-   int m_dataBits;
-   QString m_flow;
-   QString m_parity;
-   int m_stopBits;
    QTimer *serialTimer;
-
+   void saveSettings();
    int nBytes;
    int ID;
    int start_address;
-
    bool connection_state= false;
 };
 

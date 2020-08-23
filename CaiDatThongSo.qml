@@ -6,6 +6,7 @@ import QtQml 2.0
 Item {
     antialiasing: true
     anchors.fill: parent
+
     Rectangle{
         id: rectangle
         anchors.fill: parent
@@ -52,10 +53,11 @@ Item {
                     }
                     Dropdown {
                         id: dropdownMasterPort
+                        text: Modbus.portname
                         dropdownTextColor: "black"
                         model:  ListModel {
                             id: listPort
-                             ListElement {item: "";separator:false}
+                            ListElement {item: "";separator:false}
                         }
                         z: 5
                     }
@@ -71,6 +73,7 @@ Item {
                     }
                     Dropdown {
                         id: dropdownMasterBaudrate
+                        text: Modbus.baudrate
                         dropdownTextColor: "black"
                         model: ListModel {
                                 ListElement {item: "9600";}
@@ -92,6 +95,7 @@ Item {
                     }
                     Dropdown {
                         id: dropdownMasterDatabits
+                        text: Modbus.databits
                         dropdownTextColor: "black"
                         model: ListModel {
                             ListElement {item: "8";}
@@ -114,6 +118,7 @@ Item {
                     }
                     Dropdown {
                         id: dropdownMasterStop
+                        text: Modbus.stopbits
                         dropdownTextColor: "black"
                         model: ListModel {
                             ListElement {item: "1";}
@@ -133,6 +138,7 @@ Item {
                     }
                     Dropdown {
                         id: dropdownMasterParity
+                        text: Modbus.parity
                         dropdownTextColor: "black"
                         model: ListModel {
                             ListElement {item: "None";}
@@ -147,12 +153,13 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     Text {
                         width: parent.width/2
-                        text: qsTr("Stopbits")
+                        text: qsTr("Parity")
                         horizontalAlignment: Text.AlignHCenter
                         anchors.verticalCenter: parent.verticalCenter
                     }
                     Dropdown {
                         id: dropdownMasterFlow
+                        text: Modbus.flow
                         dropdownTextColor: "black"
                         model: ListModel {
                             ListElement {item: "None";}
@@ -173,14 +180,13 @@ Item {
                         MouseArea{
                             anchors.fill: parent
                             onClicked: {
-                                Modbus.q_current_port = dropdownMasterPort.text
-                                Modbus.q_baudrate = parseInt(dropdownMasterBaudrate.text)
-                                Modbus.q_dataBits = parseInt(dropdownMasterDatabits.text)
-                                Modbus.q_flow = dropdownMasterFlow.text
-                                Modbus.q_parity = dropdownMasterParity.text
-                                Modbus.q_stopBits = parseInt(dropdownMasterStop.text)
+                                Modbus.portname = dropdownMasterPort.text
+                                Modbus.baudrate = parseInt(dropdownMasterBaudrate.text)
+                                Modbus.databits = parseInt(dropdownMasterDatabits.text)
+                                Modbus.flow = dropdownMasterFlow.text
+                                Modbus.parity = dropdownMasterParity.text
+                                Modbus.stopbits = parseInt(dropdownMasterStop.text)
                                 Modbus.startConnection();
-                                //Modbus.readHoldingRegister(1,0,4)
                                 Bientan.q_ID = parseInt(inverterID.text)
                                 Vavle.q_ID = parseInt(vavleID.text)
                             }
@@ -265,10 +271,11 @@ Item {
                     }
                     Dropdown {
                         id: dropdownMasterPort1
+                        text: Cambien.portname
                         dropdownTextColor: "black"
                         model:  ListModel {
                             id: listPort1
-                             ListElement {item: "";separator:false}
+                            ListElement {item: "";separator:false}
                         }
                         z: 5
                     }
@@ -284,6 +291,7 @@ Item {
                     }
                     Dropdown {
                         id: dropdownMasterBaudrate1
+                        text: Cambien.baudrate
                         z: 4
                         dropdownTextColor: "black"
                         model: ListModel {
@@ -306,6 +314,7 @@ Item {
                     }
                     Dropdown {
                         id: dropdownMasterDatabits1
+                        text: Cambien.databits
                         z: 3
                         dropdownTextColor: "black"
                         model: ListModel {
@@ -328,6 +337,7 @@ Item {
                     }
                     Dropdown {
                         id: dropdownMasterStop1
+                        text: Cambien.stopbits
                         z: 2
                         dropdownTextColor: "black"
                         model: ListModel {
@@ -342,12 +352,13 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     Text {
                         width: parent.width/2
-                        text: qsTr("Stopbits")
+                        text: qsTr("Parity")
                         horizontalAlignment: Text.AlignHCenter
                         anchors.verticalCenter: parent.verticalCenter
                     }
                     Dropdown {
                         id: dropdownMasterParity1
+                        text: Cambien.parity
                         z: 1
                         dropdownTextColor: "black"
                         model: ListModel {
@@ -369,6 +380,7 @@ Item {
                     }
                     Dropdown {
                         id: dropdownMasterFlow1
+                        text: Cambien.flow
                         dropdownTextColor: "black"
                         model: ListModel {
                             ListElement {item: "None";}
@@ -390,14 +402,13 @@ Item {
                         MouseArea{
                             anchors.fill: parent
                             onClicked: {
-                                Cambien.q_portName = dropdownMasterPort1.text
-                                Cambien.q_baudrate = parseInt(dropdownMasterBaudrate1.text)
-                                Cambien.q_dataBits = parseInt(dropdownMasterDatabits1.text)
-                                Cambien.q_flow = dropdownMasterFlow1.text
-                                Cambien.q_parity = dropdownMasterParity1.text
-                                Cambien.q_stopBits = parseInt(dropdownMasterStop1.text)
+                                Cambien.portname = dropdownMasterPort1.text
+                                Cambien.baudrate = parseInt(dropdownMasterBaudrate1.text)
+                                Cambien.databits = parseInt(dropdownMasterDatabits1.text)
+                                Cambien.flow = dropdownMasterFlow1.text
+                                Cambien.parity = dropdownMasterParity1.text
+                                Cambien.stopbits = parseInt(dropdownMasterStop1.text)
                                 Cambien.openSerialPort();
-
                             }
                         }
                     }
@@ -436,11 +447,16 @@ Item {
             width: 200
             anchors.left: parent.left
             anchors.bottom:  parent.bottom
+            MouseArea {
+                anchors.fill: parent
+                onClicked: stack.pop("CaiDatThongSo.qml")
+            }
             Image {
                  source: "qrc:/Icon/home2.png"
                  anchors.left: parent.left
                  scale: 0.7
             }
+
         }
     }
 
@@ -459,37 +475,32 @@ Item {
         onTriggered: {
             Master.getPortAvalable();
             var msg = {'port':[],'model': listPort};
-            for (var i = 0; i < Master.q_number_port; i++)
-            {
-                msg["port"].push(Master.q_port[i])
-            }
-            if (i===0)  dropdownMasterPort.text="";
-            else
-            {
+            if (Master.q_number_port == 0){
+                dropdownMasterPort.text="";
+                dropdownMasterPort1.text="";
+            } else {
                 dropdownMasterPort.text = Master.q_port[0]
                 dropdownMasterPort1.text = Master.q_port[0]
+
+                for (var i = 0; i < Master.q_number_port; i++){
+                    msg["port"].push(Master.q_port[i])
+                    if (Master.q_port[i] === Cambien.portname){
+                        dropdownMasterPort1.text = Cambien.portname
+                    }
+                    if (Master.q_port[i] === Modbus.portname){
+                        dropdownMasterPort.text = Modbus.portname
+                    }
+                }
+
                 timer.stop()
             }
-             worker.sendMessage(msg);
-             msg['model'] =  listPort1;
-            worker.sendMessage(msg);
 
+            worker.sendMessage(msg);
+            msg['model'] =  listPort1;
+            worker.sendMessage(msg);
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*##^## Designer {
     D{i:0;autoSize:true;height:480;width:640}D{i:4;anchors_width:640}

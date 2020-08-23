@@ -9,6 +9,11 @@ Item {
     height: 600
     visible: true
 
+    Component.onCompleted: {
+        Modbus.startConnection();
+        Cambien.openSerialPort();
+    }
+
     Rectangle{
         anchors.fill: parent
         color: "lightblue"

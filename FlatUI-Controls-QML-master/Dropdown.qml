@@ -82,8 +82,6 @@ PrimaryButton {
             highlightFollowsCurrentItem: true;
             property string highlightColor: dropDown.highlightColor;
             highlight: Rectangle {
-                //width: listView.currentItem.width;
-                //height: listView.currentItem.height;
                 color: listView.highlightColor;
                 radius: (listView.currentIndex !== listView.count-1 && listView.currentIndex !== 0) ? 0 : dropDown.dropdownRadius;
             }
@@ -91,8 +89,7 @@ PrimaryButton {
             model: dropDown.model;
             property bool itemChecked: false;
 
-            Component.onCompleted: dropDown.text = currentItem.currentText;
-
+            Component.onCompleted: dropDown.text = dropDown.text != "" ? dropDown.text : currentItem.currentText;
 
 
             delegate: Item {
@@ -125,7 +122,6 @@ PrimaryButton {
                         hoverEnabled: !listView.itemChecked;
                         onClicked: {
                             dropDown.text = item;
-                            console.log(item)
                             if (dropDown.enableScrollView) {
                                 if (listView.itemChecked) {
                                     listView.itemChecked = false;
