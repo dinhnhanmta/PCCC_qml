@@ -28,6 +28,7 @@ SOURCES += \
         master.cpp \
         modbus.cpp \
         network.cpp \
+        relay.cpp \
         vavle.cpp
 
 RESOURCES += qml.qrc
@@ -58,4 +59,5 @@ HEADERS += \
     master.h \
     modbus.hpp \
     network.h \
+    relay.hpp \
     vavle.hpp

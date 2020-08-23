@@ -14,6 +14,10 @@ Item
     Rectangle {
         anchors.fill: parent
         color: "lightblue"
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
     }
 
     Image {
@@ -25,107 +29,160 @@ Item
     }
 
     Rectangle {
+        x: 877
+        y: 548
         color: "palegoldenrod"
-        width: 175
-        height: 64
+        width: 147
+        height: 44
         anchors.right: parent.right
         anchors.bottom:  parent.bottom
         Image {
             id: state_icon
-            source: Modbus.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
+            source: Cambien.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
             anchors.right: parent.right
-            scale: 0.8
+            anchors.rightMargin: -15
+            anchors.verticalCenter: parent.verticalCenter
+            scale: 0.4
         }
 
         Text {
             anchors.left:  parent.left
-            anchors.verticalCenter: state_icon.verticalCenter
-            text: qsTr("     Trang thai \n     ket noi")
+            anchors.verticalCenter: parent.verticalCenter
+            text: qsTr("     Trạng thái \n     Dcon")
+            anchors.leftMargin: -15
+            font.pixelSize: 18
+        }
+    }
+
+    Rectangle {
+        x: 706
+        y: 556
+        color: "palegoldenrod"
+        width: 147
+        height: 44
+        Image {
+            id: state_icon1
+            source: Modbus.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
+            anchors.right: parent.right
+            anchors.rightMargin: -15
+            anchors.verticalCenter: parent.verticalCenter
+            scale: 0.4
+        }
+
+        Text {
+            anchors.left:  parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            text: qsTr("     Trạng thái \n     Modbus")
+            anchors.leftMargin: -15
             font.pixelSize: 18
         }
     }
     DangerButton {
+        y: 550
         anchors.left: parent.left
         anchors.bottom: parent.bottom
         width: 175
-        height: 64
-        text: "      HOME"
+        height: 44
+        text: "     HOME"
         color: "palegoldenrod"
         Image {
-             source: "qrc:/Icon/home2.png"
-             anchors.left: parent.left
-             scale: 0.7
+            source: "qrc:/Icon/home2.png"
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            scale: 0.4
         }
         MouseArea {
-        anchors.fill: parent
-        onClicked: stack.pop("ThuNghiemBangTay.qml")
+            anchors.fill: parent
+            onClicked: stack.pop("ThuNghiemBangTay.qml")
         }
-
     }
     Button{
         id: vanXaButton
-        x: 122
-        y: 157
-        width: 133
-        height: 99
+        x: 141
+        y: 164
+        width: 108
+        height: 64
+        enabled: Modbus.q_connectionState
         property bool press: false
         Image {
             id: buttonImage
-            source: "./Icon/switch-off.jpg"
+            source: Relay.q_ouput_vavle_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
             anchors.fill: parent
         }
         onClicked: {
             press= !press
-            if (press) buttonImage.source = "./Icon/switch-on.jpg";
-            else buttonImage.source = "./Icon/switch-off.jpg";
-            Modbus.writeSingleCoil(3,press,11)
-    }
+                    Relay.writeOutputVavle(press)
+                    Relay.readAllState();
+                    //Modbus.writeSingleCoil(3,press,11)
+        }
     }
     Button{
         id: vanBomButton
-        x: 122
-        y: 357
-        width: 133
-        height: 99
+        x: 141
+        y: 302
+        width: 108
+        height: 64
+        enabled: Modbus.q_connectionState
         property bool press: false
         Image {
             id: buttonImage2
-            source: "./Icon/switch-off.jpg"
+            source: Relay.q_input_vavle_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
             anchors.fill: parent
         }
         onClicked: {
             press= !press
-            if (press)
-                buttonImage2.source = "./Icon/switch-on.jpg";
-            else buttonImage2.source = "./Icon/switch-off.jpg";
-            Modbus.writeSingleCoil(2,press,11)
+            Relay.writeInputVavle(press)
+            Relay.readAllState();
+            //Modbus.writeSingleCoil(2,press,11)
         }
     }
 
-
     Button{
-        id: startButton
-        x: 759
-        y: 409
-        width: 133
-        height: 99
+        id: denBatDau
+        x: 141
+        y: 435
+        width: 108
+        height: 64
+        enabled: Modbus.q_connectionState
         property bool press: false
         Image {
-            id: startButtonImage
-            source: "./Icon/switch-off.jpg"
+            id: buttonImage3
+            source: Relay.q_start_led_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
             anchors.fill: parent
         }
         onClicked: {
             press= !press
-            if (press)
-            {
-                startButtonImage.source = "./Icon/switch-on.jpg";
-                Bientan.setStart(1);
-            }
-            else
-            {
-                Bientan.setStart(5);
-                startButtonImage.source = "./Icon/switch-off.jpg";
+            Relay.writeStartLed(press)
+            Relay.readAllState();
+            //Modbus.writeSingleCoil(1,press,11)
+        }
+    }
+
+    PrimaryButton{
+        id: startButton
+        x: 772
+        y: 447
+        text: "START"
+        MouseArea {
+            anchors.fill: parent
+            enabled: Modbus.q_connectionState
+            property bool press: false
+            onClicked: {
+                press= !press
+                if (press)
+                {
+                    startButton.text = "STOP"
+                    startButton.color = "red";
+                    startButton.highlightColor = "red"
+                    Bientan.setStart(1);
+                }
+                else
+                {
+                    startButton.text = "START"
+                    startButton.color = "#1ABC9C"
+                    startButton.highlightColor = "#1ABC9C"
+                    Bientan.setStart(5);
+                }
             }
         }
     }
@@ -138,14 +195,12 @@ Item
         startAngle: 30
         spanAngle: 300
         startValue: 0
-        stopValue: 300
+        stopValue: 25
         dialWidth: 4
         dialColor: "darkblue"
 
         Image {
             id: needle
-            anchors.verticalCenterOffset: -26
-            anchors.horizontalCenterOffset: 0
             source: "./Icon/needle.png"
             scale: 0.8
             anchors.centerIn: parent
@@ -155,39 +210,69 @@ Item
 
         Slider {
             id: slider
+            y: -82
             anchors.top: speed.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             width: 300
+            anchors.horizontalCenterOffset: 7
             minimumValue: 0
             maximumValue: 300
-            value: q_pressure
+            value: Cambien.q_pressure*12
             visible: false
         }
     }
-
+    Text {
+        id: pressure_value
+        x: 494
+        y: 406
+        text: Cambien.q_pressure
+        font.pointSize: 18
+    }
 
     Slider {
         id: velocity_slider
-        x: 692
-        y: 350
+        x: 691
+        y: 419
         width: 300
         minimumValue: 0
         maximumValue: 50
         onValueChanged:
         {
-            ///Bientan.q_frequency = velocity_slider.value
-//            Bientan.write_friquency(velocity_slider.value.toFixed(0));
+           txtSpeed.text = velocity_slider.value.toFixed(0)
+        }
+
+        onPressedChanged:
+        {
+            if(!pressed)  Bientan.write_friquency(velocity_slider.value.toFixed(0));
         }
     }
-    Text {
-        id: txtTanSo
-        x: 499
-        y: 389
-        width: 39.525
-        text:  Modbus.readHoldingRegister(1,12288, 1)
-        font.pixelSize: 20
-    }
 
+
+
+//    Image {
+//        id: inputVavleState
+//        x: 338
+//        y: 465
+//        height: 67
+//        width: 81
+//        source: Relay.q_input_vavle_state ? "qrc:/Icon/on_state.png" : "qrc:/Icon/off_state.png"
+//    }
+//    Image {
+//        id: outputVavleState
+//        x: 541
+//        y: 465
+//        height: 67
+//        width: 81
+//        source: Relay.q_ouput_vavle_state ? "qrc:/Icon/on_state.png" : "qrc:/Icon/off_state.png"
+//    }
+//    Image {
+//        id: startLedState
+//        x: 773
+//        y: 465
+//        height: 67
+//        width: 81
+//        source: Relay.q_start_led_state ? "qrc:/Icon/on_state.png" : "qrc:/Icon/off_state.png"
+//    }
     Text {
         id: name
         x: 467
@@ -205,20 +290,25 @@ Item
         borderColor: "black"
         backgroundColor: "lightblue"
         textColor: "black"
+        text: "0"
 
     }
     PrimaryButton {
         id: btnSpeed
-        x: 641
-        y: 175
+        x: 681
+        y: 170
+        width: 125
+        height: 40
+        enabled: Modbus.q_connectionState
+        text: "Đặt tốc độ"
         MouseArea {
-        anchors.fill: parent
-        onClicked: Bientan.write_friquency(parseInt(txtSpeed.text)*100)
+            anchors.fill: parent
+            onClicked: Bientan.write_friquency(parseInt(txtSpeed.text)*100)
         }
     }
     Text {
-        x: 815
-        y: 297
+        x: 816
+        y: 337
         width: 108
         height: 37
         text: velocity_slider.value.toFixed(0)
@@ -246,9 +336,9 @@ Item
     }
 
     Text {
-        x: 107
-        y: 286
-        text: qsTr("VAN CẤP NƯỚC")
+        x: 121
+        y: 384
+        text: qsTr("ĐÈN BẮT ĐẦU")
         font.bold: false
         font.pointSize: 18
     }
@@ -263,7 +353,7 @@ Item
 
     Text {
         x: 728
-        y: 241
+        y: 286
         text: qsTr("ĐIỀU KHIỂN TỐC ĐỘ")
         font.pointSize: 18
         font.bold: false
@@ -278,18 +368,36 @@ Item
     }
 
     Text {
-        x: 537
-        y: 471
-        text: qsTr("START")
+        x: 121
+        y: 256
+        text: qsTr("VAN CẤP NƯỚC")
+        font.bold: false
+        font.pointSize: 18
+    }
+
+    Text {
+        x: 358
+        y: 468
+        text: qsTr("TỐC ĐỘ BIẾN TẦN THỰC TẾ")
+        font.bold: false
+        font.pointSize: 18
+    }
+    Text {
+        x: 454
+        y: 519
+        text: Bientan.q_velocity
         font.bold: false
         font.pointSize: 18
     }
 
     Timer {
-            interval: 500; running: true; repeat: true
+            interval: 200; running: true; repeat: true
             onTriggered: Cambien.sendRequest()
         }
 
-
+    Timer {
+            interval: 1000; running: true; repeat: true
+            onTriggered: Bientan.readVelocity()
+        }
 
   }

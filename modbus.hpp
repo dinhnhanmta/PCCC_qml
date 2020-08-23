@@ -62,13 +62,18 @@ public:
    Q_INVOKABLE void writeSingleCoil (int add, bool value, int server);
    void writeSingleCoilComleted();
 
-   Q_INVOKABLE void readSingleHoldingRegister (int add, int ID);
+   Q_INVOKABLE void readSingleHoldingRegister (int add, int ID,int *data);
    void readSingleHoldingRegisterRecieved();
 
    Q_INVOKABLE void readHoldingRegister(int ID,int start_add, int number_register);
    void readHoldingRegisterCompleted() const;
+   void readCoilsCompleted() ;
+   void readMultiCoils(int server,int start_add, int number_coils, bool *data);
 signals:
-   void readSingleHoldingRegisterCompleted(int value);
+   //void readSingleHoldingRegisterCompleted(int value);
+   void readSingleHoldingRegisterCompleted();
+   void readCoilsCompletedSignal();
+
 private:
    QModbusRtuSerialMaster *modbusDevice;
    // parameter
@@ -85,6 +90,9 @@ private:
    int start_address;
 
    bool connection_state= false;
+
+   bool *coil_result;
+   int *holding_register_result;
 };
 
 #endif // MODBUS_HPP
