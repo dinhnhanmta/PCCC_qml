@@ -9,8 +9,14 @@ Item
     id: window
     width: 1024
     height: 600
+     visible: true
 
-    visible: true
+    Component.onCompleted: {
+//        TnBangTay.startModbus();
+//        TnBangTay.startICP();
+    }
+
+
     Rectangle {
         anchors.fill: parent
         color: "lightblue"
@@ -53,7 +59,10 @@ Item
             font.pixelSize: 18
         }
     }
-
+    //    Timer {
+    //            interval: 200; running: true; repeat: true
+    ////            onTriggered: Cambien.sendRequest()
+    //        }
     Rectangle {
         x: 706
         y: 556
@@ -93,19 +102,29 @@ Item
         }
         MouseArea {
             anchors.fill: parent
-            onClicked: stack.pop("ThuNghiemBangTay.qml")
+            onClicked:
+            {
+//                TnBangTay.stopICP();
+//                TnBangTay.stopModbus();
+                stack.pop("ThuNghiemBangTay.qml")
+            }
+
         }
     }
     Button{
         id: vanXaButton
-        x: 141
-        y: 164
-        width: 108
-        height: 64
+        x: 121
+        y: 161
+        width: 120
+        height: 70
         enabled: Modbus.q_connectionState
         property bool press: false
         Image {
             id: buttonImage
+            anchors.rightMargin: -1
+            anchors.bottomMargin: 3
+            anchors.leftMargin: 1
+            anchors.topMargin: -3
             source: Relay.q_ouput_vavle_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
             anchors.fill: parent
         }
@@ -117,14 +136,18 @@ Item
     }
     Button{
         id: vanBomButton
-        x: 141
-        y: 302
-        width: 108
-        height: 64
+        x: 121
+        y: 304
+        width: 120
+        height: 70
         enabled: Modbus.q_connectionState
         property bool press: false
         Image {
             id: buttonImage2
+            anchors.rightMargin: -1
+            anchors.bottomMargin: -2
+            anchors.leftMargin: 1
+            anchors.topMargin: 2
             source: Relay.q_input_vavle_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
             anchors.fill: parent
         }
@@ -138,53 +161,39 @@ Item
 
     Button{
         id: denBatDau
-        x: 141
+        x: 121
         y: 435
-        width: 108
-        height: 64
+        width: 120
+        height: 70
         enabled: Modbus.q_connectionState
         property bool press: false
         Image {
             id: buttonImage3
-            source: Relay.q_start_led_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
+            width: 120
+            height: 70
+            anchors.rightMargin: 0
+            anchors.bottomMargin: 0
+            anchors.leftMargin: 0
+            anchors.topMargin: 0
+            source: "./Icon/switch-off.jpg"
             anchors.fill: parent
         }
         onClicked: {
             press= !press
-            Relay.writeStartLed(!Relay.q_start_led_state)
-            //Relay.readAllState();
-            //Modbus.writeSingleCoil(1,press,11)
-        }
-    }
-
-    PrimaryButton{
-        id: startButton
-        x: 772
-        y: 447
-        text: "START"
-        MouseArea {
-            anchors.fill: parent
-            enabled: Modbus.q_connectionState
-            property bool press: false
-            onClicked: {
-                press= !press
-                if (press)
-                {
-                    startButton.text = "STOP"
-                    startButton.color = "red";
-                    startButton.highlightColor = "red"
-                    Bientan.setStart(1);
-                }
-                else
-                {
-                    startButton.text = "START"
-                    startButton.color = "#1ABC9C"
-                    startButton.highlightColor = "#1ABC9C"
-                    Bientan.setStart(5);
-                }
+            if (press)
+            {
+                buttonImage3.source  = "./Icon/switch-on.jpg";
+                Bientan.setStart(1);
+            }
+            else
+            {
+                buttonImage3.source = "./Icon/switch-off.jpg";
+                Bientan.setStart(5);
             }
         }
     }
+
+
     DialItem {
         id: speed
 
@@ -226,7 +235,7 @@ Item
         id: pressure_value
         x: 444
         y: 406
-        text: Cambien.q_pressure
+        text: Cambien.q_pressure.toFixed(2)
         elide: Text.ElideNone
         font.pointSize: 18
     }
@@ -313,15 +322,15 @@ Item
         y: 337
         width: 108
         height: 37
-        text: velocity_slider.value.toFixed(0)
+        text: Cambien.q_val_pot
         font.weight: Font.Bold
         font.pointSize: 36
        }
 
     Text {
         id: name1
-        x: 331
-        y: 41
+        x: 310
+        y: 33
         text: qsTr("THỬ NGHIỆM BẰNG TAY")
         font.bold: true
         font.pointSize: 24
@@ -329,7 +338,7 @@ Item
 
     Text {
         x: 949
-        y: 189
+        y: 183
         width: 62
         height: 14
         text: qsTr("RPM")
@@ -338,18 +347,18 @@ Item
     }
 
     Text {
-        x: 121
-        y: 384
-        text: qsTr("ĐÈN BẮT ĐẦU")
-        font.bold: false
+        x: 144
+        y: 396
+        text: qsTr("START")
+        font.bold: true
         font.pointSize: 18
     }
 
     Text {
         x: 121
         y: 117
-        text: qsTr("VAN XẢ NƯỚC")
-        font.bold: false
+        text: qsTr("PUMP- UP")
+        font.bold: true
         font.pointSize: 18
     }
 
@@ -362,24 +371,24 @@ Item
     }
 
     Text {
-        x: 759
-        y: 117
+        x: 772
+        y: 103
         text: qsTr("ĐẶT TỐC ĐỘ")
         font.pointSize: 18
         font.bold: false
     }
 
     Text {
-        x: 121
-        y: 256
-        text: qsTr("VAN CẤP NƯỚC")
-        font.bold: false
+        x: 102
+        y: 262
+        text: qsTr("PUMP-DOWN")
+        font.bold: true
         font.pointSize: 18
     }
 
     Text {
-        x: 397
-        y: 470
+        x: 369
+        y: 476
         text: qsTr("TỐC ĐỘ BIẾN TẦN THỰC TẾ")
         font.bold: false
         font.pointSize: 18
@@ -394,11 +403,11 @@ Item
 
     Timer {
             interval: 200; running: true; repeat: true
-//            onTriggered: Cambien.sendRequest()
+            onTriggered: Cambien.sendRequest()
         }
 
     Timer {
-            interval: 500; running: true; repeat: true
+            interval: 200; running: true; repeat: true
             onTriggered:
             {
 //                Relay.readAllState()

@@ -20,7 +20,6 @@ Item {
         DoThi{
             x: 400
             y: 80
-
         }
         Image {
 
@@ -92,7 +91,6 @@ Item {
                 source: "qrc:/Icon/switch-off.jpg"
                 anchors.fill: parent
             }
-
         }
 
         Text {
@@ -110,7 +108,6 @@ Item {
                 source: "qrc:/Icon/switch-off.jpg"
                 anchors.fill: parent
             }
-
         }
 
         Text {

@@ -10,6 +10,7 @@ class Bientan: public QObject {
     Q_PROPERTY(int q_frequency READ getFrequency WRITE setFrequency NOTIFY varChanged)
 
      Q_PROPERTY(int q_velocity  READ getVelocity  NOTIFY varChanged)
+
 signals:
     void varChanged ();
 public:

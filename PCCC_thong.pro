@@ -31,7 +31,7 @@ SOURCES += \
         modbusthread.cpp \
         network.cpp \
         relay.cpp \
-        thunghiembangtaycontroller.cpp \
+        thunghiembangtay.cpp \
         vavle.cpp
 
 RESOURCES += qml.qrc
@@ -65,5 +65,5 @@ HEADERS += \
     modbusthread.h \
     network.h \
     relay.hpp \
-    thunghiembangtaycontroller.h \
+    thunghiembangtay.h \
     vavle.hpp

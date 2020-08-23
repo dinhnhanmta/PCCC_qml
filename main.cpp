@@ -11,7 +11,7 @@
 #include "login.hpp"
 #include "dangnhapthietbi.hpp"
 #include "relay.hpp"
-#include "thunghiembangtaycontroller.h"
+#include "thunghiembangtay.h"
 #include "icpthread.h"
 #include "modbusthread.h"
 
@@ -28,11 +28,12 @@ int main(int argc, char *argv[])
     DangNhapThietBi *m_DangNhapThietBi = new DangNhapThietBi();
     IcpThread *m_icpThread = new IcpThread(m_cambien);
     ModbusThread *m_modbusThread = new ModbusThread(m_bientan, m_modbus, m_relay);
+    ThuNghiemBangTay *m_thuNghiemBangTay = new ThuNghiemBangTay(m_icpThread, m_modbusThread);
 
-    ThuNghiemBangTayController *m_thuNghiemBangTay = new ThuNghiemBangTayController(m_icpThread, m_modbusThread);
 
     qmlRegisterType<DialItem>("IVIControls", 1, 0, "DialItem");
     qmlRegisterType<CamBienApSuat>("camBienApSuat", 1, 0, "CamBienApSuat");
+
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication app(argc, argv);
@@ -47,9 +48,8 @@ int main(int argc, char *argv[])
     context->setContextProperty("QLogin", m_login);
     context->setContextProperty("LoginTB", m_DangNhapThietBi);
     context->setContextProperty("Relay", m_relay);
+    context->setContextProperty("TnBangTay", m_thuNghiemBangTay);
 
-    m_thuNghiemBangTay->startModbus();
-    m_thuNghiemBangTay->startICP();
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

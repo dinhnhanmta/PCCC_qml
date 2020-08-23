@@ -62,5 +62,5 @@ Item {
         }
 
     }
-    scale: 0.7
+    scale: 1
 }

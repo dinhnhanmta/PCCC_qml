@@ -19,22 +19,30 @@ Item {
         color: "lightblue"
 
         Text {
-            y: 33
+            y: 34
+            width: 448
+            height: 39
             text: qsTr("THIẾT BỊ KIỂM ĐỊNH VÒI CHỮA CHÁY")
-            anchors.horizontalCenterOffset: 0
+            font.bold: true
+            anchors.horizontalCenterOffset: -39
             anchors.horizontalCenter: parent.horizontalCenter
-            font.pixelSize: 26
+            font.pixelSize: 27
         }
 
         PrimaryButton{
             id: thuNghiem
             x: 137
-            y: 159
+            y: 130
+            width: 350
+            height: 100
+            radius: 1
             z: 1
             text: "TIẾN HÀNH THỬ NGHIỆM"
             anchors.horizontalCenterOffset: -221
             anchors.horizontalCenter: parent.horizontalCenter
             Image {
+                width: 100
+                height: 100
                 source: "qrc:/Icon/play2.png"
                 anchors.left:  parent.left
                 scale: 0.7
@@ -48,19 +56,28 @@ Item {
         PrimaryButton {
             id: thuNghiemBangTay
             x: 127
-            y: 159
+            y: 130
+            width: 350
+            height: 101
             text: "THỬ NGHIỆM BẰNG TAY"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: 247
             Image {
+                y: 1
                 width: 100
                 height: 100
+                anchors.leftMargin: -7
                 source: "qrc:/Icon/hand2.png"
                 anchors.left: parent.left
                  scale: 0.7
             }
             MouseArea {
+                height: 100
+                anchors.rightMargin: 0
+                anchors.bottomMargin: 2
+                anchors.leftMargin: 0
+                anchors.topMargin: -2
                 anchors.fill: parent
                 onClicked: stack.push("ThuNghiemBangTay.qml")
             }
@@ -69,17 +86,22 @@ Item {
         PrimaryButton {
             id: thuNghiem2
             x: 139
-            y: 289
+            y: 279
+            width: 350
+            height: 100
+            radius: 1
             text: "LỊCH SỬ KIỂM ĐỊNH"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: 247
 
             Image {
+                y: 6
                 width: 100
                 height: 100
+                anchors.leftMargin: -2
                 source: "qrc:/Icon/history2.png"
-                 anchors.left: parent.left
+                anchors.left: parent.left
                  scale: 0.7
             }
             MouseArea {
@@ -91,13 +113,15 @@ Item {
         PrimaryButton {
             id: capNhat
             x: 146
-            y: 289
+            y: 279
+            height: 100
+            radius: 1
             text: "CẬP NHẬT THÔNG SỐ\n         KIỂM ĐỊNH"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: -221
             Image {
-                y: 4
+                y: 0
                 width: 100
                 height: 100
                 anchors.leftMargin: -6
@@ -111,6 +135,8 @@ Item {
             id: thuNghiem4
             x: 137
             y: 420
+            height: 100
+            radius: 1
             text: "HIỆU CHỈNH THÔNG SỐ"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
@@ -133,6 +159,8 @@ Item {
             id: thuNghiem5
             x: 132
             y: 420
+            height: 100
+            radius: 1
             text: "CÀI ĐẶT HỆ THỐNG"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
@@ -161,9 +189,13 @@ Item {
         }
 
         DangerButton {
+            x: 867
+            y: 547
             text: "Modbus"
+            anchors.rightMargin: 6
             color: "palegoldenrod"
-            width: 200
+            width: 151
+            height: 53
             anchors.right: parent.right
             anchors.bottom:  parent.bottom
             Image {
@@ -174,7 +206,7 @@ Item {
             }
         }
         DangerButton {
-            text: "Quay lại"
+            text: "HOME"
             color: "palegoldenrod"
             width: 200
             anchors.left: parent.left
