@@ -5,18 +5,20 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 
-class Network: public BaseObject, public QObject
+class Network: QObject, BaseObject
 {
+    Q_OBJECT
 public:
     Network();
     void login(QString username, QString password);
-    bool uploadDeviceParameter();
-    bool syncData();
+    void uploadDeviceParameter(QByteArray jsonData);
+    void syncData();
     QNetworkReply *reply;
 private:
     QNetworkRequest request;
     QNetworkAccessManager *manager;
     const QString loginPath = "/api/Auth/Login";
+    const QString dataPath = "/api/Vehicles/test-result";
 };
 
 #endif // NETWORK_H

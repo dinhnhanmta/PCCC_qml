@@ -3,8 +3,8 @@ import QtGraphicalEffects 1.0
 
 Rectangle {
     id: root;
-    width: 175;
-    height: 40;
+    width: 350;
+    height: 64;
     radius: 4;
     property alias flatColors: constants;
     property alias mouseField: mouseArea;
@@ -75,9 +75,6 @@ Rectangle {
             else
                 overlayTimer.stop();
         }
-
-
-
 
         Timer {
             id: overlayTimer;

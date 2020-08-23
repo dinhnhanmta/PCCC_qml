@@ -1,3 +1,4 @@
+#include "localdatabase.h"
 #include "login.hpp"
 
 Login::Login(){
@@ -6,37 +7,41 @@ Login::Login(){
 
 void Login::onClick(QString userName,QString password)
 {
-    this->settings->setUserName(userName);
-    this->settings->setPassword(password);
+    settings->defautConfig.setUserName(userName);
+    settings->defautConfig.setPassword(password);
     network->login(userName, password);
     connect(network->reply, &QNetworkReply::finished, [=]() {
         if(network->reply->error() == QNetworkReply::NoError){
             QJsonObject obj = QJsonDocument::fromJson(network->reply->readAll()).object();
             if (obj.value("code").toInt() == 0){
-                settings->setToken(obj.value("data").toObject().value("token").toString());
+                settings->defautConfig.setToken(obj.value("data").toObject().value("token").toString());
                 emit loginSuccess();
             } else {
                 emit loginFailed();
             }
         } else {
-            settings->setToken("");
+            settings->defautConfig.setToken("");
             logger->printLog(LoggerLevel::FATAL, network->reply->errorString());
             emit loginFailed();
         }
     });
 }
 
+void Login::onClick(){
+    emit loginSuccess();
+}
+
 QString Login::loggedUsername()
 {
-    return settings->getUserName();
+    return settings->defautConfig.getUserName();
 }
 
 QString Login::loggedPassword()
 {
-    return settings->getPassword();
+    return settings->defautConfig.getPassword();
 }
 
 bool Login::logged()
 {
-    return settings->getToken() != "";
+    return settings->defautConfig.getToken() != "";
 }

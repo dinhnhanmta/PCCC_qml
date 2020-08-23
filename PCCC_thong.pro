@@ -22,6 +22,7 @@ SOURCES += \
         deviceparameter.cpp \
         dialitem.cpp \
         icpthread.cpp \
+        localdatabase.cpp \
         logger.cpp \
         login.cpp \
         main.cpp \
@@ -56,6 +57,7 @@ HEADERS += \
     deviceparameter.h \
     dialitem.h \
     icpthread.h \
+    localdatabase.h \
     logger.h \
     login.hpp \
     master.h \

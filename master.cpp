@@ -32,7 +32,6 @@ void Master::getPortAvalable()
     m_port.removeDuplicates();
     m_number_port = i;
     emit varChanged();
-   // qDebug() <<m_port;
 }
 
 bool Master::startConnection()

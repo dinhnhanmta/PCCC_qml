@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>Caidat.qml</file>
         <file>FlatUI-Controls-QML-master/screenshots/screenshot.jpg</file>
         <file>FlatUI-Controls-QML-master/src/android-clock.png</file>
         <file>FlatUI-Controls-QML-master/src/android-contact.png</file>

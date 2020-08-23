@@ -3,20 +3,17 @@
 #include "modbus.hpp"
 
 
-class CamBienApSuat: public QObject
+class CamBienApSuat: public QObject, BaseObject
 {
     Q_OBJECT
-    //Q_PROPERTY(int q_address READ getAddress WRITE setAddress NOTIFY varChanged)
-   // Q_PROPERTY(int q_ID READ getID WRITE setID NOTIFY varChanged)
     Q_PROPERTY(float q_pressure READ getPressure WRITE setPressure NOTIFY pressureChanged)
 
-    Q_PROPERTY(QString q_portName READ getPortName WRITE setPortName NOTIFY varChanged)
-    Q_PROPERTY(QString q_flow READ getFlow WRITE setFlow NOTIFY varChanged)
-    Q_PROPERTY(QString q_parity READ getParity WRITE setParity NOTIFY varChanged)
-    Q_PROPERTY(int q_baudrate READ getBaudrate WRITE setBaudrate NOTIFY varChanged)
-    Q_PROPERTY(int q_dataBits READ getDatabits WRITE setDatabis NOTIFY varChanged)
-    Q_PROPERTY(int q_stopBits READ getStopbits WRITE setStopbits NOTIFY varChanged)
-    Q_PROPERTY(bool q_connectionState READ getState NOTIFY varChanged)
+    Q_PROPERTY(QString portname READ getPortName WRITE setPortName NOTIFY varChanged)
+    Q_PROPERTY(int baudrate READ getBaudrate WRITE setBaudrate NOTIFY varChanged)
+    Q_PROPERTY(QString flow READ getFlow WRITE setFlow NOTIFY varChanged)
+    Q_PROPERTY(QString parity READ getParity WRITE setParity NOTIFY varChanged)
+    Q_PROPERTY(int stopbits READ getStopBits WRITE setStopBits NOTIFY varChanged)
+    Q_PROPERTY(int databits READ getDataBits WRITE setDatabits NOTIFY varChanged)
 
 signals:
     void varChanged ();
@@ -25,46 +22,39 @@ public:
     CamBienApSuat();
     float getPressure (){return pressure;}
     void setPressure (float p){pressure = p;}
+    void setPortName(QString value){ settings->cambienParam.setPortName(value);}
+    QString getPortName(){return settings->cambienParam.getPortName();}
 
-    QString getPortName (){return m_portName;}
-    void setPortName (QString p){m_portName = p;}
-    QString getFlow (){return m_flow;}
-    void setFlow (QString p){m_flow = p;}
-    QString getParity (){return m_parity;}
-    void setParity (QString p){m_parity = p;}
-    int getBaudrate (){return m_baudrate;}
-    void setBaudrate (int p){m_baudrate = p;}
-    int getDatabits (){return m_dataBits;}
-    void setDatabis (int p){m_dataBits = p;}
-    int getStopbits (){return m_stopBits;}
-    void setStopbits (int p){m_stopBits = p;}
+    void setBaudrate(int value){ settings->cambienParam.setBaudrate(value);}
+    int getBaudrate(){return settings->cambienParam.getBaudrate();}
 
-    bool getState () {return connection_state;}
-public:
-    //void readPressure();
-    //void readPressureCompleted(int value);
-signals:
-    void receiveCompleted();
-public slots:
-    void OnReceiveCompleted();
-public:
+    void setFlow(QString value){ settings->cambienParam.setFlow(value);}
+    QString getFlow(){return settings->cambienParam.getFlow();}
+
+    void setParity(QString value){ settings->cambienParam.setParity(value);}
+    QString getParity(){return settings->cambienParam.getParity();}
+
+    void setStopBits(int value){ settings->cambienParam.setStopBits(value);}
+    int getStopBits(){return settings->cambienParam.getStopBits();}
+
+    void setDatabits(int value){ settings->cambienParam.setDataBits(value);}
+    int getDataBits(){return settings->cambienParam.getDataBits();}
+
     Q_INVOKABLE void openSerialPort();
     Q_INVOKABLE void closeSerialPort();
     Q_INVOKABLE void writeData(const QByteArray &data);
     Q_INVOKABLE void sendRequest();
     void readData();
     void handleError(QSerialPort::SerialPortError error);
+signals:
+    void receiveCompleted();
+public slots:
+    void OnReceiveCompleted();
+
 private:
     QSerialPort *m_serial;
     float pressure;
     float val_pot;
-    QString m_portName;
-    int m_baudrate;
-    int m_dataBits;
-    QString m_flow;
-    QString m_parity;
-    int m_stopBits;
-    bool connection_state;
     QString m_receiveText;
 };
 

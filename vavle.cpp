@@ -17,6 +17,5 @@ void Vavle::writeVavleState1()
 }
 void Vavle::writeVavleState2()
 {
-    vavle_modbus->setBaudrate(baudrate);
     vavle_modbus->writeSingleCoil(address2,vavle_state2,ID);
 }

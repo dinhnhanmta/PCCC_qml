@@ -5,7 +5,4 @@ PrimaryButton {
     color: flatColors.alizarin;
     highlightColor: "#ec7063";
     text: "Danger Button";
-    width: 175;
-
-
 }

@@ -1,68 +1,165 @@
 #include "config.h"
 
-#include <QString>
+AppSetting::AppSetting(const QString savedPath):
+    defautConfig(savedPath),
+    modbusParam(savedPath, "Modbus"),
+    cambienParam(savedPath, "Cambien")
+{}
 
-AppSetting::AppSetting(const QString savedPath): QSettings(savedPath, QSettings::Format::IniFormat, nullptr)
+SerialParameter::SerialParameter(const QString savedPath, const QString group)
+    : QSettings(savedPath, QSettings::Format::IniFormat, nullptr), group(group)
+{}
+
+QString SerialParameter::getPortName()
+{
+    this->beginGroup(group);
+    QString value = this->value("portname").toString();
+    this->endGroup();
+    return value != "" ? value : "ttyUSB0";
+}
+
+void SerialParameter::setPortName(const QString &value)
+{
+    this->beginGroup(group);
+    this->setValue("portname", value);
+    this->endGroup();
+}
+
+int SerialParameter::getBaudrate()
+{
+    this->beginGroup(group);
+    int value = this->value("baudrate").toInt();
+    this->endGroup();
+    return value != 0 ? value : 19200;
+}
+
+void SerialParameter::setBaudrate(int value)
+{
+    this->beginGroup(group);
+    this->setValue("baudrate", value);
+    this->endGroup();
+}
+
+QString SerialParameter::getFlow()
+{
+    this->beginGroup(group);
+    QString value = this->value("flow").toString();
+    this->endGroup();
+    return value;
+}
+
+void SerialParameter::setFlow(const QString &value)
+{
+    this->beginGroup(group);
+    this->setValue("flow", value);
+    this->endGroup();
+}
+
+QString SerialParameter::getParity()
+{
+    this->beginGroup(group);
+    QString value = this->value("parity").toString();
+    this->endGroup();
+    return value != "" ? value : "None";
+}
+
+void SerialParameter::setParity(const QString &value)
+{
+    this->beginGroup(group);
+    this->setValue("parity", value);
+    this->endGroup();
+}
+
+int SerialParameter::getStopBits()
+{
+    this->beginGroup(group);
+    int value = this->value("stopbits").toInt();
+    this->endGroup();
+    return value != 0 ? value : 1;
+}
+
+void SerialParameter::setStopBits(int value)
+{
+    this->beginGroup(group);
+    this->setValue("stopbits", value);
+    this->endGroup();
+}
+
+int SerialParameter::getDataBits()
+{
+    this->beginGroup(group);
+    int value = this->value("databits").toInt();
+    this->endGroup();
+    return value != 0 ? value : 8;
+}
+
+void SerialParameter::setDataBits(int value)
+{
+    this->beginGroup(group);
+    this->setValue("databits", value);
+    this->endGroup();
+}
+
+DefaultConfig::DefaultConfig(const QString savedPath)
+    : QSettings(savedPath, QSettings::Format::IniFormat, nullptr)
+{}
+
+QString DefaultConfig::getServerUrl()
 {
     this->beginGroup("default");
-    this->serverUrl = this->value("serverUrl").toString();
-    this->baudrate = this->value("baudrate").toInt();
-    this->userName = this->value("userName").toString();
-    this->password = this->value("password").toString();
-    this->token = this->value("token").toString();
+    QString value = this->value("userName").toString();
+    this->endGroup();
+    return value != "" ? value: DEFAULT_SERVER_URL;
 }
 
-QString AppSetting::getServerUrl() const
+void DefaultConfig::setServerUrl(const QString &value)
 {
-    return serverUrl != "" ? serverUrl : DEFAULT_SERVER_URL;
+    this->beginGroup("default");
+    this->setValue("serverUrl", value);
+    this->endGroup();
 }
 
-void AppSetting::setServerUrl(const QString &value)
+QString DefaultConfig::getUserName()
 {
-    this->setValue("serverUrl", serverUrl);
-    serverUrl = value;
+    this->beginGroup("default");
+    QString value = this->value("userName").toString();
+    this->endGroup();
+    return value;
 }
 
-int AppSetting::getBaudrate() const
+void DefaultConfig::setUserName(const QString &value)
 {
-    return baudrate != 0 ? baudrate : DEFAULT_BAUDRATE;
+    this->beginGroup("default");
+    this->setValue("userName", value);
+    this->endGroup();
 }
 
-void AppSetting::setBaudrate(int value)
+QString DefaultConfig::getPassword()
 {
-    this->setValue("baudrate", baudrate);
-    baudrate = value;
+    this->beginGroup("default");
+    QString value = this->value("password").toString();
+    this->endGroup();
+    return value;
 }
 
-QString AppSetting::getUserName() const
+void DefaultConfig::setPassword(const QString &value)
 {
-    return userName;
+    this->beginGroup("default");
+    this->setValue("password", value);
+    this->endGroup();
 }
 
-void AppSetting::setUserName(const QString &value)
+QString DefaultConfig::getToken()
 {
-    this->setValue("userName", userName);
-    userName = value;
+    this->beginGroup("default");
+    QString value = this->value("token").toString();
+    this->endGroup();
+    return value;
 }
 
-QString AppSetting::getPassword() const
+void DefaultConfig::setToken(const QString &value)
 {
-    return password;
-}
-
-void AppSetting::setPassword(const QString &value)
-{
-    this->setValue("password", password);
-    password = value;
-}
-
-QString AppSetting::getToken() const
-{
-    return token;
-}
-
-void AppSetting::setToken(const QString &value)
-{
-    this->setValue("token", token);
-    token = value;
+    this->beginGroup("default");
+    this->setValue("token", value);
+    this->endGroup();
 }
