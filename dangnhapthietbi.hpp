@@ -1,6 +1,7 @@
 #ifndef DANGNHAPTHIETBI_H
 #define DANGNHAPTHIETBI_H
 #include <QString>
+#include <QtSql>
 #include <QObject>
 class DangNhapThietBi: public QObject {
     Q_OBJECT

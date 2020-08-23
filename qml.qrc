@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>Caidat.qml</file>
         <file>FlatUI-Controls-QML-master/screenshots/screenshot.jpg</file>
         <file>FlatUI-Controls-QML-master/src/android-clock.png</file>
         <file>FlatUI-Controls-QML-master/src/android-contact.png</file>
@@ -45,6 +44,7 @@
         <file>DoThi.qml</file>
         <file>CButton.qml</file>
         <file>fontawesome-webfont.ttf</file>
+        <file>DangNhapKDV.qml</file>
         <file>Icon/hand.jpg</file>
         <file>Icon/hand.png</file>
         <file>Icon/hand.svg</file>
@@ -78,5 +78,7 @@
         <file>CaiDatThongSo.qml</file>
         <file>HieuChinhThamSo.qml</file>
         <file>LichSuKiemDinh.qml</file>
+        <file>Icon/on_state.png</file>
+        <file>Icon/off_state.png</file>
     </qresource>
 </RCC>

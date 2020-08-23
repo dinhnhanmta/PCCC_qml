@@ -179,10 +179,20 @@ Item {
                             height: 50
                             Layout.alignment: Qt.AlignCenter
                             Layout.preferredWidth: 200
-                            name: "Log In"
+                            name: "Đăng nhập"
                             baseColor: mainAppColor
                             borderColor: mainAppColor
                             onClicked: QLogin.onClick(loginUsername.text,loginPassword.text)
+                        }
+
+                        CButton{
+                            height: 50
+                            Layout.alignment: Qt.AlignCenter
+                            Layout.preferredWidth: 200
+                            name: "Bỏ qua"
+                            baseColor: mainAppColor
+                            borderColor: mainAppColor
+                            onClicked: QLogin.onClick()
                         }
                     }
                 }

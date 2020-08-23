@@ -8,7 +8,7 @@ Item
 {
     id: window
     width: 1024
-    height: 800
+    height: 600
 
     visible: true
     Button{
@@ -32,8 +32,8 @@ Item
     }
     Button{
         id: vanBomButton
-        x: 115
-        y: 503
+        x: 121
+        y: 456
         width: 133
         height: 99
         property bool press: false
@@ -179,8 +179,8 @@ Item
 
     Text {
         id: name5
-        x: 115
-        y: 457
+        x: 123
+        y: 396
         text: qsTr("VAN DAU VAO")
         font.bold: true
         font.pointSize: 18

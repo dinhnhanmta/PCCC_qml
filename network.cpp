@@ -7,8 +7,8 @@
 Network::Network()
 {
     manager = new QNetworkAccessManager(this);
-    if (settings->getToken() != ""){
-        request.setRawHeader("Authorization", settings->getToken().toUtf8());
+    if (settings->defautConfig.getToken() != ""){
+        request.setRawHeader("Authorization", settings->defautConfig.getToken().toUtf8());
     }
 }
 
@@ -23,7 +23,7 @@ void Network::login(QString username, QString password)
                 )
         ).toJson();
 
-    request.setUrl(QUrl::fromUserInput(settings->getServerUrl() + loginPath));
+    request.setUrl(QUrl::fromUserInput(settings->defautConfig.getServerUrl() + loginPath));
     request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
     request.setHeader(QNetworkRequest::ContentLengthHeader,QByteArray::number(jsonData.size()));
 
@@ -32,7 +32,7 @@ void Network::login(QString username, QString password)
 
 void Network::uploadDeviceParameter(QByteArray jsonData)
 {
-    request.setUrl(QUrl::fromUserInput(settings->getServerUrl() + dataPath));
+    request.setUrl(QUrl::fromUserInput(settings->defautConfig.getServerUrl() + dataPath));
     request.setHeader(QNetworkRequest::ContentTypeHeader,"application/json");
     request.setHeader(QNetworkRequest::ContentLengthHeader,QByteArray::number(jsonData.size()));
 
@@ -41,6 +41,6 @@ void Network::uploadDeviceParameter(QByteArray jsonData)
 
 void Network::syncData()
 {
-    request.setUrl(QUrl::fromUserInput(settings->getServerUrl() + dataPath));
+    request.setUrl(QUrl::fromUserInput(settings->defautConfig.getServerUrl() + dataPath));
     reply = manager->get(request);
 }

@@ -1,6 +1,6 @@
 #ifndef BIENTAN_H
 #define BIENTAN_H
-#include "Modbus.hpp"
+#include "modbus.hpp"
 
 class Bientan: public QObject {
     Q_OBJECT
@@ -8,6 +8,8 @@ class Bientan: public QObject {
     Q_PROPERTY(int q_ID READ getID WRITE setID NOTIFY varChanged)
     Q_PROPERTY(int q_baudrate READ getBaudrate WRITE setBaudrate NOTIFY varChanged)
     Q_PROPERTY(int q_frequency READ getFrequency WRITE setFrequency NOTIFY varChanged)
+
+     Q_PROPERTY(int q_velocity  READ getVelocity  NOTIFY varChanged)
 signals:
     void varChanged ();
 public:
@@ -25,17 +27,20 @@ public:
 
     int getFrequency(){return frequency;}
     void setFrequency (int fred){frequency = fred;}
-
+    int getVelocity(){return velocity;}
+    void readVelocityCompleted();
 public:
     Q_INVOKABLE void write_friquency(int freq);
 
     Q_INVOKABLE void setStart(int val);
+    Q_INVOKABLE void readVelocity();
 private:
     Modbus *bientan_modbus;
     int address;
     int ID;
     int baudrate;
     int frequency;
+    int velocity;
 };
 
 #endif // BIENTAN_H

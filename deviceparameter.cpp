@@ -36,7 +36,6 @@ void DeviceParameter::uploadToServer()
         if(network->reply->error() == QNetworkReply::NoError){
             QJsonObject obj = QJsonDocument::fromJson(network->reply->readAll()).object();
             if (obj.value("code").toInt() == 0){
-                settings->setToken(obj.value("data").toObject().value("token").toString());
                 onSyncSuccess();
             }
         } else {

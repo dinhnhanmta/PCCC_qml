@@ -38,10 +38,8 @@ Item {
         }
 
         PrimaryButton {
-            x: 181
+            x: 100
             y: 447
-            width: 227
-            height: 51
             text: "ĐĂNG NHẬP MÃ KIỂM ĐỊNH"
             MouseArea {
             anchors.fill: parent
@@ -55,10 +53,8 @@ Item {
         }
 
         PrimaryButton {
-            x: 660
+            x: 600
             y: 447
-            width: 227
-            height: 51
             text: "TẠO MÃ KIỂM ĐỊNH"
         }
 

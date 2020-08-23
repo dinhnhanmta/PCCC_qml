@@ -5,8 +5,9 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 
-class Network: public BaseObject, public QObject
+class Network: QObject, BaseObject
 {
+    Q_OBJECT
 public:
     Network();
     void login(QString username, QString password);

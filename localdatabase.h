@@ -22,6 +22,7 @@ private:
                             QVariantMap condition, QString order_by,
                             bool ascOrder, int limit);
     QSqlDatabase db;
+    QSqlQuery *query;
 };
 
 #endif // LOCALDATABASE_H
