@@ -4,6 +4,7 @@ Item {
     width: 1024
     height: 600
     visible: true
+
     Rectangle{
         anchors.fill: parent
         color: "lightblue"
@@ -39,6 +40,8 @@ Item {
             anchors.left:  parent.left
             anchors.verticalCenter: state_icon.verticalCenter
             text: qsTr("     Trang thai \n     ket noi")
+            anchors.verticalCenterOffset: 32
+            anchors.leftMargin: 34
             font.pixelSize: 18
         }
     }
@@ -84,7 +87,7 @@ Item {
         text: qsTr("KIỂU ĐẦU NỐI")
     }
     Text {
-        x: 160
+        x: 123
         y: 462
         text: qsTr("ÁP SUÂT LÀM VIỆC")
     }
@@ -109,7 +112,7 @@ Item {
         text: qsTr("CHIỀU DÀI LỚP\nTRÁNG CAO SU")
     }
     Text {
-        x: 548
+        x: 534
         y: 453
         text: qsTr("SỐ KHUYẾT TẬP\n TRÊN BỀ MẶT NGOÀI")
     }
@@ -155,5 +158,5 @@ Item {
     }
 
     }
-    scale: 0.7
+//    scale:
 }

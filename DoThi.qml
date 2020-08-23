@@ -77,7 +77,7 @@ Item {
             axisX.max = axisX.max + 1
             var count = series1.count
             series1.remove(0);
-            series1.insert(count,axisX.max-1,Cambien.q_pressure);
+            series1insert(count,axisX.max-1,Cambien.q_pressure);
         }
     }
 

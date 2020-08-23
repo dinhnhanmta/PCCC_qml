@@ -110,9 +110,8 @@ Item
             anchors.fill: parent
         }
         onClicked: {
-            press= !press
-                    Relay.writeOutputVavle(press)
-                    Relay.readAllState();
+                    Relay.writeOutputVavle(!Relay.q_ouput_vavle_state)
+                   // Relay.readAllState();
                     //Modbus.writeSingleCoil(3,press,11)
         }
     }
@@ -131,8 +130,8 @@ Item
         }
         onClicked: {
             press= !press
-            Relay.writeInputVavle(press)
-            Relay.readAllState();
+            Relay.writeInputVavle(!Relay.q_input_vavle_state)
+            //Relay.readAllState();
             //Modbus.writeSingleCoil(2,press,11)
         }
     }
@@ -152,8 +151,8 @@ Item
         }
         onClicked: {
             press= !press
-            Relay.writeStartLed(press)
-            Relay.readAllState();
+            Relay.writeStartLed(!Relay.q_start_led_state)
+            //Relay.readAllState();
             //Modbus.writeSingleCoil(1,press,11)
         }
     }
@@ -188,8 +187,8 @@ Item
     }
     DialItem {
         id: speed
-        objectName: "speed"
-        width: 250
+
+        width: 200
         height: width
         anchors.centerIn: parent
         startAngle: 30
@@ -201,6 +200,8 @@ Item
 
         Image {
             id: needle
+            anchors.verticalCenterOffset: -24
+            anchors.horizontalCenterOffset: 1
             source: "./Icon/needle.png"
             scale: 0.8
             anchors.centerIn: parent
@@ -223,9 +224,10 @@ Item
     }
     Text {
         id: pressure_value
-        x: 494
+        x: 444
         y: 406
         text: Cambien.q_pressure
+        elide: Text.ElideNone
         font.pointSize: 18
     }
 
@@ -376,8 +378,8 @@ Item
     }
 
     Text {
-        x: 358
-        y: 468
+        x: 397
+        y: 470
         text: qsTr("TỐC ĐỘ BIẾN TẦN THỰC TẾ")
         font.bold: false
         font.pointSize: 18
@@ -392,12 +394,16 @@ Item
 
     Timer {
             interval: 200; running: true; repeat: true
-            onTriggered: Cambien.sendRequest()
+//            onTriggered: Cambien.sendRequest()
         }
 
     Timer {
-            interval: 1000; running: true; repeat: true
-            onTriggered: Bientan.readVelocity()
+            interval: 500; running: true; repeat: true
+            onTriggered:
+            {
+//                Relay.readAllState()
+              // Bientan.readVelocity()
+            }
         }
 
   }

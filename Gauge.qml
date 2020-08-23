@@ -24,7 +24,7 @@ CircularGauge {
             radius: 360
 
             Image {
-                anchors.fill: parent
+                anchors.fill: parents
                 source: "qrc:/img/background.svg"
                 asynchronous: true
                 sourceSize {

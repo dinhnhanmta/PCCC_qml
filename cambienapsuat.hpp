@@ -57,6 +57,7 @@ public:
 private:
     QSerialPort *m_serial;
     float pressure;
+    float val_pot;
     QString m_portName;
     int m_baudrate;
     int m_dataBits;

@@ -12,6 +12,7 @@ Item {
     Rectangle{
         anchors.fill: parent
         color: "lightblue"
+        border.color: "#4e4eda"
 
 
     Text {
@@ -24,16 +25,13 @@ Item {
     }
 
 
-
-
-
-
         PrimaryButton{
         id: thuNghiem
         x: 137
         y: 159
-        width: 250
-        height: 64
+        width: 300
+        height: 110
+        radius: 1
         z: 1
         text: "               TIẾN HÀNH THỬ NGHIỆM"
         anchors.horizontalCenterOffset: -221
@@ -41,12 +39,18 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
 
         Image {
+            y: 10
+            width: 100
+            height: 100
+            anchors.left: parent.left
+            anchors.leftMargin: -4
             source: "qrc:/Icon/play2.png"
-            anchors.left:  parent.left
             scale: 0.7
         }
         MouseArea {
-        anchors.fill: parent
+            width: 300
+            height: 110
+            anchors.fill: parent
         onClicked: stack.push("DangNhapTB.qml")
         }
         }
@@ -56,8 +60,9 @@ Item {
             id: thuNghiemBangTay
             x: 127
             y: 159
-            width: 250
-            height: 64
+            width: 300
+            height: 110
+            radius: 1
             text: "              THỬ NGHIỆM BẰNG TAY"
 
 
@@ -66,8 +71,10 @@ Item {
             anchors.horizontalCenterOffset: 247
 
             Image {
-                 source: "qrc:/Icon/hand2.png"
-                 anchors.left: parent.left
+                width: 100
+                height: 100
+                source: "qrc:/Icon/hand2.png"
+                anchors.left: parent.left
                  scale: 0.7
             }
             MouseArea {
@@ -80,15 +87,18 @@ Item {
             id: thuNghiem2
             x: 139
             y: 289
-            width: 250
-            height: 64
+            width: 300
+            height: 110
+            radius: 1
             text: "             LỊCH SỬ KIỂM ĐỊNH"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: 247
 
             Image {
-                 source: "qrc:/Icon/history2.png"
+                width: 100
+                height: 100
+                source: "qrc:/Icon/history2.png"
                  anchors.left: parent.left
                  scale: 0.7
             }
@@ -102,14 +112,19 @@ Item {
             id: capNhat
             x: 146
             y: 289
-            width: 250
-            height: 64
+            width: 300
+            height: 110
+            radius: 1
             text: "             CẬP NHẬT THÔNG SỐ\n                     KIỂM ĐỊNH"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: -221
             Image {
-                 source: "qrc:/Icon/update2.png"
+                y: 4
+                width: 100
+                height: 100
+                anchors.leftMargin: -6
+                source: "qrc:/Icon/update2.png"
                  anchors.left: parent.left
                  scale: 0.7
             }
@@ -121,15 +136,18 @@ Item {
             id: thuNghiem4
             x: 137
             y: 420
-            width: 250
-            height: 64
+            width: 300
+            height: 110
+            radius: 1
             text: "              HIỆU CHỈNH THÔNG SỐ"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: 247
 
             Image {
-                 source: "qrc:/Icon/adjust2.png"
+                width: 100
+                height: 100
+                source: "qrc:/Icon/adjust2.png"
                  anchors.left: parent.left
                  scale: 0.7
             }
@@ -143,15 +161,20 @@ Item {
             id: thuNghiem5
             x: 132
             y: 420
-            width: 250
-            height: 64
+            width: 300
+            height: 110
+            radius: 1
             text: "                CÀI ĐẶT HỆ THỐNG"
             anchors.horizontalCenter: parent.horizontalCenter
             z: 1
             anchors.horizontalCenterOffset: -221
 
             Image {
-                 source: "qrc:/Icon/setting2.png"
+                y: 6
+                width: 100
+                height: 100
+                anchors.leftMargin: 1
+                source: "qrc:/Icon/setting2.png"
                  anchors.left: parent.left
                  scale: 0.7
             }
@@ -172,9 +195,11 @@ Item {
         }
 
         Rectangle {
+            x: 849
+            y: 548
             color: "palegoldenrod"
             width: 175
-            height: 64
+            height: 52
             anchors.right: parent.right
             anchors.bottom:  parent.bottom
         Image {
@@ -188,6 +213,8 @@ Item {
             anchors.left:  parent.left
             anchors.verticalCenter: state_icon.verticalCenter
             text: qsTr("     Trang thai \n     ket noi")
+            anchors.verticalCenterOffset: 29
+            anchors.leftMargin: -113
             font.pixelSize: 18
         }
         }
@@ -197,6 +224,7 @@ Item {
             width: 175
             height: 64
             text: "      HOME"
+            border.color: "#4646e2"
             color: "palegoldenrod"
         Image {
              source: "qrc:/Icon/home2.png"

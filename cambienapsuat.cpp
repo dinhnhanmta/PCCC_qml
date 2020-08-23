@@ -7,6 +7,7 @@ CamBienApSuat::CamBienApSuat()
     connect(m_serial, &QSerialPort::readyRead, this, &CamBienApSuat::readData);
     connect(this,&CamBienApSuat::receiveCompleted,this,&CamBienApSuat::OnReceiveCompleted);
     pressure = 0;
+    val_pot = 0;
     m_baudrate = 9600;
     m_stopBits = 1;
     m_parity = "None";
@@ -75,7 +76,10 @@ void CamBienApSuat::OnReceiveCompleted()
     qDebug()<< "receive complete"<< m_receiveText;
      qDebug()<< "splitted";
     splitted = m_receiveText.split("+");
+    val_pot = splitted[5].toFloat()/2.5*10;
     pressure = splitted[6].toFloat()/2.5*10;
+    qDebug()<<"val_pot = "<<val_pot;
+    qDebug()<<"pressure = "<<pressure;
     emit pressureChanged();
 
 }

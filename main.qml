@@ -9,24 +9,21 @@ Window {
     visible: true
     width: 1024
     height: 600
-
-    Flickable {
-        id: flickable
-        anchors.fill: parent
-        flickableDirection: Flickable.VerticalFlick
-        StackView {
-               id: stack
-               initialItem: "Login.qml"
-               anchors.fill: parent
-           }
-    }
+//    visibility: Window.FullScreen
+    //    title: qsTr("Hello World")
+    StackView {
+           id: stack
+           initialItem: "DangNhapKDV.qml"
+           anchors.fill: parent
+       }
 
     InputPanel {
         id: inputPanel
         z: 99
         x: 0
-        y: Qt.inputMethod.visible ? window.height - inputPanel.height : window.height
+        y: window.height
         width: window.width
+
         states: State {
             name: "visible"
             when: inputPanel.active
@@ -47,13 +44,6 @@ Window {
                 }
             }
         }
-        onActiveChanged: {
-            flickable.interactive = !active;
-            if (active){
-                flickable.contentY = height / 2;
-            } else {
-                flickable.contentY = 0;
-            }
-        }
+
     }
 }

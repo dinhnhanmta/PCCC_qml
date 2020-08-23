@@ -21,14 +21,16 @@ SOURCES += \
         dangnhapthietbi.cpp \
         deviceparameter.cpp \
         dialitem.cpp \
-        localdatabase.cpp \
+        icpthread.cpp \
         logger.cpp \
         login.cpp \
         main.cpp \
         master.cpp \
         modbus.cpp \
+        modbusthread.cpp \
         network.cpp \
         relay.cpp \
+        thunghiembangtaycontroller.cpp \
         vavle.cpp
 
 RESOURCES += qml.qrc
@@ -53,11 +55,13 @@ HEADERS += \
     dangnhapthietbi.hpp \
     deviceparameter.h \
     dialitem.h \
-    localdatabase.h \
+    icpthread.h \
     logger.h \
     login.hpp \
     master.h \
     modbus.hpp \
+    modbusthread.h \
     network.h \
     relay.hpp \
+    thunghiembangtaycontroller.h \
     vavle.hpp

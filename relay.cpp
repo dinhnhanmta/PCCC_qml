@@ -13,7 +13,6 @@ Relay::Relay(Modbus *modbus)
 {
    relay_modbus = modbus;
    connect(modbus,&Modbus::readCoilsCompletedSignal,this,&Relay::readStateCompleted);
-
 }
 
 void Relay::writeInputVavle(bool value)
@@ -34,8 +33,9 @@ void Relay::writeStartLed(bool value)
 void Relay::readAllState()
 {
     relay_modbus -> readMultiCoils(RELAY_ID,START_LED_ADDRESS,3,data_receive);
-
 }
+
+
 void Relay::readStateCompleted()
 {
     start_led_state = data_receive[0];

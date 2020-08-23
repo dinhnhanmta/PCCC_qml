@@ -6,8 +6,8 @@ Login::Login(){
 
 void Login::onClick(QString userName,QString password)
 {
-    settings->setUserName(userName);
-    settings->setPassword(password);
+    this->settings->setUserName(userName);
+    this->settings->setPassword(password);
     network->login(userName, password);
     connect(network->reply, &QNetworkReply::finished, [=]() {
         if(network->reply->error() == QNetworkReply::NoError){
