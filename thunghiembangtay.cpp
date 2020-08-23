@@ -22,6 +22,7 @@ void ThuNghiemBangTay::updateLogic()
     {
         count_writeFre = 0;
         m_bienTan->write_friquency((int)(m_camBienApSuat->getValPot()*100));
+        m_bienTan->readRealFrequency();
     }
 
     m_relay->readAllState();

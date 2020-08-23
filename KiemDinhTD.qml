@@ -20,6 +20,7 @@ Item {
         DoThi{
             x: 400
             y: 80
+
         }
         Image {
 
@@ -71,8 +72,8 @@ Item {
         PrimaryButton {
             x: 616
             y: 447
-            width: 172
-            height: 72
+            width: 206
+            height: 93
             text: "BẮT ĐẦU KIỂM ĐỊNH"
         }
 
@@ -85,12 +86,13 @@ Item {
         Rectangle {
             x: 215
             y: 481
-            width: 74
-            height: 38
+            width: 108
+            height: 59
             Image {
                 source: "qrc:/Icon/switch-off.jpg"
                 anchors.fill: parent
             }
+
         }
 
         Text {
@@ -102,12 +104,13 @@ Item {
         Rectangle {
             x: 441
             y: 481
-            width: 74
-            height: 38
+            width: 108
+            height: 59
             Image {
                 source: "qrc:/Icon/switch-off.jpg"
                 anchors.fill: parent
             }
+
         }
 
         Text {
@@ -119,8 +122,8 @@ Item {
         Input {
             x: 117
             y: 351
-            width: 145
-            height: 42
+            width: 164
+            height: 65
             text: "100"
             pointSize: 26
             disabled: true
@@ -160,7 +163,7 @@ Item {
                 width: 300
                 minimumValue: 0
                 maximumValue: 300
-                value: Cambien.q_pressure
+                value: 80
                 visible: false
             }
         }

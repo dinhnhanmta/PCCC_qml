@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.9.0, 2020-08-22T20:36:14. -->
+<!-- Written by QtCreator 4.9.0, 2020-08-23T06:40:39. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -619,7 +619,7 @@
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory"></value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/home/thongktdt/Desktop/PCCC/code/build-PCCC_thong-Desktop_Qt_5_12_3_GCC_64bit-Profile</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default"></value>
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>

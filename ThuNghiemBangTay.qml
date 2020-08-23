@@ -37,13 +37,14 @@ Item
             anchors.centerIn: parent
             width: parent - 60
             height: parent.height
-            spacing: 60
+            spacing: 10
 
             Column {
                 id: column1
                 y: 20
-                spacing: 20
-                height: parent.height - 40
+                width: 350
+                spacing: 12
+                height: parent.height
 
                 Text {
                     text: qsTr("PUML UP")
@@ -54,8 +55,9 @@ Item
 
                 Button{
                     id: vanXaButton
-                    width: 108
-                    height: 64
+                    width: 150
+                    height: 80
+                    anchors.horizontalCenter: parent.horizontalCenter
                     enabled: Modbus.q_connectionState
                     property bool press: false
                     Image {
@@ -69,7 +71,7 @@ Item
                 }
 
                 Text {
-                    text: qsTr("VAN CẤP NƯỚC")
+                    text: qsTr("PUMP DOWN")
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.bold: false
                     font.pointSize: 18
@@ -77,8 +79,9 @@ Item
 
                 Button{
                     id: vanBomButton
-                    width: 108
-                    height: 64
+                    width: 150
+                    height: 80
+                    anchors.horizontalCenter: parent.horizontalCenter
                     enabled: Modbus.q_connectionState
                     property bool press: false
                     Image {
@@ -101,8 +104,9 @@ Item
 
                 Button{
                     id: denBatDau
-                    width: 108
-                    height: 64
+                    width: 150
+                    height: 80
+                    anchors.horizontalCenter: parent.horizontalCenter
                     enabled: Modbus.q_connectionState
                     property bool press: false
                     Image {
@@ -119,7 +123,8 @@ Item
             }
             Column {
                 id: column2
-                spacing: 40
+                width: 350
+                spacing: 16
                 height: parent.height
                 Text {
                     text: qsTr("ÁP SUẤT")
@@ -130,7 +135,7 @@ Item
 
                 DialItem {
                     id: speed
-                    width: 200
+                    width: 300
                     height: width
                     startAngle: 30
                     spanAngle: 300
@@ -138,9 +143,12 @@ Item
                     stopValue: 25
                     dialWidth: 4
                     dialColor: "darkblue"
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     Image {
                         id: needle
+                        width: 270
+                        height: 270
                         source: "./Icon/needle.png"
                         scale: 0.8
                         anchors.centerIn: parent
@@ -160,8 +168,9 @@ Item
                         value: Cambien.q_pressure*12
                         visible: false
                     }
-                }
 
+
+                }
                 Text {
                     id: pressure_value
                     text: Cambien.q_pressure.toFixed(1)
@@ -169,16 +178,19 @@ Item
                     elide: Text.ElideNone
                     font.pointSize: 18
                 }
+
+
             }
             Column {
                 id: column
-                spacing: 55
+                width: 350
+                spacing: 50
                 height: parent.height
                 anchors.top: parent.top
-                anchors.topMargin: 50
+                anchors.topMargin: 20
                 Text {
                     id: tocDoText
-                    text: qsTr("ĐIỀU KHIỂN TỐC ĐỘ")
+                    text: qsTr("TỐC ĐỘ ĐẶT")
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.pointSize: 18
                     font.bold: false
@@ -192,6 +204,7 @@ Item
                     Text {
                         width: 108
                         height: 37
+                        color: "#0410d6"
                         text: Cambien.q_val_pot.toFixed(1)
 
                         font.weight: Font.Bold
@@ -207,15 +220,17 @@ Item
                     //                }
                 }
                 Text {
-                    text: qsTr("TỐC ĐỘ BIẾN TẦN THỰC TẾ")
+                    text: qsTr("TỐC ĐỘ THỰC TẾ")
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.bold: false
                     font.pointSize: 18
                 }
                 Text {
-                    text: Bientan.q_velocity
+                    color: "#fd410b"
+                    text: Bientan.q_real_frequency/100
+                    font.family: "Tahoma"
                     anchors.horizontalCenter: parent.horizontalCenter
-                    font.bold: false
+                    font.bold: true
                     font.pointSize: 18
                 }
 
@@ -223,6 +238,16 @@ Item
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
 
 
 /*##^## Designer {

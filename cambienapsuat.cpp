@@ -46,8 +46,9 @@ void CamBienApSuat::writeData(const QByteArray &data)
 void CamBienApSuat::sendRequest()
 {
         m_serial->write("#01\r");
-//        qDebug() << "write #01\r";
+        //        qDebug() << "write #01\r";
 }
+
 
 void CamBienApSuat::readData()
 {

@@ -47,6 +47,8 @@ public:
     Q_INVOKABLE void closeSerialPort();
     Q_INVOKABLE void writeData(const QByteArray &data);
     Q_INVOKABLE void sendRequest();
+
+
     void readData();
     void handleError(QSerialPort::SerialPortError error);
     bool getState() const;
