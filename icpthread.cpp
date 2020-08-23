@@ -10,7 +10,7 @@ void IcpThread::run()
 {
     while(true)
     {
-        qDebug()<< "Update ICP";
+//        qDebug()<< "Update ICP";
         IcpUpdate();
         msleep(200);
     }

@@ -6,33 +6,17 @@ import QtQml 2.0
 Item {
     antialiasing: true
     anchors.fill: parent
+    Component.onCompleted: screenLabel.text = qsTr("CÀI ĐẶT THÔNG SỐ HỆ THỐNG")
 
     Rectangle{
         id: rectangle
         anchors.fill: parent
         color: "lightblue"
-        Image {
-            source: "qrc:/Icon/account.png"
-            scale: 0.8
-            anchors.right: parent.right
-            anchors.top: parent.top
-        }
-
-        Text {
-            id: label
-            anchors.top: parent.top
-            anchors.topMargin: 10
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("CÀI ĐẶT THÔNG SỐ HỆ THỐNG")
-            font.pixelSize: 26
-            font.bold: true
-            color: "white"
-        }
 
         Row {
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: label.bottom
-            anchors.topMargin: 10
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 10
             width: parent.width - 50
             Column {
                 width: parent.width/3
@@ -426,37 +410,6 @@ Item {
                     }
                 }
             }
-        }
-
-        DangerButton {
-            text: "Modbus"
-            color: "palegoldenrod"
-            width: 200
-            anchors.right: parent.right
-            anchors.bottom:  parent.bottom
-            Image {
-                id: state_icon
-                 source: Modbus.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
-                 anchors.right: parent.right
-                 scale: 0.7
-            }
-        }
-        DangerButton {
-            text: "Quay lại"
-            color: "palegoldenrod"
-            width: 200
-            anchors.left: parent.left
-            anchors.bottom:  parent.bottom
-            MouseArea {
-                anchors.fill: parent
-                onClicked: stack.pop("CaiDatThongSo.qml")
-            }
-            Image {
-                 source: "qrc:/Icon/home2.png"
-                 anchors.left: parent.left
-                 scale: 0.7
-            }
-
         }
     }
 

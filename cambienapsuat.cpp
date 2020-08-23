@@ -22,8 +22,12 @@ void CamBienApSuat::openSerialPort()
     m_serial->setStopBits(( QSerialPort::StopBits)settings->cambienParam.getStopBits());
     if (m_serial->open(QIODevice::ReadWrite)) {
         sendRequest();
+        connection_state = true;
+        emit varChanged();
     } else {
         qDebug()<< m_serial->errorString();
+        connection_state = false;
+        emit varChanged();
     }
 }
 
@@ -65,6 +69,16 @@ void CamBienApSuat::OnReceiveCompleted()
     qDebug()<<"pressure = "<<pressure;
     emit pressureChanged();
 
+}
+
+bool CamBienApSuat::getState() const
+{
+    return connection_state;
+}
+
+void CamBienApSuat::setState(bool value)
+{
+    connection_state = value;
 }
 void CamBienApSuat::handleError(QSerialPort::SerialPortError error)
 {
