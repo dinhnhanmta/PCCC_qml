@@ -30,7 +30,6 @@
         <file>Clock.qml</file>
         <file>Login.qml</file>
         <file>MainWindow.qml</file>
-        <file>BangTay.qml</file>
         <file>Icon/handclick.png</file>
         <file>Icon/switch-on-icon.png</file>
         <file>Icon/switch-off-icon.png</file>
