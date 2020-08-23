@@ -11,15 +11,15 @@ Item {
         anchors.fill: parent
         color: "lightblue"
         Text {
-            y: 35
+            y: 8
             text: qsTr("QUY TRÌNH KIỂM ĐỊNH TỰ ĐỘNG")
             anchors.horizontalCenterOffset: 1
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: 26
         }
         DoThi{
-            x: 400
-            y: 80
+            x: 280
+            y: 55
         }
         Image {
 
@@ -29,64 +29,77 @@ Item {
             anchors.top: parent.top
         }
 
-        Rectangle {
-            color: "palegoldenrod"
-            width: 175
-            height: 64
-            anchors.right: parent.right
-            anchors.bottom:  parent.bottom
-            Image {
-                id: state_icon
-                source: Modbus.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
-                anchors.right: parent.right
-                scale: 0.8
-            }
-
-            Text {
-                anchors.left:  parent.left
-                anchors.verticalCenter: state_icon.verticalCenter
-                text: qsTr("     Trang thai \n     ket noi")
-                font.pixelSize: 18
-            }
-        }
-        DangerButton {
+        Row {
+            id: footer
             anchors.left: parent.left
+            anchors.right: parent.right
             anchors.bottom: parent.bottom
-            width: 175
             height: 64
-            text: "      HOME"
-            color: "palegoldenrod"
-            Image {
-                 source: "qrc:/Icon/home2.png"
-                 anchors.left: parent.left
-                 scale: 0.7
-            }
-            MouseArea {
-            anchors.fill: parent
-            onClicked: stack.pop("KiemDinhTD.qml")
+            DangerButton {
+                text: "Modbus"
+                color: "palegoldenrod"
+                width: 200
+                anchors.right: parent.right
+                anchors.bottom:  parent.bottom
+                Image {
+                    source: Modbus.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
+                    anchors.right: parent.right
+                    scale: 0.7
+                }
             }
 
+
+            DangerButton {
+                text: "Cảm biến"
+                color: "palegoldenrod"
+                width: 200
+                anchors.horizontalCenter: parent.horizontalCenter
+                Image {
+                    source: Cambien.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
+                    anchors.right: parent.right
+                    scale: 0.7
+                }
+            }
+
+            DangerButton {
+                text: "Home"
+                color: "palegoldenrod"
+                width: 200
+                anchors.left: parent.left
+                anchors.bottom:  parent.bottom
+                Image {
+                     source: "qrc:/Icon/home2.png"
+                     anchors.left: parent.left
+                     scale: 0.7
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        stack.pop("DangNhapTB.qml")
+                    }
+                }
+            }
         }
 
         PrimaryButton {
-            x: 616
-            y: 447
-            width: 172
-            height: 72
+            x: 59
+            y: 449
+            width: 167
+            height: 47
             text: "BẮT ĐẦU KIỂM ĐỊNH"
         }
 
         Text {
-            x: 170
-            y: 447
-            text: qsTr("TRẠNG THÁI VAN CÁP NƯỚC")
+            x: 17
+            y: 357
+            text: qsTr("VAN CÁP NƯỚC")
         }
 
         Rectangle {
-            x: 215
-            y: 481
-            width: 74
-            height: 38
+            x: 35
+            y: 390
+            width: 60
+            height: 37
             Image {
                 source: "qrc:/Icon/switch-off.jpg"
                 anchors.fill: parent
@@ -94,16 +107,16 @@ Item {
         }
 
         Text {
-            x: 400
-            y: 447
-            text: qsTr("TRẠNG THÁI VAN XẢ NƯỚC")
+            x: 155
+            y: 357
+            text: qsTr("VAN XẢ NƯỚC")
         }
 
         Rectangle {
-            x: 441
-            y: 481
-            width: 74
-            height: 38
+            x: 175
+            y: 390
+            width: 60
+            height: 37
             Image {
                 source: "qrc:/Icon/switch-off.jpg"
                 anchors.fill: parent
@@ -111,18 +124,18 @@ Item {
         }
 
         Text {
-            x: 135
-            y: 317
+            x: 68
+            y: 277
             text: qsTr("TỐC ĐỘ ĐỘNG CƠ")
         }
 
         Input {
-            x: 117
-            y: 351
-            width: 145
-            height: 42
-            text: "100"
-            pointSize: 26
+            x: 80
+            y: 306
+            width: 103
+            height: 34
+            text: "123"
+            pointSize: 18
             disabled: true
             horizontalAlignment: Text.AlignRight
             verticalAlignment: Text.AlignVCenter
@@ -130,13 +143,17 @@ Item {
 
 
         Text {
-            x: 135
-            y: 94
+            id: textPressureDial
+            x: 101
+            y: 31
             text: qsTr("ÁP SUẤT")
         }
         DialItem {
             x: 100
-            y: 120
+            id: speed
+            anchors.top: textPressureDial.bottom
+            anchors.topMargin: 20
+            anchors.horizontalCenter: textPressureDial.horizontalCenter
             width: 200
             height: width
             startAngle: 30

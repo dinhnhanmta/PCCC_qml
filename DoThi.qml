@@ -30,44 +30,46 @@
 import QtQuick 2.0
 import QtCharts 2.0
 import camBienApSuat 1.0
+import QtQml 2.0
 Item {
-    width: 500
-    height: 300
+    width: 700
+    height: 450
 
     //![1]
     ChartView {
-        title: "Two Series, Common Axes"
+        title: qsTr("ĐỒ THỊ ÁP SUẤT THEO THỜI GIAN")
         anchors.fill: parent
         legend.visible: false
         antialiasing: true
 
         legend.alignment: Qt.AlignTop
         animationOptions: ChartView.SeriesAnimations
-
-        ValueAxis {
-            id: axisX
-            min: 0
-            max: 20
-            tickCount: 11
-        }
-
-        ValueAxis {
-            id: axisY
-            min: 0
-            max: 25
-        }
-
         LineSeries {
-            id: series1
-            axisX: axisX
-            axisY: axisY
-        }
+               id: series1
+                axisX: DateTimeAxis {
+
+                    tickCount: 5
+                }
+                axisY: ValueAxis {
+                    min: 0
+                    max: 25
+                }
     }
 
     Component.onCompleted: {
-        for (var i = 0; i <= 19; i++) {
-            series1.append(i, 0);
+        var d = new Date()
+        var xValue = d.getMinutes() + ":" + d.getSeconds() //+ ":"+d.getMilliseconds()
+        var d2= new Date()
+
+        var locale =  Qt.locale()
+         var dateTimeString = "Tue 2013-09-17 10:56:06"
+        console.log(Date.fromLocaleString(locale, dateTimeString, "ddd yyyy-MM-dd hh:mm:ss"));
+       // console.log (d2)
+        for (var i = -5; i <= 0; i++) {
+            series1.append(d2,10);
         }
+
+    }
     }
 
     CamBienApSuat {
@@ -77,21 +79,8 @@ Item {
             axisX.max = axisX.max + 1
             var count = series1.count
             series1.remove(0);
-            series1insert(count,axisX.max-1,Cambien.q_pressure);
+            series1.insert(count,axisX.max-1,Cambien.q_pressure);
+            var xValue = d.getMinutes() + ":" + d.getSeconds() + ":"+d.getMilliseconds()
         }
     }
-
-    /*
-       Timer {
-            interval: 1000; running: true; repeat: true
-            onTriggered: {
-                axisX.min = axisX.min + 1
-                axisX.max = axisX.max + 1
-                var count = series1.count
-                series1.remove(0);
-                series1.insert(count,axisX.max-1,Cambien.q_pressure);
-            }
-        }
-        */
-
 }
