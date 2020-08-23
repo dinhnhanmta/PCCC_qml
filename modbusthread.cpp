@@ -12,7 +12,7 @@ void ModbusThread::run()
 {
     while(true)
     {
-        qDebug()<<"update modbus";
+//        qDebug()<<"update modbus";
         updateRelay();
         msleep(1000);
     }

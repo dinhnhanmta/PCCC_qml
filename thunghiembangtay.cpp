@@ -5,29 +5,44 @@ ThuNghiemBangTay::ThuNghiemBangTay(QObject *parent) : QObject(parent)
 
 }
 
-ThuNghiemBangTay::ThuNghiemBangTay(IcpThread *icpThread, ModbusThread *modbusThread)
+ThuNghiemBangTay::ThuNghiemBangTay(CamBienApSuat *cbap, Bientan *bientan, Modbus *modbus, Relay *relay)
 {
-    m_icpThread = icpThread;
-    m_modbusThread = modbusThread; m_modbusThread->exit();
+    m_camBienApSuat = cbap;
+    m_bienTan = bientan;
+    m_modbus = modbus;
+    m_relay = relay;
+    last_start_state = m_relay->getStartLedState();
 }
 
-void ThuNghiemBangTay::startICP()
+void ThuNghiemBangTay::updateLogic()
 {
-     m_icpThread->start();
+    static int count_writeFre = 0;
+    count_writeFre ++;
+    if(count_writeFre ==10)  // cap nhat cham hon 10 lan
+    {
+        count_writeFre = 0;
+        m_bienTan->write_friquency((int)(m_camBienApSuat->getValPot()*100));
+    }
+
+    m_relay->readAllState();
+
+    bool current_start_state = m_relay->getStartLedState();
+
+
+    // Cap nhat gia tri bien tan
+    if(current_start_state != last_start_state && current_start_state ==1)
+    {
+        last_start_state = current_start_state;
+        m_bienTan->setStart(1);
+    }
+    else if(current_start_state != last_start_state && current_start_state ==0)
+    {
+        last_start_state = current_start_state;
+        m_bienTan->setStart(5);
+    }
+
 }
 
 
-void ThuNghiemBangTay::startModbus()
-{
-    m_modbusThread ->start();
-}
 
-void ThuNghiemBangTay::stopICP()
-{
-    m_icpThread->terminate();
-}
 
-void ThuNghiemBangTay::stopModbus()
-{
-     m_modbusThread->terminate();
-}

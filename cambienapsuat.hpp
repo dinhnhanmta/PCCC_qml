@@ -9,6 +9,7 @@ class CamBienApSuat: public QObject, BaseObject
     Q_PROPERTY(float q_pressure READ getPressure WRITE setPressure NOTIFY pressureChanged)
     Q_PROPERTY(float q_val_pot READ getValPot NOTIFY pressureChanged)
 
+    Q_PROPERTY(bool q_connectionState READ getState WRITE setState NOTIFY varChanged)
     Q_PROPERTY(QString portname READ getPortName WRITE setPortName NOTIFY varChanged)
     Q_PROPERTY(int baudrate READ getBaudrate WRITE setBaudrate NOTIFY varChanged)
     Q_PROPERTY(QString flow READ getFlow WRITE setFlow NOTIFY varChanged)
@@ -48,6 +49,9 @@ public:
     Q_INVOKABLE void sendRequest();
     void readData();
     void handleError(QSerialPort::SerialPortError error);
+    bool getState() const;
+    void setState(bool value);
+
 signals:
     void receiveCompleted();
 public slots:
@@ -55,6 +59,7 @@ public slots:
 
 private:
     QSerialPort *m_serial;
+    bool connection_state= false;
     float pressure;
     float val_pot;
     QString m_receiveText;

@@ -70,11 +70,13 @@ public:
    void readHoldingRegisterCompleted() const;
    void readCoilsCompleted() ;
    void readMultiCoils(int server,int start_add, int number_coils, bool *data);
+   void readMultiDiscrete(int server,int start_add, int number_coils, bool *data);
+   void readDiscreteCompleted();
 signals:
    //void readSingleHoldingRegisterCompleted(int value);
    void readSingleHoldingRegisterCompleted();
    void readCoilsCompletedSignal();
-
+    void readDiscreteCompletedSignal();
 private:
    QModbusRtuSerialMaster *modbusDevice;
    QTimer *serialTimer;
@@ -83,9 +85,10 @@ private:
    int ID;
    int start_address;
    bool connection_state= false;
-
+   bool *discrete_result;
    bool *coil_result;
    int *holding_register_result;
+   int nDiscrete;
 };
 
 #endif // MODBUS_HPP

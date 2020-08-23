@@ -28,7 +28,6 @@ SOURCES += \
         main.cpp \
         master.cpp \
         modbus.cpp \
-        modbusthread.cpp \
         network.cpp \
         relay.cpp \
         thunghiembangtay.cpp \
@@ -62,7 +61,6 @@ HEADERS += \
     login.hpp \
     master.h \
     modbus.hpp \
-    modbusthread.h \
     network.h \
     relay.hpp \
     thunghiembangtay.h \

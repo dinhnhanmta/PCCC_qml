@@ -22,8 +22,12 @@ void CamBienApSuat::openSerialPort()
     m_serial->setStopBits(( QSerialPort::StopBits)settings->cambienParam.getStopBits());
     if (m_serial->open(QIODevice::ReadWrite)) {
         sendRequest();
+        connection_state = true;
+        emit varChanged();
     } else {
         qDebug()<< m_serial->errorString();
+        connection_state = false;
+        emit varChanged();
     }
 }
 
@@ -56,17 +60,27 @@ void CamBienApSuat::readData()
 
 void CamBienApSuat::OnReceiveCompleted()
 {
-    qDebug()<< "receive complete"<< m_receiveText;
-     qDebug()<< "splitted";
+//    qDebug()<< "receive complete"<< m_receiveText;
+//     qDebug()<< "splitted";
     QStringList splitted ;
     splitted = m_receiveText.split("+");
     pressure = splitted[5].toFloat();///2.5*10;
-    val_pot = splitted[6].toFloat();///2.5*10;
-    qDebug()<<"val_pot = "<<val_pot;
-    qDebug()<<"pressure = "<<pressure;
+    val_pot = splitted[6].toFloat()*5;///2.5*10;
+//    qDebug()<<"val_pot = "<<val_pot;
+//    qDebug()<<"pressure = "<<pressure;
     m_receiveText = "";
     emit pressureChanged();
 
+}
+
+bool CamBienApSuat::getState() const
+{
+    return connection_state;
+}
+
+void CamBienApSuat::setState(bool value)
+{
+    connection_state = value;
 }
 void CamBienApSuat::handleError(QSerialPort::SerialPortError error)
 {

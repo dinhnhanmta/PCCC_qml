@@ -71,8 +71,8 @@ Item {
         PrimaryButton {
             x: 616
             y: 447
-            width: 206
-            height: 93
+            width: 172
+            height: 72
             text: "BẮT ĐẦU KIỂM ĐỊNH"
         }
 
@@ -85,8 +85,8 @@ Item {
         Rectangle {
             x: 215
             y: 481
-            width: 108
-            height: 59
+            width: 74
+            height: 38
             Image {
                 source: "qrc:/Icon/switch-off.jpg"
                 anchors.fill: parent
@@ -102,8 +102,8 @@ Item {
         Rectangle {
             x: 441
             y: 481
-            width: 108
-            height: 59
+            width: 74
+            height: 38
             Image {
                 source: "qrc:/Icon/switch-off.jpg"
                 anchors.fill: parent
@@ -119,8 +119,8 @@ Item {
         Input {
             x: 117
             y: 351
-            width: 164
-            height: 65
+            width: 145
+            height: 42
             text: "100"
             pointSize: 26
             disabled: true
@@ -160,7 +160,7 @@ Item {
                 width: 300
                 minimumValue: 0
                 maximumValue: 300
-                value: 80
+                value: Cambien.q_pressure
                 visible: false
             }
         }

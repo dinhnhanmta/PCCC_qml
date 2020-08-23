@@ -12,8 +12,6 @@
 #include "dangnhapthietbi.hpp"
 #include "relay.hpp"
 #include "thunghiembangtay.h"
-#include "icpthread.h"
-#include "modbusthread.h"
 
 int main(int argc, char *argv[])
 {
@@ -26,9 +24,7 @@ int main(int argc, char *argv[])
     CamBienApSuat *m_cambien = new CamBienApSuat();
     Login *m_login = new Login();
     DangNhapThietBi *m_DangNhapThietBi = new DangNhapThietBi();
-    IcpThread *m_icpThread = new IcpThread(m_cambien);
-    ModbusThread *m_modbusThread = new ModbusThread(m_bientan, m_modbus, m_relay);
-    ThuNghiemBangTay *m_thuNghiemBangTay = new ThuNghiemBangTay(m_icpThread, m_modbusThread);
+    ThuNghiemBangTay *m_thuNghiemBangTay = new ThuNghiemBangTay(m_cambien, m_bientan, m_modbus, m_relay);
 
 
     qmlRegisterType<DialItem>("IVIControls", 1, 0, "DialItem");

@@ -25,22 +25,27 @@ public:
 
     Q_INVOKABLE void readAllState();
     void readStateCompleted();
-
-
+    void readDiscreteCompleted();
     bool getStartLedState(){return start_led_state;}
     bool getOuputVavleState(){return ouput_vavle_state;}
     bool getInputVavleState(){return input_vavle_state;}
-
+//    bool getStartButton(){return last_start_led_state;}
 signals:
 
     void stateChanged();
+//    void buttonStartChange();
 
 private:
     Modbus *relay_modbus;
     bool input_vavle_state = false;
     bool ouput_vavle_state = false;
     bool start_led_state = false;
+    bool last_start_led_state = false;
+    bool last_input_vavle_state = false;
+    bool last_ouput_vavle_state = false;
+    bool start_status = false;
     bool data_receive[3] = {false,false,false};
+     bool discrete_receive[3] = {false,false,false};
 };
 
 #endif // RELAY_HPP

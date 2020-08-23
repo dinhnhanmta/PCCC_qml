@@ -96,8 +96,26 @@ Item {
         y: 143
         text: qsTr("ÁP SUẤT THỬ")
     }
+
+
+
+
+    /*##^## Designer {
+        D{i:0;autoSize:true;height:480;width:640}D{i:21;anchors_height:480}
+    }
+     ##^##*/
+
     Text {
         x: 554
+
+
+
+
+        /*##^## Designer {
+            D{i:0;autoSize:true;height:480;width:640}D{i:21;anchors_height:480}
+        }
+         ##^##*/
+
         y: 220
         text: qsTr("LỚP BỘT TAN")
     }
@@ -109,6 +127,15 @@ Item {
     Text {
         x: 555
         y: 372
+
+
+
+
+        /*##^## Designer {
+            D{i:0;autoSize:true;height:480;width:640}D{i:21;anchors_height:480}
+        }
+         ##^##*/
+
         text: qsTr("CHIỀU DÀI LỚP\nTRÁNG CAO SU")
     }
     Text {
