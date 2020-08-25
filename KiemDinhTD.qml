@@ -15,15 +15,23 @@ Item {
     property var pHientai: []
     property var xValue: []
     property int time: 0
+
     Rectangle{
         anchors.fill: parent
         color: "lightblue"
         Text {
-            y: 8
-            text: qsTr("QUY TRÌNH KIỂM ĐỊNH TỰ ĐỘNG")
-            anchors.horizontalCenterOffset: 1
+            y: 18
+            height: 40
+            color: "#0335b8"
+            text: qsTr("KIỂM ĐỊNH TỰ ĐỘNG")
+            font.capitalization: Font.AllUppercase
+            font.weight: Font.ExtraBold
+            style: Text.Outline
+            anchors.horizontalCenterOffset: 13
+            font.bold: true
+            font.family: "Tahoma"
             anchors.horizontalCenter: parent.horizontalCenter
-            font.pixelSize: 26
+            font.pixelSize: 27
         }
         Chart{
             x: 280
@@ -49,9 +57,10 @@ Item {
                                  strokeColor : "rgba(151,187,205,1)",
                                  pointColor : "rgba(151,187,205,1)",
                                  pointStrokeColor : "#fff",
-                                 data : [10,3,4,1,0]
+                                 data : [20,3,4,1,0]
                              }
-                         ],
+                         ]
+
                      });
 
 
@@ -153,7 +162,7 @@ Item {
 
         Text {
             x: 17
-            y: 269
+            y: 275
             text: qsTr("VAN CẤP NƯỚC")
         }
 
@@ -163,12 +172,6 @@ Item {
             y: 299
             width: 60
             height: 37
-//=======
-//            x: 215
-//            y: 481
-//            width: 108
-//            height: 59
-//>>>>>>> refs/remotes/origin/issue_4
             Image {
                 source: "qrc:/Icon/switch-off.jpg"
                 anchors.fill: parent
@@ -177,8 +180,8 @@ Item {
         }
 
         Text {
-            x: 155
-            y: 269
+            x: 158
+            y: 275
             text: qsTr("VAN XẢ NƯỚC")
         }
 
@@ -188,29 +191,22 @@ Item {
             y: 299
             width: 60
             height: 37
-//=======
-//            x: 441
-//            y: 481
-//            width: 108
-//            height: 59
-//>>>>>>> refs/remotes/origin/issue_4
             Image {
                 source: "qrc:/Icon/switch-off.jpg"
                 anchors.fill: parent
             }
 
         }
-
         Text {
-            x: 79
-            y: 192
+            x: 80
+            y: 211
             text: qsTr("TỐC ĐỘ ĐỘNG CƠ")
         }
 
         Input {
 
             x: 91
-            y: 223
+            y: 235
             width: 103
             height: 34
             text: "123"
