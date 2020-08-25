@@ -9,7 +9,7 @@ Window {
     visible: true
     width: 1024
     height: 600
-
+    visibility: "FullScreen"
     Flickable {
         id: flickable
         anchors.fill: parent

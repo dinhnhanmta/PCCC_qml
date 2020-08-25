@@ -48,20 +48,20 @@ void Relay::readDiscreteCompleted()
     }
     if(discrete_receive[0] ==0) last_start_led_state = false;
 
-    if(discrete_receive[1] ==1 && last_input_vavle_state ==false)
+    if(discrete_receive[2] ==1 && last_input_vavle_state ==false)
     {
         last_input_vavle_state = true;
         input_vavle_state = !input_vavle_state;
         relay_modbus ->writeSingleCoil(INPUT_VALVE_ADDRESS,input_vavle_state,RELAY_ID);
     }
-    if(discrete_receive[1] ==0 ) last_input_vavle_state =false;
-    if(discrete_receive[2] ==1 && last_ouput_vavle_state ==false)
+    if(discrete_receive[2] ==0 ) last_input_vavle_state =false;
+    if(discrete_receive[1] ==1 && last_ouput_vavle_state ==false)
     {
         last_ouput_vavle_state = true;
         ouput_vavle_state = !ouput_vavle_state;
         relay_modbus ->writeSingleCoil(OUTPUT_VALVE_ADDRESS,ouput_vavle_state,RELAY_ID);
     }
-    if(discrete_receive[2] ==0 ) last_ouput_vavle_state =false;
+    if(discrete_receive[1] ==0 ) last_ouput_vavle_state =false;
 }
 void Relay::readStateCompleted()
 {

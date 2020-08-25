@@ -12,7 +12,9 @@
 #include "dangnhapthietbi.hpp"
 #include "relay.hpp"
 #include "thunghiembangtay.h"
-
+#include "dothi.hpp"
+#include "kiemdinhtudong.hpp"
+#include "dataobject.h"
 int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
@@ -25,11 +27,9 @@ int main(int argc, char *argv[])
     Login *m_login = new Login();
     DangNhapThietBi *m_DangNhapThietBi = new DangNhapThietBi();
     ThuNghiemBangTay *m_thuNghiemBangTay = new ThuNghiemBangTay(m_cambien, m_bientan, m_modbus, m_relay);
-
-
+    KiemDinhTuDong *m_kiemDinhTuDong = new KiemDinhTuDong();
     qmlRegisterType<DialItem>("IVIControls", 1, 0, "DialItem");
     qmlRegisterType<CamBienApSuat>("camBienApSuat", 1, 0, "CamBienApSuat");
-
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication app(argc, argv);
@@ -45,8 +45,10 @@ int main(int argc, char *argv[])
     context->setContextProperty("LoginTB", m_DangNhapThietBi);
     context->setContextProperty("Relay", m_relay);
     context->setContextProperty("TnBangTay", m_thuNghiemBangTay);
-
-
+    context->setContextProperty("KiemDinhTD", m_kiemDinhTuDong);
+    context->setContextProperty("listLoaiVoi", QVariant::fromValue(m_kiemDinhTuDong->listLoaiVoi));
+    context->setContextProperty("listApSuatThu", QVariant::fromValue(m_kiemDinhTuDong->listApSuatThu));
+    context->setContextProperty("listApSuatLamViec", QVariant::fromValue(m_kiemDinhTuDong->listApSuatLamViec));
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {

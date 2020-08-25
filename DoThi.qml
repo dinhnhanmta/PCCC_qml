@@ -34,43 +34,66 @@ import QtQml 2.0
 Item {
     width: 700
     height: 450
+    property int test : 45;
+    property string thu : "??";
+    property var pThu: []
+    property var xValue: []
+    Chart{
+        id :chartID
+        width: 700
+        height: 450
 
-    //![1]
-    ChartView {
-        title: qsTr("ĐỒ THỊ ÁP SUẤT THEO THỜI GIAN")
-        anchors.fill: parent
-        legend.visible: false
-        antialiasing: true
+        onPaint: {
 
-        legend.alignment: Qt.AlignTop
-        animationOptions: ChartView.SeriesAnimations
-        LineSeries {
-               id: series1
-                axisX: DateTimeAxis {
+            line({
+                     labels : xValue,
+                     datasets : [
+                         {
+                             fillColor : "rgba(220,220,220,0.5)",
+                             strokeColor : "rgba(220,220,220,1)",
+                             pointColor : "rgba(220,220,220,1)",
+                             pointStrokeColor : "#fff",
+                             data : someList
+                         },
+                         {
+                             fillColor : "rgba(151,187,205,0.5)",
+                             strokeColor : "rgba(151,187,205,1)",
+                             pointColor : "rgba(151,187,205,1)",
+                             pointStrokeColor : "#fff",
+                             data : [28,48,40,19,96,27,100]
+                         }
+                     ],
+                 });
 
-                    tickCount: 5
-                }
-                axisY: ValueAxis {
-                    min: 0
-                    max: 25
-                }
+
+       }
+
     }
 
-    Component.onCompleted: {
-        var d = new Date()
-        var xValue = d.getMinutes() + ":" + d.getSeconds() //+ ":"+d.getMilliseconds()
-        var d2= new Date()
-
-        var locale =  Qt.locale()
-         var dateTimeString = "Tue 2013-09-17 10:56:06"
-        console.log(Date.fromLocaleString(locale, dateTimeString, "ddd yyyy-MM-dd hh:mm:ss"));
-       // console.log (d2)
-        for (var i = -5; i <= 0; i++) {
-            series1.append(d2,10);
+    Timer{
+        id:t
+        interval: 1000
+        repeat: true
+        running: true
+        onTriggered:{
+            var d = new Date()
+            thu = d.getSeconds() + ":" + d. getMilliseconds()
+            xValue.push(thu)
+            someList.push(44)
+            chartID.requestPaint();
+        }
+    }
+        Component.onCompleted: {
+            console.debug("this is the chart.js by qml you can use it just like use the chart.js ",
+                          "you can look the Chart.js in http://chartjs.org/");
+            thu="qeqef"
+            requestPaint()
         }
 
-    }
-    }
+
+
+
+
 
     CamBienApSuat {
         onPressureChanged:

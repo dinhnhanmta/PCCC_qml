@@ -79,5 +79,6 @@
         <file>LichSuKiemDinh.qml</file>
         <file>Icon/on_state.png</file>
         <file>Icon/off_state.png</file>
+        <file>Chart.qml</file>
     </qresource>
 </RCC>

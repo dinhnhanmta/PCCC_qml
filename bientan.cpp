@@ -22,7 +22,13 @@ void Bientan::readVelocity()
     bientan_modbus->readSingleHoldingRegister(address,1,&velocity);
 }
 
+
 void Bientan::readVelocityCompleted()
 {
     emit varChanged();
+}
+
+void Bientan::readRealFrequency()
+{
+    bientan_modbus->readSingleHoldingRegister(12288, 1, &real_frequency);
 }

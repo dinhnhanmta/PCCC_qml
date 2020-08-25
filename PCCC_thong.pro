@@ -1,4 +1,4 @@
-QT += quick virtualkeyboard serialbus serialport widgets sql
+QT += quick virtualkeyboard serialbus serialport widgets sql charts
 
 CONFIG += c++11
 
@@ -19,9 +19,12 @@ SOURCES += \
         cambienapsuat.cpp \
         config.cpp \
         dangnhapthietbi.cpp \
+        dataobject.cpp \
         deviceparameter.cpp \
         dialitem.cpp \
+        dothi.cpp \
         icpthread.cpp \
+        kiemdinhtudong.cpp \
         localdatabase.cpp \
         logger.cpp \
         login.cpp \
@@ -53,9 +56,12 @@ HEADERS += \
     config.h \
     constant.h \
     dangnhapthietbi.hpp \
+    dataobject.h \
     deviceparameter.h \
     dialitem.h \
+    dothi.hpp \
     icpthread.h \
+    kiemdinhtudong.hpp \
     localdatabase.h \
     logger.h \
     login.hpp \
