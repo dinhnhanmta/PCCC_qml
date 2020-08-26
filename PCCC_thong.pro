@@ -23,6 +23,7 @@ SOURCES += \
         deviceparameter.cpp \
         dialitem.cpp \
         dothi.cpp \
+        hieuchinhthongso.cpp \
         icpthread.cpp \
         kiemdinhtudong.cpp \
         localdatabase.cpp \
@@ -60,6 +61,7 @@ HEADERS += \
     deviceparameter.h \
     dialitem.h \
     dothi.hpp \
+    hieuchinhthongso.hpp \
     icpthread.h \
     kiemdinhtudong.hpp \
     localdatabase.h \
@@ -71,3 +73,5 @@ HEADERS += \
     relay.hpp \
     thunghiembangtay.h \
     vavle.hpp
+
+DISTFILES +=

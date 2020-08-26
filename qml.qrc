@@ -80,5 +80,6 @@
         <file>Icon/on_state.png</file>
         <file>Icon/off_state.png</file>
         <file>Chart.qml</file>
+        <file>HieuChinhThamSo2.qml</file>
     </qresource>
 </RCC>

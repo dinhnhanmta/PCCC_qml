@@ -335,7 +335,7 @@ Item {
                         MouseArea {
                             height: 100
                             anchors.fill: parent
-                            onClicked: stack2.push("HieuChinhThamSo.qml")
+                            onClicked: stack2.push("HieuChinhThamSo2.qml")
                         }
                     }
                 }
