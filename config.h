@@ -47,6 +47,9 @@ public:
 
     QString getToken();
     void setToken(const QString &value);
+
+    QString getDeviceCode();
+    void setDeviceCode(const QString &value);
 };
 
 class AppSetting {

@@ -15,7 +15,7 @@ public:
                                     QString order_by = "", bool ascOrder = false);
     QVariantMap queryRecord(QString table, QStringList fields,
                             QVariantMap condition,
-                            QString order_by, bool ascOrder);
+                            QString order_by="", bool ascOrder = false);
 
 private:
     QSqlQuery buildQueryCmd(QString table, QStringList fields,
@@ -23,6 +23,7 @@ private:
                             bool ascOrder, int limit);
     QSqlDatabase db;
     QSqlQuery *query;
+    QString getLastExecutedQuery();
 };
 
 #endif // LOCALDATABASE_H

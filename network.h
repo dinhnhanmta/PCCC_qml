@@ -11,13 +11,15 @@ class Network: QObject, BaseObject
 public:
     Network();
     void login(QString username, QString password);
-    void uploadDeviceParameter(QByteArray jsonData);
+    void deviceLogin(QString code);
+    void inspect(QByteArray jsonData);
     void syncData();
     QNetworkReply *reply;
 private:
     QNetworkRequest request;
     QNetworkAccessManager *manager;
     const QString loginPath = "/api/Auth/Login";
+    const QString deviceLoginPath = "/api/Devices/DeviceLogin";
     const QString dataPath = "/api/Vehicles/test-result";
 };
 

@@ -1,15 +1,33 @@
 import QtQuick 2.0
 import "FlatUI-Controls-QML-master"
 import QtQuick.Dialogs 1.1
+import QtQuick.Controls 2.0
 Item {
     anchors.fill: parent
-    Component.onCompleted: screenLabel.text = qsTr("ĐĂNG NHẬP THÔNG SỐ THIẾT BỊ")
 
     MessageDialog {
         id: messageDialog
         title: "Lỗi Đăng Nhập"
         icon: StandardIcon.Critical
         text: "Mã thiết bị không tồn tại! Hãy tạo mã mới!"
+    }
+
+    Connections {
+        target: LoginTB
+        onLoginSuccess: {
+           stack2.push("KiemDinhTD.qml")
+        }
+        onLoginFailed: {
+            messageDialog.visible = true
+        }
+    }
+
+    Component.onCompleted: {
+        if (LoginTB.logged()){
+            stack2.push("KiemDinhTD.qml")
+        } else {
+            screenLabel.text = qsTr("ĐĂNG NHẬP THÔNG SỐ THIẾT BỊ")
+        }
     }
 
     Rectangle{
@@ -23,9 +41,9 @@ Item {
             anchors.verticalCenterOffset: -100
             text: qsTr("MÃ THIẾT BỊ")
         }
-        Input {
+        TextField {
             id: maTB
-            width: 200
+            width: 800
             anchors.verticalCenterOffset: -50
             anchors.centerIn: parent
         }
@@ -38,11 +56,7 @@ Item {
             text: "ĐĂNG NHẬP MÃ KIỂM ĐỊNH"
             MouseArea {
             anchors.fill: parent
-            onClicked:
-                {
-                    if (LoginTB.checkLogin(maTB.text)) stack2.push("KiemDinhTD.qml")
-                    else messageDialog.visible = true
-                }
+            onClicked: LoginTB.login(maTB.text)
             }
         }
 
