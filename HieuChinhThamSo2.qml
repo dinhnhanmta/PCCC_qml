@@ -5,6 +5,7 @@ Item {
     anchors.fill: parent
     Component.onCompleted:
     {
+        screenLabel.text = qsTr("HIỆU CHỈNH THAM SỐ HỆ THỐNG")
         var i = 0
         console.log(HieuChinh.q_parameterList)
         for (i = 0;i<HieuChinh.q_parameterList.length;i++)
