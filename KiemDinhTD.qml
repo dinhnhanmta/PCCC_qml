@@ -62,8 +62,6 @@ Item {
             running: true
             triggeredOnStart: true
             onTriggered:{
-                //var d = new Date()
-                //thu = d.getSeconds() + ":" + d. getMilliseconds()
                 time +=1;
                 xValue.push(time)
                 pThu.push(apSuatThu.text.replace(" MPa",""))
@@ -71,72 +69,12 @@ Item {
             }
         }
 
-/*
-        Row {
-            id: footer
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            height: 64
-            DangerButton {
-                text: "Modbus"
-                color: "palegoldenrod"
-                width: 200
-                anchors.right: parent.right
-                anchors.bottom:  parent.bottom
-                Image {
-                    source: Modbus.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
-                    anchors.right: parent.right
-                    scale: 0.7
-                }
-            }
 
-
-            DangerButton {
-                text: "Cảm biến"
-                color: "palegoldenrod"
-                width: 200
-                anchors.horizontalCenter: parent.horizontalCenter
-                Image {
-                    source: Cambien.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
-                    anchors.right: parent.right
-                    scale: 0.7
-                }
-            }
-
-            DangerButton {
-                text: "Home"
-                color: "palegoldenrod"
-                width: 200
-                anchors.left: parent.left
-                anchors.bottom:  parent.bottom
-                Image {
-                     source: "qrc:/Icon/home2.png"
-                     anchors.left: parent.left
-                     scale: 0.7
-                }
-                MouseArea {
-                    id: mouseArea
-                    anchors.fill: parent
-                    onClicked: {
-                        stack.pop("DangNhapTB.qml")
-                    }
-                }
-            }
-        }
-        */
         PrimaryButton {
-
             x: 70
             y: 381
             width: 167
             height: 47
-//=======
-//            x: 616
-//            y: 447
-//            width: 206
-//            height: 93
-//>>>>>>> refs/remotes/origin/issue_4
             text: "BẮT ĐẦU KIỂM ĐỊNH"
         }
 
@@ -192,14 +130,6 @@ Item {
             height: 34
             text: "123"
             pointSize: 18
-//=======
-//            x: 117
-//            y: 351
-//            width: 164
-//            height: 65
-//            text: "100"
-//            pointSize: 26
-//>>>>>>> refs/remotes/origin/issue_4
             disabled: true
             horizontalAlignment: Text.AlignRight
             verticalAlignment: Text.AlignVCenter
