@@ -70,16 +70,14 @@
         <file>img/needle.svg</file>
         <file>img/tickmark.svg</file>
         <file>GaugeStyle.qml</file>
-        <file>ThongSoKD.qml</file>
         <file>FlatUI-Controls-QML-master/Textinput.qml</file>
         <file>ThuNghiemBangTay.qml</file>
         <file>CaiDatThongSo.qml</file>
-        <file>HieuChinhThamSo.qml</file>
         <file>LichSuKiemDinh.qml</file>
         <file>Icon/on_state.png</file>
         <file>Icon/off_state.png</file>
         <file>Chart.qml</file>
-        <file>HieuChinhThamSo2.qml</file>
+        <file>HieuChinhThamSo.qml</file>
         <file>Menu.qml</file>
     </qresource>
 </RCC>

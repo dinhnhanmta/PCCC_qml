@@ -2,19 +2,17 @@
 
 LocalDatabase::LocalDatabase(const QString dbPath)
 {
-    db = QSqlDatabase::addDatabase(DB_NAME);
-    db.setDatabaseName(dbPath);
-    db.open();
-    query = new QSqlQuery(db);
+    QSqlDatabase db = openDabase();
+    QSqlQuery query(db);
 
-    query->exec("create table IF NOT EXISTS vehicles "
+    query.exec("create table IF NOT EXISTS vehicles "
               "(id integer primary key AUTOINCREMENT, "
               "name varchar(255) NOT NULL, "
               "iParameter varchar(2048) DEFAULT '[]', "
               "oParameter varchar(2048) DEFAULT '[]', "
               "syncAt DATETIME, UNIQUE(name))");
 
-    query->exec("create table IF NOT EXISTS devices "
+    query.exec("create table IF NOT EXISTS devices "
               "(id integer primary key AUTOINCREMENT, "
               "vehicleId integer NOT NULL, "
               "code varchar(255) NOT NULL, "
@@ -24,10 +22,19 @@ LocalDatabase::LocalDatabase(const QString dbPath)
               "FOREIGN KEY(vehicleId) REFERENCES vehicles(id))");
 }
 
-QString LocalDatabase::getLastExecutedQuery()
+QSqlDatabase LocalDatabase::openDabase(){
+    QSqlDatabase db;
+    if (db.isOpen()) db.close();
+    db = QSqlDatabase::addDatabase(DB_NAME);
+    db.setDatabaseName(SQL_PATH);
+    db.open();
+    return db;
+}
+
+QString LocalDatabase::getLastExecutedQuery(QSqlQuery query)
 {
-    QString str = query->lastQuery();
-    QMapIterator<QString, QVariant> it(query->boundValues());
+    QString str = query.lastQuery();
+    QMapIterator<QString, QVariant> it(query.boundValues());
     while (it.hasNext()){
         it.next();
         str.replace(it.key(),it.value().toString());
@@ -51,23 +58,18 @@ bool LocalDatabase::insertRecord(QString table, QVariantMap data)
                 listValues.append(it->toString());
                 break;
             case QMetaType::QString:
-                listValues.append('"' + it->toString() + '"');
+                listValues.append("'" + it->toString() + "'");
         }
     }
+    QSqlDatabase db = openDabase();
+    QSqlQuery query(db);
 
-    query->prepare("INSERT OR REPLACE INTO " + table + " (" + data.keys().join(",") + ") "
-                  "VALUES (" + listValues.join(",") + ")");
-    return query->exec();
+    return query.exec("INSERT OR REPLACE INTO " + table + " (" + data.keys().join(",") + ") "
+                                                                                         "VALUES (" + listValues.join(",") + ")");
 }
-
-
 
 bool LocalDatabase::updateRecord(QString table, QVariantMap data, QVariantMap condition)
 {
-    query->prepare("UPDATE :table SET (:set_list) "
-                  "WHERE :condition");
-    query->bindValue(":table", table);
-
     QList<QString> setLists;
     for(QVariantMap::const_iterator iter = data.begin(); iter != data.end(); ++iter) {
         switch (iter.value().userType())
@@ -82,10 +84,9 @@ bool LocalDatabase::updateRecord(QString table, QVariantMap data, QVariantMap co
                 setLists.append(iter.key() + "=" + iter.value().toString());
                 break;
             case QMetaType::QString:
-                setLists.append(iter.key() + "=" + '"' + iter.value().toString() + '"');
+                setLists.append(iter.key() + "=" + "'" + iter.value().toString() + "'");
         }
     }
-    query->bindValue(":set_list", setLists.join(", "));
 
     QList<QString> listConditions;
     for (QVariantMap::const_iterator it = condition.begin(); it != condition.end(); ++it) {
@@ -101,19 +102,17 @@ bool LocalDatabase::updateRecord(QString table, QVariantMap data, QVariantMap co
                 listConditions.append(it.key() + "=" + it.value().toString());
                 break;
             case QMetaType::QString:
-                listConditions.append(it.key() + "=" + '"' + it.value().toString() + '"');
+                listConditions.append(it.key() + "=" + "'" + it.value().toString() + "'");
         }
     }
-    query->bindValue(":condition", listConditions.join(" AND "));
-
-    return query->exec();
+    QSqlDatabase db = openDabase();
+    QSqlQuery query(db);
+    return query.exec("UPDATE " + table + " SET " + setLists.join(", ") +
+                      "WHERE " + listConditions.join(" AND "));
 }
 
 bool LocalDatabase::deleteRecord(QString table, QVariantMap condition)
 {
-    query->prepare("DELETE FROM :table  "
-                  "WHERE :list_condition");
-    query->bindValue(":table", table);
     QList<QString> listConditions;
     for (QVariantMap::const_iterator it = condition.begin(); it != condition.end(); ++it) {
         switch (it.value().userType())
@@ -128,11 +127,13 @@ bool LocalDatabase::deleteRecord(QString table, QVariantMap condition)
                 listConditions.append(it.key() + "=" + it.value().toString());
                 break;
             case QMetaType::QString:
-                listConditions.append(it.key() + "=" + '"' + it.value().toString() + '"');
+                listConditions.append(it.key() + "=" + "'" + it.value().toString() + "'");
         }
     }
-    query->bindValue(":list_condition", listConditions.join(" AND "));
-    return query->exec();
+    QSqlDatabase db = openDabase();
+    QSqlQuery query(db);
+    return query.exec("DELETE FROM " + table  +
+                      " WHERE " + listConditions.join(" AND "));
 }
 
 QSqlQuery LocalDatabase::buildQueryCmd(
@@ -156,7 +157,7 @@ QSqlQuery LocalDatabase::buildQueryCmd(
                     listConditions.append(it.key() + "=" + it.value().toString());
                     break;
                 case QMetaType::QString:
-                    listConditions.append(it.key() + "=" + '"' + it.value().toString() + '"');
+                    listConditions.append(it.key() + "=" + "'" + it.value().toString() + "'");
             }
         }
         sqlCmd += " WHERE " + listConditions.join(" AND ");
@@ -164,6 +165,7 @@ QSqlQuery LocalDatabase::buildQueryCmd(
     sqlCmd += order_by != "" ? " ORDER BY " + order_by + " " + (ascOrder? "ASC" : "DESC"): "";
     sqlCmd += limit > 0 ? ";" : " limit " + QString::number(limit) + ";";
 
+    QSqlDatabase db = openDabase();
     QSqlQuery query(db);
     query.prepare(sqlCmd);
     return query;
