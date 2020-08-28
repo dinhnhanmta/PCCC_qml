@@ -19,6 +19,12 @@ Item {
         }
         onLoginFailed: {
             messageDialog.visible = true
+            deviceLoginBtn.enabled = true
+        }
+        onUnauthorized: {
+            stack2.pop()
+            stack.pop()
+            stack.push("Login.qml")
         }
     }
 
@@ -49,14 +55,18 @@ Item {
         }
 
         PrimaryButton {
+            id: deviceLoginBtn
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.horizontalCenterOffset: -200
             anchors.top: maTB.bottom
             anchors.topMargin: 50
             text: "ĐĂNG NHẬP MÃ KIỂM ĐỊNH"
             MouseArea {
-            anchors.fill: parent
-            onClicked: LoginTB.login(maTB.text)
+                anchors.fill: parent
+                onClicked: {
+                    deviceLoginBtn.enabled = false
+                    LoginTB.login(maTB.text)
+                }
             }
         }
 

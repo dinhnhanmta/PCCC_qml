@@ -15,6 +15,7 @@ public:
     Q_INVOKABLE QString loggedUsername();
     Q_INVOKABLE QString loggedPassword();
     Q_INVOKABLE bool logged();
+    Q_INVOKABLE void logout();
 signals:
     void loginSuccess();
     void loginFailed();

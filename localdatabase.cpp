@@ -12,7 +12,7 @@ LocalDatabase::LocalDatabase(const QString dbPath)
               "name varchar(255) NOT NULL, "
               "iParameter varchar(2048) DEFAULT '[]', "
               "oParameter varchar(2048) DEFAULT '[]', "
-              "syncAt DATETIME)");
+              "syncAt DATETIME, UNIQUE(name))");
 
     query->exec("create table IF NOT EXISTS devices "
               "(id integer primary key AUTOINCREMENT, "
@@ -20,7 +20,7 @@ LocalDatabase::LocalDatabase(const QString dbPath)
               "code varchar(255) NOT NULL, "
               "iParameter varchar(2048) DEFAULT '{}', "
               "oParameter varchar(2048) DEFAULT '{}', "
-              "syncAt DATETIME NULL,"
+              "syncAt DATETIME NULL, UNIQUE(code), "
               "FOREIGN KEY(vehicleId) REFERENCES vehicles(id))");
 }
 

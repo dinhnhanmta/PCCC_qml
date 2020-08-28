@@ -43,7 +43,6 @@
         <file>DoThi.qml</file>
         <file>CButton.qml</file>
         <file>fontawesome-webfont.ttf</file>
-        <file>DangNhapKDV.qml</file>
         <file>Icon/hand.jpg</file>
         <file>Icon/hand.png</file>
         <file>Icon/hand.svg</file>
@@ -79,5 +78,6 @@
         <file>LichSuKiemDinh.qml</file>
         <file>Icon/on_state.png</file>
         <file>Icon/off_state.png</file>
+        <file>Menu.qml</file>
     </qresource>
 </RCC>

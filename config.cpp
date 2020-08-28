@@ -152,7 +152,7 @@ void DefaultConfig::setPassword(const QString &value)
 QString DefaultConfig::getToken()
 {
     this->beginGroup("default");
-    QString value = "Bearer " + this->value("token").toString();
+    QString value = this->value("token").toString();
     this->endGroup();
     return value;
 }

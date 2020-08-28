@@ -13,9 +13,11 @@ public:
     Q_INVOKABLE void login(QString code);
     DangNhapThietBi();
     Q_INVOKABLE bool logged();
+    Q_INVOKABLE void logout();
 signals:
     void loginSuccess();
     void loginFailed();
+    void unauthorized();
 private:
     bool saveDevice(QJsonObject obj);
     Network *network;
