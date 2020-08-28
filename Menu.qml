@@ -28,13 +28,13 @@ Item {
 
             PrimaryButton {
                 text: qsTr("ĐĂNG XUẤT THIẾT BỊ")
-
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
                         LoginTB.logout()
                         stack2.clear()
                     }
+                    enabled: LoginTB.logged()
                 }
             }
         }

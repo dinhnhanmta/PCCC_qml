@@ -15,7 +15,7 @@ void DangNhapThietBi::login(QString code)
                 } else {
                     emit loginFailed();
                 }
-            } else if (network->reply->error() == QNetworkReply::TimeoutError){
+            } else if (network->reply->error() == QNetworkReply::TimeoutError || network->reply->error() == QNetworkReply::HostNotFoundError){
                 getDevice(code);
             } else if (network->reply->error() == QNetworkReply::AuthenticationRequiredError){
                 settings->defautConfig.setToken("");
@@ -39,13 +39,16 @@ bool DangNhapThietBi::saveDevice(QJsonObject obj){
 
 void DangNhapThietBi::getDevice(QString code){
     QStringList fields;
+    fields.append("id");
     fields.append("iParameter");
     fields.append("oParameter");
 
     QVariantMap conditions;
     conditions["code"] = code;
     QVariantMap result = localDatabase->queryRecord("devices", fields, conditions);
-    if (!result.isEmpty()){
+
+    if (result.value("id").isValid()){
+        settings->defautConfig.setDeviceCode(code);
         emit loginSuccess();
     } else {
         emit loginFailed();
@@ -60,7 +63,7 @@ DangNhapThietBi::DangNhapThietBi()
 
 bool DangNhapThietBi::logged()
 {
-    return settings->defautConfig.getDeviceCode() != "";
+    return !settings->defautConfig.getDeviceCode().isEmpty();
 }
 
 void DangNhapThietBi::logout()
