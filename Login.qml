@@ -51,6 +51,7 @@ Item {
                 }
                 onLoginFailed: {
                     messageDialog.visible = true
+                    loginBtn.enabled = true
                 }
             }
 
@@ -175,13 +176,17 @@ Item {
                         }
 
                         CButton{
+                            id: loginBtn
                             height: 50
                             Layout.alignment: Qt.AlignCenter
                             Layout.preferredWidth: 200
                             name: "Đăng nhập"
                             baseColor: mainAppColor
                             borderColor: mainAppColor
-                            onClicked: QLogin.onClick(loginUsername.text,loginPassword.text)
+                            onClicked: {
+                                loginBtn.enabled = false
+                                QLogin.onClick(loginUsername.text,loginPassword.text)
+                            }
                         }
 
                         CButton{

@@ -107,7 +107,7 @@ DefaultConfig::DefaultConfig(const QString savedPath)
 QString DefaultConfig::getServerUrl()
 {
     this->beginGroup("default");
-    QString value = this->value("userName").toString();
+    QString value = this->value("serverUrl").toString();
     this->endGroup();
     return value != "" ? value: DEFAULT_SERVER_URL;
 }
@@ -161,5 +161,20 @@ void DefaultConfig::setToken(const QString &value)
 {
     this->beginGroup("default");
     this->setValue("token", value);
+    this->endGroup();
+}
+
+QString DefaultConfig::getDeviceCode()
+{
+    this->beginGroup("default");
+    QString value = this->value("deviceCode").toString();
+    this->endGroup();
+    return value;
+}
+
+void DefaultConfig::setDeviceCode(const QString &value)
+{
+    this->beginGroup("default");
+    this->setValue("deviceCode", value);
     this->endGroup();
 }

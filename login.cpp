@@ -13,7 +13,7 @@ void Login::onClick(QString userName,QString password)
     connect(network->reply, &QNetworkReply::finished, [=]() {
         if(network->reply->error() == QNetworkReply::NoError){
             QJsonObject obj = QJsonDocument::fromJson(network->reply->readAll()).object();
-            if (obj.value("code").toInt() == 0){
+            if (obj.value("code").toInt() == 200){
                 settings->defautConfig.setToken(obj.value("data").toObject().value("token").toString());
                 emit loginSuccess();
             } else {
@@ -43,5 +43,10 @@ QString Login::loggedPassword()
 
 bool Login::logged()
 {
-    return settings->defautConfig.getToken() != "";
+    return !settings->defautConfig.getToken().isEmpty();
+}
+
+void Login::logout()
+{
+    settings->defautConfig.setToken("");
 }

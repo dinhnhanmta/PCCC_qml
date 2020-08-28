@@ -31,7 +31,7 @@ void DeviceParameter::uploadToServer()
     QByteArray jsonData = QJsonDocument(
                 this->toJsonObject()
         ).toJson();
-    network->uploadDeviceParameter(jsonData);
+    network->inspect(jsonData);
     connect(network->reply, &QNetworkReply::finished, [=]() {
         if(network->reply->error() == QNetworkReply::NoError){
             QJsonObject obj = QJsonDocument::fromJson(network->reply->readAll()).object();

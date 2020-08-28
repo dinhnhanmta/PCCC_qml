@@ -6,26 +6,40 @@ LocalDatabase::LocalDatabase(const QString dbPath)
     db.setDatabaseName(dbPath);
     db.open();
     query = new QSqlQuery(db);
-    if (db.tables().length() == 0){
-        query->exec("create table devices "
-                  "(id integer primary key AUTOINCREMENT, "
-                  "code varchar(20), "
-                  "jsonData varchar(1024), "
-                   "sync TINYINT, "
-                   "createdAt DATETIME, "
-                  "syncAt DATETIME)");
+
+    query->exec("create table IF NOT EXISTS vehicles "
+              "(id integer primary key AUTOINCREMENT, "
+              "name varchar(255) NOT NULL, "
+              "iParameter varchar(2048) DEFAULT '[]', "
+              "oParameter varchar(2048) DEFAULT '[]', "
+              "syncAt DATETIME, UNIQUE(name))");
+
+    query->exec("create table IF NOT EXISTS devices "
+              "(id integer primary key AUTOINCREMENT, "
+              "vehicleId integer NOT NULL, "
+              "code varchar(255) NOT NULL, "
+              "iParameter varchar(2048) DEFAULT '{}', "
+              "oParameter varchar(2048) DEFAULT '{}', "
+              "syncAt DATETIME NULL, UNIQUE(code), "
+              "FOREIGN KEY(vehicleId) REFERENCES vehicles(id))");
+}
+
+QString LocalDatabase::getLastExecutedQuery()
+{
+    QString str = query->lastQuery();
+    QMapIterator<QString, QVariant> it(query->boundValues());
+    while (it.hasNext()){
+        it.next();
+        str.replace(it.key(),it.value().toString());
     }
+    return str;
 }
 
 bool LocalDatabase::insertRecord(QString table, QVariantMap data)
 {
-    query->prepare("INSERT INTO :table (:list_column) "
-                  "VALUES (:list_value)");
-    query->bindValue(":table", table);
-    query->bindValue(":list_column", data.keys().join(","));
     QList<QString> listValues;
-    for (QList<QVariant>::iterator it = data.values().begin(); it != data.values().end(); ++it) {
-        switch (it->userType())
+    for (QVariantMap::const_iterator it = data.begin(); it != data.end(); ++it) {
+        switch (it.value().userType())
         {
             case QMetaType::Bool:
                 listValues.append(it->toBool()?"1":"0");
@@ -40,9 +54,13 @@ bool LocalDatabase::insertRecord(QString table, QVariantMap data)
                 listValues.append('"' + it->toString() + '"');
         }
     }
-    query->bindValue(":list_value", listValues.join(","));
+
+    query->prepare("INSERT OR REPLACE INTO " + table + " (" + data.keys().join(",") + ") "
+                  "VALUES (" + listValues.join(",") + ")");
     return query->exec();
 }
+
+
 
 bool LocalDatabase::updateRecord(QString table, QVariantMap data, QVariantMap condition)
 {
@@ -174,8 +192,8 @@ QList<QVariantMap> LocalDatabase::queryRecords(
     return listResult;
 }
 
-QVariantMap LocalDatabase::queryRecord(QString table, QStringList fields, QVariantMap condition, QString order_by="",
-                                       bool ascOrder = false)
+QVariantMap LocalDatabase::queryRecord(QString table, QStringList fields, QVariantMap condition, QString order_by,
+                                       bool ascOrder)
 {
     QSqlQuery query = buildQueryCmd(table, fields, condition, order_by, ascOrder, 1);
     query.exec();

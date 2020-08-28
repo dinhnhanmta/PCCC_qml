@@ -349,6 +349,13 @@ Item {
             scale: 0.8
             anchors.right: parent.right
             anchors.top: parent.top
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    stack2.clear()
+                    stack2.push("Menu.qml")
+                }
+            }
         }
 
 
@@ -415,6 +422,7 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
+                        screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH VÒI CHỮA CHÁY")
                         if (!stack2.empty) stack2.clear()
                         screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH VÒI CHỮA CHÁY")
                     }
