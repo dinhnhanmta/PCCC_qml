@@ -140,7 +140,7 @@ QSqlQuery LocalDatabase::buildQueryCmd(
         QVariantMap condition, QString order_by="",
         bool ascOrder = false, int limit = 0
         ){
-    QString sqlCmd = "SELECT :fields FROM :table";
+    QString sqlCmd = "SELECT " + fields.join(", ") + " FROM " + table;
     QList<QString> listConditions;
     if (condition.size() > 0){
         for (QVariantMap::const_iterator it = condition.begin(); it != condition.end(); ++it) {
@@ -159,18 +159,13 @@ QSqlQuery LocalDatabase::buildQueryCmd(
                     listConditions.append(it.key() + "=" + '"' + it.value().toString() + '"');
             }
         }
-        sqlCmd += " WHERE :list_condition";
+        sqlCmd += " WHERE " + listConditions.join(" AND ");
     }
     sqlCmd += order_by != "" ? " ORDER BY " + order_by + " " + (ascOrder? "ASC" : "DESC"): "";
     sqlCmd += limit > 0 ? ";" : " limit " + QString::number(limit) + ";";
 
     QSqlQuery query(db);
     query.prepare(sqlCmd);
-    query.bindValue(":table", table);
-    query.bindValue(":fields", fields.join(", "));
-    if (condition.size() > 0){
-        query.bindValue(":list_condition", listConditions.join(" AND "));
-    }
     return query;
 }
 
