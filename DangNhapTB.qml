@@ -40,7 +40,7 @@ Item {
             anchors.fill: parent
             onClicked:
                 {
-                    if (LoginTB.checkLogin(maTB.text)) stack.push("KiemDinhTD.qml")
+                    if (LoginTB.checkLogin(maTB.text)) stack2.push("KiemDinhTD.qml")
                     else messageDialog.visible = true
                 }
             }

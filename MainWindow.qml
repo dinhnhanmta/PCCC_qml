@@ -12,6 +12,7 @@ Item {
     Component.onCompleted: {
         Modbus.startConnection();
         Cambien.openSerialPort();
+        screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH VÒI CHỮA CHÁY")
     }
 
     Rectangle{
@@ -415,6 +416,7 @@ Item {
                     anchors.fill: parent
                     onClicked: {
                         if (!stack2.empty) stack2.clear()
+                        screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH VÒI CHỮA CHÁY")
                     }
                 }
             }

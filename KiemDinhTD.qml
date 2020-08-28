@@ -4,9 +4,8 @@ import QtQuick.Controls.Styles 1.2
 import QtQuick.Controls 1.2
 import IVIControls 1.0
 Item {
-    width: 1024
-    height: 600
-    property alias mouseArea: mouseArea
+    anchors.fill: parent
+    //property alias mouseArea: mouseArea
     visible: true
     property int test : 45;
     property string thu : "??";
@@ -19,23 +18,11 @@ Item {
     Rectangle{
         anchors.fill: parent
         color: "lightblue"
-        Text {
-            y: 18
-            height: 40
-            color: "#0335b8"
-            text: qsTr("KIỂM ĐỊNH TỰ ĐỘNG")
-            font.capitalization: Font.AllUppercase
-            font.weight: Font.ExtraBold
-            style: Text.Outline
-            anchors.horizontalCenterOffset: 13
-            font.bold: true
-            font.family: "Tahoma"
-            anchors.horizontalCenter: parent.horizontalCenter
-            font.pixelSize: 27
-        }
+        Component.onCompleted: screenLabel.text = qsTr("KIỂM ĐỊNH TỰ ĐỘNG")
+
         Chart{
-            x: 280
-            y: 55
+            x: 272
+            y: 0
             id :chartID
             width: 700
             height: 450
@@ -84,14 +71,7 @@ Item {
             }
         }
 
-            Image {
-
-            source: "qrc:/Icon/account.png"
-            scale: 0.8
-            anchors.right: parent.right
-            anchors.top: parent.top
-        }
-
+/*
         Row {
             id: footer
             anchors.left: parent.left
@@ -144,11 +124,11 @@ Item {
                 }
             }
         }
-
+        */
         PrimaryButton {
 
-            x: 59
-            y: 473
+            x: 70
+            y: 381
             width: 167
             height: 47
 //=======
@@ -161,18 +141,19 @@ Item {
         }
 
         Text {
-            x: 17
-            y: 275
+            x: 19
+            y: 171
             text: qsTr("VAN CẤP NƯỚC")
         }
 
         Rectangle {
 
-            x: 42
-            y: 299
+            x: 46
+            y: 195
             width: 60
             height: 37
             Image {
+                id: image
                 source: "qrc:/Icon/switch-off.jpg"
                 anchors.fill: parent
             }
@@ -180,15 +161,15 @@ Item {
         }
 
         Text {
-            x: 158
-            y: 275
+            x: 171
+            y: 171
             text: qsTr("VAN XẢ NƯỚC")
         }
 
         Rectangle {
 
-            x: 176
-            y: 299
+            x: 184
+            y: 195
             width: 60
             height: 37
             Image {
@@ -199,14 +180,14 @@ Item {
         }
         Text {
             x: 80
-            y: 211
+            y: 107
             text: qsTr("TỐC ĐỘ ĐỘNG CƠ")
         }
 
         Input {
 
-            x: 91
-            y: 235
+            x: 92
+            y: 131
             width: 103
             height: 34
             text: "123"
@@ -227,8 +208,8 @@ Item {
 
         Text {
             id: textPressureDial
-            x: 101
-            y: 31
+            x: 105
+            y: -60
             text: qsTr("ÁP SUẤT")
         }
         DialItem {
@@ -267,8 +248,8 @@ Item {
         }
         Dropdown {
             id: dropdownListLoaiVoi
-            x: 79
-            y: 359
+            x: 85
+            y: 263
             width: 127
             height: 35
             dropdownTextColor: "black"
@@ -287,8 +268,8 @@ Item {
         }
         Rectangle
         {
-            x: 48
-            y: 424
+            x: 46
+            y: 333
             height: dropdownListLoaiVoi.height
             width: dropdownListLoaiVoi.width/2
             color: dropdownListLoaiVoi.color
@@ -300,8 +281,8 @@ Item {
         }
 
         Rectangle {
-            x: 176
-            y: 424
+            x: 195
+            y: 333
             width: dropdownListLoaiVoi.width/2
             height: dropdownListLoaiVoi.height
             color: dropdownListLoaiVoi.color
@@ -314,21 +295,27 @@ Item {
 
         Text {
             x: 112
-            y: 335
+            y: 239
             text: qsTr("LOẠI VÒI")
         }
 
         Text {
-            x: 8
-            y: 400
+            x: 19
+            y: 309
             text: qsTr("ÁP SUÂT LÀM VIỆC")
         }
 
         Text {
-            x: 163
-            y: 400
+            x: 175
+            y: 309
             text: qsTr("ÁP SUÂT THỬ")
         }
 
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
