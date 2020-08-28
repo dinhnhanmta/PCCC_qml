@@ -81,5 +81,6 @@
         <file>Chart.qml</file>
         <file>HieuChinhThamSo2.qml</file>
         <file>Menu.qml</file>
+        <file>thietbi.json</file>
     </qresource>
 </RCC>
