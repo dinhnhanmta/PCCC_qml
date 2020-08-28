@@ -78,6 +78,8 @@
         <file>LichSuKiemDinh.qml</file>
         <file>Icon/on_state.png</file>
         <file>Icon/off_state.png</file>
+        <file>Chart.qml</file>
+        <file>HieuChinhThamSo2.qml</file>
         <file>Menu.qml</file>
     </qresource>
 </RCC>

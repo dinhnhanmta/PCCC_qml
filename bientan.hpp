@@ -9,7 +9,9 @@ class Bientan: public QObject {
     Q_PROPERTY(int q_baudrate READ getBaudrate WRITE setBaudrate NOTIFY varChanged)
     Q_PROPERTY(int q_frequency READ getFrequency WRITE setFrequency NOTIFY varChanged)
 
-     Q_PROPERTY(int q_velocity  READ getVelocity  NOTIFY varChanged)
+    Q_PROPERTY(int q_velocity  READ getVelocity  NOTIFY varChanged)
+    Q_PROPERTY(int q_real_frequency READ getRealFrequency  NOTIFY varChanged)
+
 signals:
     void varChanged ();
 public:
@@ -29,11 +31,15 @@ public:
     void setFrequency (int fred){frequency = fred;}
     int getVelocity(){return velocity;}
     void readVelocityCompleted();
+    void readRealFrequency();
+    int getRealFrequency(){return  real_frequency;}
 public:
     Q_INVOKABLE void write_friquency(int freq);
 
     Q_INVOKABLE void setStart(int val);
     Q_INVOKABLE void readVelocity();
+
+
 private:
     Modbus *bientan_modbus;
     int address;
@@ -41,6 +47,7 @@ private:
     int baudrate;
     int frequency;
     int velocity;
+    int real_frequency;
 };
 
 #endif // BIENTAN_H

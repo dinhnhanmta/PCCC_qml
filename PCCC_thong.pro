@@ -1,4 +1,4 @@
-QT += quick virtualkeyboard serialbus serialport widgets sql
+QT += quick virtualkeyboard serialbus serialport widgets sql charts
 
 CONFIG += c++11
 
@@ -19,19 +19,22 @@ SOURCES += \
         cambienapsuat.cpp \
         config.cpp \
         dangnhapthietbi.cpp \
+        dataobject.cpp \
         deviceparameter.cpp \
         dialitem.cpp \
+        dothi.cpp \
+        hieuchinhthongso.cpp \
         icpthread.cpp \
+        kiemdinhtudong.cpp \
         localdatabase.cpp \
         logger.cpp \
         login.cpp \
         main.cpp \
         master.cpp \
         modbus.cpp \
-        modbusthread.cpp \
         network.cpp \
         relay.cpp \
-        thunghiembangtaycontroller.cpp \
+        thunghiembangtay.cpp \
         vavle.cpp
 
 RESOURCES += qml.qrc
@@ -54,16 +57,21 @@ HEADERS += \
     config.h \
     constant.h \
     dangnhapthietbi.hpp \
+    dataobject.h \
     deviceparameter.h \
     dialitem.h \
+    dothi.hpp \
+    hieuchinhthongso.hpp \
     icpthread.h \
+    kiemdinhtudong.hpp \
     localdatabase.h \
     logger.h \
     login.hpp \
     master.h \
     modbus.hpp \
-    modbusthread.h \
     network.h \
     relay.hpp \
-    thunghiembangtaycontroller.h \
+    thunghiembangtay.h \
     vavle.hpp
+
+DISTFILES +=

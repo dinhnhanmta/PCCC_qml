@@ -7,6 +7,8 @@ class CamBienApSuat: public QObject, BaseObject
 {
     Q_OBJECT
     Q_PROPERTY(float q_pressure READ getPressure WRITE setPressure NOTIFY pressureChanged)
+    Q_PROPERTY(float q_val_pot READ getValPot NOTIFY pressureChanged)
+
     Q_PROPERTY(bool q_connectionState READ getState WRITE setState NOTIFY varChanged)
     Q_PROPERTY(QString portname READ getPortName WRITE setPortName NOTIFY varChanged)
     Q_PROPERTY(int baudrate READ getBaudrate WRITE setBaudrate NOTIFY varChanged)
@@ -21,6 +23,7 @@ signals:
 public:
     CamBienApSuat();
     float getPressure (){return pressure;}
+    float getValPot(){return  val_pot;}
     void setPressure (float p){pressure = p;}
     void setPortName(QString value){ settings->cambienParam.setPortName(value);}
     QString getPortName(){return settings->cambienParam.getPortName();}
@@ -44,6 +47,8 @@ public:
     Q_INVOKABLE void closeSerialPort();
     Q_INVOKABLE void writeData(const QByteArray &data);
     Q_INVOKABLE void sendRequest();
+
+
     void readData();
     void handleError(QSerialPort::SerialPortError error);
     bool getState() const;
@@ -60,6 +65,7 @@ private:
     float pressure;
     float val_pot;
     QString m_receiveText;
-};
+};    Q_INVOKABLE void writeData(const QByteArray &data);
+
 
 #endif // CAMBIENAPSUAT_HPP

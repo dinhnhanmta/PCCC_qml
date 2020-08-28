@@ -11,10 +11,11 @@
 #include "login.hpp"
 #include "dangnhapthietbi.hpp"
 #include "relay.hpp"
-#include "thunghiembangtaycontroller.h"
-#include "icpthread.h"
-#include "modbusthread.h"
-
+#include "thunghiembangtay.h"
+#include "dothi.hpp"
+#include "kiemdinhtudong.hpp"
+#include "dataobject.h"
+#include "hieuchinhthongso.hpp"
 int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
@@ -26,13 +27,12 @@ int main(int argc, char *argv[])
     CamBienApSuat *m_cambien = new CamBienApSuat();
     Login *m_login = new Login();
     DangNhapThietBi *m_DangNhapThietBi = new DangNhapThietBi();
-    IcpThread *m_icpThread = new IcpThread(m_cambien);
-    ModbusThread *m_modbusThread = new ModbusThread(m_bientan, m_modbus, m_relay);
-
-    ThuNghiemBangTayController *m_thuNghiemBangTay = new ThuNghiemBangTayController(m_icpThread, m_modbusThread);
-
+    ThuNghiemBangTay *m_thuNghiemBangTay = new ThuNghiemBangTay(m_cambien, m_bientan, m_modbus, m_relay);
+    KiemDinhTuDong *m_kiemDinhTuDong = new KiemDinhTuDong();
+    HieuChinhThongSo *m_hieuChinhThongSo = new HieuChinhThongSo();
     qmlRegisterType<DialItem>("IVIControls", 1, 0, "DialItem");
     qmlRegisterType<CamBienApSuat>("camBienApSuat", 1, 0, "CamBienApSuat");
+    //qmlRegisterType<HieuChinhThongSo>("HieuChinhThongSo", 1, 0, "HieuChinhThongSo");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QApplication app(argc, argv);
@@ -47,10 +47,12 @@ int main(int argc, char *argv[])
     context->setContextProperty("QLogin", m_login);
     context->setContextProperty("LoginTB", m_DangNhapThietBi);
     context->setContextProperty("Relay", m_relay);
-
-    m_thuNghiemBangTay->startModbus();
-    m_thuNghiemBangTay->startICP();
-
+    context->setContextProperty("TnBangTay", m_thuNghiemBangTay);
+    context->setContextProperty("KiemDinhTD", m_kiemDinhTuDong);
+    context->setContextProperty("listLoaiVoi", QVariant::fromValue(m_kiemDinhTuDong->listLoaiVoi));
+    context->setContextProperty("listApSuatThu", QVariant::fromValue(m_kiemDinhTuDong->listApSuatThu));
+    context->setContextProperty("listApSuatLamViec", QVariant::fromValue(m_kiemDinhTuDong->listApSuatLamViec));
+    context->setContextProperty("HieuChinh", m_hieuChinhThongSo);
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {

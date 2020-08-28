@@ -124,8 +124,8 @@ void Modbus::readHoldingRegister(int server,int start_add, int number_register)
 void Modbus::readHoldingRegisterCompleted() const {
   QModbusReply *reply = qobject_cast<QModbusReply *>(sender());
   const QModbusDataUnit result = reply->result();
-  qDebug() << "read ";
-  qDebug() << "";
+//  qDebug() << "read ";
+//  qDebug() << "";
 
   for (int j = 0; j < nBytes; j++)
       qDebug() << QString("The value of %1 is %2").arg(j).arg(result.value(j));
@@ -155,17 +155,46 @@ void Modbus::readMultiCoils(int server,int start_add, int number_coils, bool *da
 void Modbus::readCoilsCompleted()  {
   QModbusReply *reply = qobject_cast<QModbusReply *>(sender());
   const QModbusDataUnit result = reply->result();
-  qDebug() << "read ";
-  qDebug() << "";
+//  qDebug() << "read ";
+//  qDebug() << "";
 
   for (int j = 0; j < nBytes; j++)
   {
     coil_result[j] = result.value(j);
-    qDebug() << QString("The coil value of %1 is %2").arg(j).arg(result.value(j));
+//    qDebug() << QString("The coil value of %1 is %2").arg(j).arg(result.value(j));
   }
   emit readCoilsCompletedSignal ();
 }
 
+void Modbus::readMultiDiscrete(int server,int start_add, int number_coils, bool *data)
+{
+
+    nDiscrete = number_coils;
+    QModbusDataUnit readUnit(QModbusDataUnit::DiscreteInputs, start_add,
+                             static_cast<unsigned short>(number_coils));
+
+    if (auto *reply = modbusDevice->sendReadRequest(readUnit, server)) {
+      if (!reply->isFinished())
+        //      connect the finished signal of the request to your read slot
+        connect(reply, &QModbusReply::finished, this, &Modbus::readDiscreteCompleted);
+      //    else
+      //      delete reply; // broadcast replies return immediately
+    } else
+      qDebug() << "request error";
+
+     discrete_result= data;
+}
+void Modbus::readDiscreteCompleted()  {
+  QModbusReply *reply = qobject_cast<QModbusReply *>(sender());
+  const QModbusDataUnit result = reply->result();
+
+  for (int j = 0; j < nDiscrete; j++)
+  {
+    discrete_result[j] = result.value(j);
+//    qDebug() << QString("The Discrete Input value of %1 is %2").arg(j).arg(result.value(j));
+  }
+  emit readDiscreteCompletedSignal ();
+}
 void Modbus::stopConnection()
 {
     modbusDevice->disconnectDevice();

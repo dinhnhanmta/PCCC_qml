@@ -7,7 +7,26 @@ import QtQuick.Controls 1.2
 Item
 {
     anchors.fill: parent
-    Component.onCompleted: screenLabel.text = qsTr("THỬ NGHIỆM BẰNG TAY")
+    Component.onCompleted:
+        {
+
+        screenLabel.text = qsTr("THỬ NGHIỆM BẰNG TAY")
+
+    }
+
+    Timer {
+            interval: 200; running: true; repeat: true
+          onTriggered: Cambien.sendRequest()
+        }
+    Timer {
+                interval: 200; running: true; repeat: true
+                onTriggered:
+                {
+//                     Relay.readAllState()
+                  // Bientan.readVelocity()
+                    TnBangTay.updateLogic()
+                }
+            }
 
     Rectangle {
         anchors.fill: parent
@@ -18,16 +37,17 @@ Item
             anchors.centerIn: parent
             width: parent - 60
             height: parent.height
-            spacing: 60
+            spacing: 10
 
             Column {
                 id: column1
                 y: 20
-                spacing: 20
-                height: parent.height - 40
+                width: 350
+                spacing: 12
+                height: parent.height
 
                 Text {
-                    text: qsTr("VAN XẢ NƯỚC")
+                    text: qsTr("PUML UP")
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.bold: false
                     font.pointSize: 18
@@ -35,8 +55,9 @@ Item
 
                 Button{
                     id: vanXaButton
-                    width: 108
-                    height: 64
+                    width: 150
+                    height: 80
+                    anchors.horizontalCenter: parent.horizontalCenter
                     enabled: Modbus.q_connectionState
                     property bool press: false
                     Image {
@@ -50,7 +71,7 @@ Item
                 }
 
                 Text {
-                    text: qsTr("VAN CẤP NƯỚC")
+                    text: qsTr("PUMP DOWN")
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.bold: false
                     font.pointSize: 18
@@ -58,8 +79,9 @@ Item
 
                 Button{
                     id: vanBomButton
-                    width: 108
-                    height: 64
+                    width: 150
+                    height: 80
+                    anchors.horizontalCenter: parent.horizontalCenter
                     enabled: Modbus.q_connectionState
                     property bool press: false
                     Image {
@@ -82,12 +104,13 @@ Item
 
                 Button{
                     id: denBatDau
-                    width: 108
-                    height: 64
+                    width: 150
+                    height: 80
+                    anchors.horizontalCenter: parent.horizontalCenter
                     enabled: Modbus.q_connectionState
                     property bool press: false
                     Image {
-                        id: buttonImage3
+                        id: buttonImage4
                         source: Relay.q_start_led_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
                         anchors.fill: parent
                     }
@@ -96,10 +119,12 @@ Item
                         Relay.writeStartLed(!Relay.q_start_led_state)
                     }
                 }
+
             }
             Column {
                 id: column2
-                spacing: 40
+                width: 350
+                spacing: 16
                 height: parent.height
                 Text {
                     text: qsTr("ÁP SUẤT")
@@ -110,7 +135,7 @@ Item
 
                 DialItem {
                     id: speed
-                    width: 200
+                    width: 300
                     height: width
                     startAngle: 30
                     spanAngle: 300
@@ -118,11 +143,12 @@ Item
                     stopValue: 25
                     dialWidth: 4
                     dialColor: "darkblue"
+                    anchors.horizontalCenter: parent.horizontalCenter
 
                     Image {
                         id: needle
-                        anchors.verticalCenterOffset: -24
-                        anchors.horizontalCenterOffset: 1
+                        width: 270
+                        height: 270
                         source: "./Icon/needle.png"
                         scale: 0.8
                         anchors.centerIn: parent
@@ -132,148 +158,97 @@ Item
 
                     Slider {
                         id: slider
-                        y: -82
+                        y: -58
                         anchors.top: speed.bottom
                         anchors.horizontalCenter: parent.horizontalCenter
                         width: 300
-                        anchors.horizontalCenterOffset: 7
+                        anchors.horizontalCenterOffset: -55
                         minimumValue: 0
                         maximumValue: 300
                         value: Cambien.q_pressure*12
                         visible: false
                     }
-                }
 
+
+                }
                 Text {
                     id: pressure_value
-                    text: Cambien.q_pressure
+                    text: Cambien.q_pressure.toFixed(1)
                     anchors.horizontalCenter: parent.horizontalCenter
                     elide: Text.ElideNone
                     font.pointSize: 18
                 }
+
+
             }
             Column {
                 id: column
-                spacing: 20
+                width: 350
+                spacing: 50
                 height: parent.height
+                anchors.top: parent.top
+                anchors.topMargin: 20
                 Text {
-                    text: qsTr("ĐẶT TỐC ĐỘ")
+                    id: tocDoText
+                    text: qsTr("TỐC ĐỘ ĐẶT")
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.pointSize: 18
                     font.bold: false
                 }
-                Row {
-                    id: row1
+                Row
+                {
+                    id: row_speed
+//                    layoutDirection: Qt.LeftToRight
                     anchors.horizontalCenter: parent.horizontalCenter
-                    spacing: 20
-                    PrimaryButton {
-                        id: btnSpeed
-                        width: 125
-                        height: 40
-                        enabled: Modbus.q_connectionState
-                        text: "Đặt tốc độ"
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: Bientan.write_friquency(parseInt(txtSpeed.text)*100)
-                        }
-                    }
-
-                    Input{
-                        id: txtSpeed
-                        width: 100
-                        height: 40
-                        borderColor: "black"
-                        backgroundColor: "lightblue"
-                        textColor: "black"
-                        text: "0"
-                    }
-
+//                    anchors.leftMargin: 0
                     Text {
-                        width: 62
-                        height: 14
-                        text: qsTr("RPM")
-                        anchors.verticalCenter: parent.verticalCenter
-                        font.pointSize: 12
-                        font.bold: false
-                    }
-                }
-                Text {
-                    text: qsTr("ĐIỀU KHIỂN TỐC ĐỘ")
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    font.pointSize: 18
-                    font.bold: false
-                }
-                Text {
-                    width: 108
-                    height: 37
-                    text: velocity_slider.value.toFixed(0)
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    font.weight: Font.Bold
-                    font.pointSize: 24
-                }
-                Slider {
-                    id: velocity_slider
-                    width: 300
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    minimumValue: 0
-                    maximumValue: 50
-                    onValueChanged:
-                    {
-                       txtSpeed.text = velocity_slider.value.toFixed(0)
-                    }
+                        width: 108
+                        height: 37
+                        color: "#0410d6"
+                        text: Cambien.q_val_pot.toFixed(1)
 
-                    onPressedChanged:
-                    {
-                        if(!pressed)  Bientan.write_friquency(velocity_slider.value.toFixed(0));
+                        font.weight: Font.Bold
+                        font.pointSize: 24
                     }
+                    //                Text {
+                    //                    width: 108
+                    //                    height: 37
+                    //                    text: "Hz"
+                    //                    anchors.horizontalCenter: parent.horizontalCenter
+                    //                    font.weight: Font.Bold
+                    //                    font.pointSize: 24
+                    //                }
                 }
                 Text {
-                    text: qsTr("TỐC ĐỘ BIẾN TẦN THỰC TẾ")
+                    text: qsTr("TỐC ĐỘ THỰC TẾ")
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.bold: false
                     font.pointSize: 18
                 }
                 Text {
-                    text: Bientan.q_velocity
+                    color: "#fd410b"
+                    text: Bientan.q_real_frequency/100
+                    font.family: "Tahoma"
                     anchors.horizontalCenter: parent.horizontalCenter
-                    font.bold: false
+                    font.bold: true
                     font.pointSize: 18
                 }
-                PrimaryButton{
-                    id: startButton
-                    text: "START"
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    width: 250
-                    height: 40
-                    radius: 1
-                    MouseArea {
-                        enabled: Modbus.q_connectionState
-                        property bool press: false
-                        height: 64
-                        anchors.fill: parent
-                        onClicked: {
-                            press= !press
-                            if (press)
-                            {
-                                startButton.text = "STOP"
-                                startButton.color = "red";
-                                startButton.highlightColor = "red"
-                                Bientan.setStart(1);
-                            }
-                            else
-                            {
-                                startButton.text = "START"
-                                startButton.color = "#1ABC9C"
-                                startButton.highlightColor = "#1ABC9C"
-                                Bientan.setStart(5);
-                            }
-                        }
-                    }
-                }
+
             }
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 /*##^## Designer {
     D{i:0;autoSize:true;height:480;width:640}

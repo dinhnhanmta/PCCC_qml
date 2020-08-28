@@ -14,7 +14,7 @@ void ModbusThread::run()
     {
 //        qDebug()<<"update modbus";
         updateRelay();
-        msleep(500);
+        msleep(1000);
     }
 }
 

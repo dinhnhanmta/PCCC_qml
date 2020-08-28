@@ -46,7 +46,9 @@ void CamBienApSuat::writeData(const QByteArray &data)
 void CamBienApSuat::sendRequest()
 {
         m_serial->write("#01\r");
+        //        qDebug() << "write #01\r";
 }
+
 
 void CamBienApSuat::readData()
 {
@@ -59,14 +61,15 @@ void CamBienApSuat::readData()
 
 void CamBienApSuat::OnReceiveCompleted()
 {
-   QStringList splitted;
-    qDebug()<< "receive complete"<< m_receiveText;
-     qDebug()<< "splitted";
+//    qDebug()<< "receive complete"<< m_receiveText;
+//     qDebug()<< "splitted";
+    QStringList splitted ;
     splitted = m_receiveText.split("+");
-    val_pot = splitted[5].toFloat()/2.5*10;
-    pressure = splitted[6].toFloat()/2.5*10;
-    qDebug()<<"val_pot = "<<val_pot;
-    qDebug()<<"pressure = "<<pressure;
+    pressure = splitted[5].toFloat();///2.5*10;
+    val_pot = splitted[6].toFloat()*5;///2.5*10;
+//    qDebug()<<"val_pot = "<<val_pot;
+//    qDebug()<<"pressure = "<<pressure;
+    m_receiveText = "";
     emit pressureChanged();
 
 }

@@ -30,45 +30,70 @@
 import QtQuick 2.0
 import QtCharts 2.0
 import camBienApSuat 1.0
+import QtQml 2.0
 Item {
-    width: 500
-    height: 300
+    width: 700
+    height: 450
+    property int test : 45;
+    property string thu : "??";
+    property var pThu: []
+    property var xValue: []
+    Chart{
+        id :chartID
+        width: 700
+        height: 450
 
-    //![1]
-    ChartView {
-        title: "Two Series, Common Axes"
-        anchors.fill: parent
-        legend.visible: false
-        antialiasing: true
+        onPaint: {
 
-        legend.alignment: Qt.AlignTop
-        animationOptions: ChartView.SeriesAnimations
+            line({
+                     labels : xValue,
+                     datasets : [
+                         {
+                             fillColor : "rgba(220,220,220,0.5)",
+                             strokeColor : "rgba(220,220,220,1)",
+                             pointColor : "rgba(220,220,220,1)",
+                             pointStrokeColor : "#fff",
+                             data : someList
+                         },
+                         {
+                             fillColor : "rgba(151,187,205,0.5)",
+                             strokeColor : "rgba(151,187,205,1)",
+                             pointColor : "rgba(151,187,205,1)",
+                             pointStrokeColor : "#fff",
+                             data : [28,48,40,19,96,27,100]
+                         }
+                     ],
+                 });
 
-        ValueAxis {
-            id: axisX
-            min: 0
-            max: 20
-            tickCount: 11
-        }
 
-        ValueAxis {
-            id: axisY
-            min: 0
-            max: 25
-        }
+       }
 
-        LineSeries {
-            id: series1
-            axisX: axisX
-            axisY: axisY
-        }
     }
 
-    Component.onCompleted: {
-        for (var i = 0; i <= 19; i++) {
-            series1.append(i, 0);
+    Timer{
+        id:t
+        interval: 1000
+        repeat: true
+        running: true
+        onTriggered:{
+            var d = new Date()
+            thu = d.getSeconds() + ":" + d. getMilliseconds()
+            xValue.push(thu)
+            someList.push(44)
+            chartID.requestPaint();
         }
     }
+        Component.onCompleted: {
+            console.debug("this is the chart.js by qml you can use it just like use the chart.js ",
+                          "you can look the Chart.js in http://chartjs.org/");
+            thu="qeqef"
+            requestPaint()
+        }
+
+
+
+
+
 
     CamBienApSuat {
         onPressureChanged:
@@ -77,21 +102,8 @@ Item {
             axisX.max = axisX.max + 1
             var count = series1.count
             series1.remove(0);
-            series1insert(count,axisX.max-1,Cambien.q_pressure);
+            series1.insert(count,axisX.max-1,Cambien.q_pressure);
+            var xValue = d.getMinutes() + ":" + d.getSeconds() + ":"+d.getMilliseconds()
         }
     }
-
-    /*
-       Timer {
-            interval: 1000; running: true; repeat: true
-            onTriggered: {
-                axisX.min = axisX.min + 1
-                axisX.max = axisX.max + 1
-                var count = series1.count
-                series1.remove(0);
-                series1.insert(count,axisX.max-1,Cambien.q_pressure);
-            }
-        }
-        */
-
 }
