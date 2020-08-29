@@ -50,3 +50,11 @@ void Login::logout()
 {
     settings->defautConfig.setToken("");
 }
+
+QString Login::displayedNamed(){
+    if (settings->defautConfig.getToken().isEmpty()){
+        return "Chưa đăng nhập";
+    } else {
+        return settings->defautConfig.getUserName();
+    }
+}

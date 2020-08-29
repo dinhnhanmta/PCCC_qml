@@ -38,12 +38,28 @@ Item {
 
         StackView {
             id: stack2
-            anchors.horizontalCenter: parent.horizontalCenter
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: screenLabel.bottom
             anchors.bottom: footer.top
             anchors.topMargin: 20
+            replaceEnter: Transition {
+                  PropertyAnimation{
+                      property: "opacity"
+                      from: 0
+                      to: 1
+                      duration: 300
+                  }
+              }
+
+              replaceExit: Transition {
+                  PropertyAnimation{
+                      property: "opacity"
+                      from: 1
+                      to: 0
+                      duration: 250
+                  }
+              }
 
             Row {
                 width: parent.width - 20
@@ -65,6 +81,7 @@ Item {
                         border.color: "#4dade9"
                         activeFocusOnTab: false
                         anchors.horizontalCenter: parent.horizontalCenter
+                        enabled: stack2.empty
                         Image {
                             width: 100
                             height: 100
@@ -84,6 +101,7 @@ Item {
                         radius: 1
                         text: "                 CẬP NHẬT THÔNG SỐ\n                        KIỂM ĐỊNH"
                         anchors.horizontalCenter: parent.horizontalCenter
+                        enabled: stack2.empty
                         Image {
                             width: 100
                             height: 100
@@ -103,7 +121,7 @@ Item {
                         radius: 1
                         text: "         CÀI ĐẶT HỆ THỐNG"
                         anchors.horizontalCenter: parent.horizontalCenter
-
+                        enabled: stack2.empty
                         Image {
                             width: 100
                             height: 100
@@ -130,6 +148,7 @@ Item {
                         radius: 1
                         text: "                THỬ NGHIỆM BẰNG TAY"
                         anchors.horizontalCenter: parent.horizontalCenter
+                        enabled: stack2.empty
                         Image {
                             width: 100
                             height: 100
@@ -151,7 +170,7 @@ Item {
                         radius: 1
                         text: "LỊCH SỬ KIỂM ĐỊNH"
                         anchors.horizontalCenter: parent.horizontalCenter
-
+                        enabled: stack2.empty
                         Image {
                             width: 100
                             height: 100
@@ -171,7 +190,7 @@ Item {
                         radius: 1
                         text: "         HIỆU CHỈNH THÔNG SỐ"
                         anchors.horizontalCenter: parent.horizontalCenter
-
+                        enabled: stack2.empty
                         Image {
                             width: 100
                             height: 100
@@ -187,10 +206,10 @@ Item {
                     }
                 }
             }
-
         }
 
         Image {
+            id: userAvatar
             source: "qrc:/Icon/account.png"
             scale: 0.8
             anchors.right: parent.right
@@ -204,57 +223,113 @@ Item {
             }
         }
 
+        Text {
+            anchors.right: userAvatar.left
+            height: userAvatar.height
+            text: qsTr("Xin chào\n") + QLogin.displayedNamed()
+            font.pointSize: 10
+            font.weight: Font.Bold
+            font.family: "Tahoma"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+
 
         Row {
             id: footer
             y: 551
             anchors.left: parent.left
-
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             height: 50
             anchors.rightMargin: 0
             anchors.bottomMargin: 0
             anchors.leftMargin: 0
-            DangerButton {
-                id: dangerButton1
-                y: 0
-                text: ""
+
+
+
+
+            Rectangle{
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottom:  parent.bottom
+                height: homeBtn.height
                 color: "palegoldenrod"
-                radius: 1
-                width: 100
-                height: 50
+                width: perphiralStatusTxt.width + perphiralStatus.width + 30
+                Text {
+                    id: perphiralStatusTxt
+                    anchors.top: perphiralStatus.top
+                    anchors.right: perphiralStatus.left
+                    height: homeBtn.height
+                    text: qsTr("Kết nối\nngoại vi")
+                    horizontalAlignment: Text.AlignHCenter
+                    style: Text.Normal
+                    font.weight: Font.ExtraBold
+                    font.capitalization: Font.AllUppercase
+                    font.family: "Tahoma"
+                    anchors.rightMargin: 15
+                    anchors.leftMargin: 15
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 15
+                }
+                DangerButton {
+                    id: perphiralStatus
+                    width: 100
+                    height: homeBtn.height
+                    text: ""
+                    radius: 1
+                    color: "palegoldenrod"
+                    anchors.right: parent.right
+                    anchors.bottom:  parent.bottom
+                    Image {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: Cambien.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
+                        scale: 0.7
+                    }
+                }
+            }
+
+            Rectangle{
                 anchors.right: parent.right
                 anchors.bottom:  parent.bottom
-                Image {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.top: parent.top
-                    source: Modbus.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
-                    scale: 0.7
+                height: homeBtn.height
+                color: "palegoldenrod"
+                width: sensorStatusTxt.width + sensorStatus.width + 30
+                Text {
+                    id: sensorStatusTxt
+                    anchors.top: sensorStatus.top
+                    anchors.right: sensorStatus.left
+                    height: homeBtn.height
+                    text: qsTr("Kết nối\ncảm biến")
+                    horizontalAlignment: Text.AlignHCenter
+                    font.weight: Font.ExtraBold
+                    font.capitalization: Font.AllUppercase
+                    anchors.rightMargin: 15
+                    anchors.leftMargin: 15
+                    verticalAlignment: Text.AlignVCenter
+                    font.pixelSize: 15
                 }
-            }
-
-
-            DangerButton {
-                id: dangerButton
-                width: 100
-                height: 50
-                text: ""
-                anchors.horizontalCenter: parent.horizontalCenter
-                radius: 1
-                color: "#eee8e7"
-                anchors.bottom:  parent.bottom
-                Image {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: Cambien.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
+                DangerButton {
+                    id: sensorStatus
+                    text: ""
+                    color: "palegoldenrod"
+                    radius: 1
+                    width: 100
                     anchors.right: parent.right
-                    scale: 0.7
+                    anchors.bottom:  parent.bottom
+                    Image {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                        source: Modbus.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
+                        scale: 0.7
+                    }
                 }
             }
 
+
+
             DangerButton {
+                id: homeBtn
                 text: "Home"
                 color: "palegoldenrod"
                 width: 200
@@ -263,7 +338,7 @@ Item {
                 Image {
                     source: "qrc:/Icon/home2.png"
                     anchors.left: parent.left
-                    scale: 0.7
+                    scale: 0.5
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -276,21 +351,6 @@ Item {
             }
         }
 
-        Text {
-            id: element
-            x: 298
-            y: 566
-            text: qsTr("Kết nối cảm biến")
-            font.pixelSize: 15
-        }
-
-        Text {
-            id: element1
-            x: 798
-            y: 566
-            text: qsTr("Kết nối ngoại vi")
-            font.pixelSize: 15
-        }
     }
 }
 
@@ -298,7 +358,15 @@ Item {
 
 
 
+
+
+
+
+
+
+
+
 /*##^## Designer {
-    D{i:28;anchors_height:50;anchors_width:100}
+    D{i:28;anchors_height:50;anchors_width:100}D{i:32;anchors_height:50;anchors_width:100}
 }
  ##^##*/
