@@ -1,5 +1,9 @@
 #ifndef HIEUCHINHTHONGSO_HP
 #define HIEUCHINHTHONGSO_HP
+#include "baseobject.h"
+#include "localdatabase.h"
+#include "network.h"
+
 #include <QFile>
 #include <QDebug>
 #include <QObject>
@@ -8,18 +12,23 @@
 #include <QJsonValue>
 #include <QJsonArray>
 
-class HieuChinhThongSo : public QObject
+class HieuChinhThongSo : public QObject, BaseObject
 {
     Q_OBJECT
     Q_PROPERTY(QStringList q_parameterList READ getPara WRITE setPara NOTIFY paraChanged)
 public:
-    explicit HieuChinhThongSo(QObject *parent = nullptr);
+    HieuChinhThongSo();
     void readJson(QString name);
 
     QStringList getPara(){return parameterList; }
     void setPara(QStringList list){parameterList  = list;}
+
+    Q_INVOKABLE void submitData();
 signals:
     void paraChanged();
+    void submitSuccess();
+    void submitFailed();
+    void unauthorized();
 private:
     struct Lang{
         QString ma_tb = "";
@@ -40,6 +49,10 @@ private:
 
     QStringList parameterList ;
 
+    Network *network;
+    LocalDatabase *localDatabase;
+
+    bool saveInspectData(QByteArray jsonData, bool sync);
 };
 
 #endif // HIEUCHINHTHONGSO_HP
