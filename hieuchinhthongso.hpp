@@ -7,15 +7,15 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
-
+#include "localdatabase.h"
 class HieuChinhThongSo : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QStringList q_parameterList READ getPara WRITE setPara NOTIFY paraChanged)
 public:
     explicit HieuChinhThongSo(QObject *parent = nullptr);
+    HieuChinhThongSo(LocalDatabase *db);
     void readJson(QString name);
-
     QStringList getPara(){return parameterList; }
     void setPara(QStringList list){parameterList  = list;}
 signals:
@@ -39,6 +39,7 @@ private:
     } lang;
 
     QStringList parameterList ;
+    LocalDatabase * database;
 
 };
 
