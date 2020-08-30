@@ -9,7 +9,7 @@ Item {
         var i = 0
         for (i = 0;i<HieuChinh.q_parameterList.length;i++)
         {
-            parameter_name.append({name: HieuChinh.q_parameterList[i].padEnd(10," ")})
+            parameter_name.append({name: HieuChinh.q_parameterList[i]})
         }
     }
 
@@ -20,17 +20,25 @@ Item {
         GridLayout{
             width: parent.width
             height:parent.height
-            columns: 3
-            anchors.centerIn: parent
+            columns: 4
+            anchors.left: parent.left
+            anchors.leftMargin: 50
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 100
+            anchors.top: parent.top
             Repeater {
                 id: repeat
                 model: parameter_name
-                Text {
-                    text: modelData
-                    Input{
-                        anchors.left: parent.right
-                        anchors.leftMargin: 10
-                        anchors.verticalCenter: parent.verticalCenter
+
+                Input{
+                    width: 153
+                    height: 53
+                    digiOnly:( modelData == "Nơi sản xuất") ? false :true
+                    Text {
+                        text: modelData
+                        anchors.bottom: parent.top
+                        anchors.bottomMargin: 10
+                        anchors.horizontalCenter:  parent.horizontalCenter
                     }
                 }
             }
@@ -40,4 +48,30 @@ Item {
              id: parameter_name
         }
     }
+    PrimaryButton{
+        id: submit
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 40
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: 153
+        height: 53
+        text: "LƯU"
+        MouseArea
+        {
+            anchors.fill: parent
+            onClicked:
+            {
+                var obj = {};
+
+                for (var i=0;i<repeat.count;i++)
+                {
+                    obj[repeat.model.get(i).name] = repeat.itemAt(i).text
+                }
+                HieuChinh.submitData(JSON.stringify(obj))
+            }
+        }
+
+    }
 }
+
+

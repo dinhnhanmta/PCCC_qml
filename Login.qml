@@ -13,7 +13,7 @@ Item {
     property color mainTextCOlor: "#f0f0f0"
     property color popupBackGroundColor: "#b44"
     property color popupTextCOlor: "#ffffff"
-        Rectangle{
+    Rectangle{
         anchors.fill: parent
         color: backGroundColor
 
