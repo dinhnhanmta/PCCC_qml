@@ -13,7 +13,7 @@ LocalDatabase::LocalDatabase(const QString dbPath)
 
     query.exec("create table IF NOT EXISTS devices "
               "(id integer primary key AUTOINCREMENT, "
-              "deviceModelId integer NOT NULL, "
+              "vehicles integer NOT NULL, "
               "code varchar(255) NOT NULL, "
               "iParameter varchar(2048) DEFAULT '{}', "
               "syncAt DATETIME NULL, UNIQUE(code), "
