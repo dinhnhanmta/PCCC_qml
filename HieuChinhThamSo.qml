@@ -7,6 +7,7 @@ Item {
     {
         screenLabel.text = qsTr("HIỆU CHỈNH THAM SỐ HỆ THỐNG")
         var i = 0
+        if (repeat.count===0)
         for (i = 0;i<HieuChinh.q_parameterList.length;i++)
         {
             parameter_name.append({name: HieuChinh.q_parameterList[i]})
@@ -61,8 +62,8 @@ Item {
             anchors.fill: parent
             onClicked:
             {
+                console.log()
                 var obj = {};
-
                 for (var i=0;i<repeat.count;i++)
                 {
                     obj[repeat.model.get(i).name] = repeat.itemAt(i).text

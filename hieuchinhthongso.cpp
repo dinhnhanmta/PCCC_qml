@@ -11,25 +11,31 @@ void HieuChinhThongSo::readJson()
 {
     database = new LocalDatabase();
     QStringList fields;
-    //fields.append("id");
     fields.append("iParameter");
-    fields.append("oParameter");
     QVariantMap conditions;
     QVariantMap result = database->queryRecord("vehicles", fields, conditions);
     QJsonDocument json = QJsonDocument::fromJson(result.value("iParameter").toString().toUtf8());
     QStringList list;
-    if (json.isArray()){
+    if (parameterList.isEmpty()&&json.isArray())
+    {
         foreach (const QVariant &it, json.array().toVariantList()){
             parameterList.append(it.toString());
+            qDebug()<< it.toString();
         }
-     } else {
+    } else {
      //TODO: Handle exceptions   exceptions
+        qDebug()<< "READ DATABASE ERROR";
     }
     emit paraChanged();
 }
 
-void HieuChinhThongSo::submitData(QByteArray jsonData)
+void HieuChinhThongSo::submitData(QString paraData)
 {
+    QJsonObject  object;
+    object.insert("code",settings->defautConfig.getDeviceCode());
+    object.insert("iParameter",paraData);
+    QJsonDocument doc(object);
+    QByteArray jsonData = doc.toJson();
     if (settings->defautConfig.getToken().isEmpty()){
         if (saveInspectData(jsonData, false)) emit submitSuccess();
         else emit submitFailed();
@@ -38,8 +44,10 @@ void HieuChinhThongSo::submitData(QByteArray jsonData)
         connect(network->reply, &QNetworkReply::finished, [=]() {
             if(network->reply->error() == QNetworkReply::NoError){
                 QJsonObject obj = QJsonDocument::fromJson(network->reply->readAll()).object();
-                if (obj.value("code").toInt() == 0 && this->saveInspectData(jsonData, true)){
+                qDebug()<<obj;
+                if (obj.value("code").toInt() == 0 && this->saveInspectData(paraData, true)){
                     settings->defautConfig.setDeviceCode(obj.value("data").toObject().value("code").toString());
+                    qDebug()<<"thanh cong";
                     emit submitSuccess();
                 } else {
                     emit submitFailed();
@@ -62,11 +70,20 @@ void HieuChinhThongSo::submitData(QByteArray jsonData)
     }
 }
 
-bool HieuChinhThongSo::saveInspectData(QByteArray jsonData, bool sync){
+//bool HieuChinhThongSo::saveInspectData(QByteArray jsonData, bool sync){
+//    QVariantMap mapConditions;
+//    mapConditions["code"] = settings->defautConfig.getToken();
+//    QVariantMap mapUpdatedData;
+//    mapUpdatedData["iParameter"] = QString::fromUtf8(jsonData);
+//    if (sync) mapUpdatedData["syncAt"] = QDateTime::currentDateTime().toString();
+//    return localDatabase->updateRecord("devices",mapUpdatedData,mapConditions);
+//}
+
+bool HieuChinhThongSo::saveInspectData(QString jsonData, bool sync){
     QVariantMap mapConditions;
     mapConditions["code"] = settings->defautConfig.getToken();
     QVariantMap mapUpdatedData;
-    mapUpdatedData["iParameter"] = QString::fromUtf8(jsonData);
+    mapUpdatedData["iParameter"] = jsonData;
     if (sync) mapUpdatedData["syncAt"] = QDateTime::currentDateTime().toString();
     return localDatabase->updateRecord("devices",mapUpdatedData,mapConditions);
 }

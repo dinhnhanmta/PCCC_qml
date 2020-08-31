@@ -24,7 +24,7 @@ public:
     Q_INVOKABLE void readJson();
     QStringList getPara(){return parameterList; }
     void setPara(QStringList list){parameterList  = list;}
-    Q_INVOKABLE void submitData(QByteArray jsonData);
+    Q_INVOKABLE void submitData(QString paraData);
 signals:
     void paraChanged();
     void submitSuccess();
@@ -54,7 +54,7 @@ private:
     Network *network;
     LocalDatabase *localDatabase;
 
-    bool saveInspectData(QByteArray jsonData, bool sync);
+    bool saveInspectData(QString jsonData, bool sync);
 };
 
 #endif // HIEUCHINHTHONGSO_HP
