@@ -5,21 +5,19 @@ LocalDatabase::LocalDatabase(const QString dbPath)
     QSqlDatabase db = openDabase();
     QSqlQuery query(db);
 
-    query.exec("create table IF NOT EXISTS vehicles "
+    query.exec("create table IF NOT EXISTS deviceModels "
               "(id integer primary key AUTOINCREMENT, "
               "name varchar(255) NOT NULL, "
               "iParameter varchar(2048) DEFAULT '[]', "
-              "oParameter varchar(2048) DEFAULT '[]', "
               "syncAt DATETIME, UNIQUE(name))");
 
     query.exec("create table IF NOT EXISTS devices "
               "(id integer primary key AUTOINCREMENT, "
-              "vehicleId integer NOT NULL, "
+              "deviceModelId integer NOT NULL, "
               "code varchar(255) NOT NULL, "
               "iParameter varchar(2048) DEFAULT '{}', "
-              "oParameter varchar(2048) DEFAULT '{}', "
               "syncAt DATETIME NULL, UNIQUE(code), "
-              "FOREIGN KEY(vehicleId) REFERENCES vehicles(id))");
+              "FOREIGN KEY(vehicleId) REFERENCES deviceModels(id))");
 }
 
 QSqlDatabase LocalDatabase::openDabase(){

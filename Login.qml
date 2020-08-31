@@ -111,6 +111,7 @@ Item {
                             font.family: "fontawesome"
                             leftPadding: 40
                             text: QLogin.loggedUsername()
+                            enabled: stack.empty
                             background: Rectangle {
                                 radius: implicitHeight / 2
                                 color: "transparent"
@@ -146,6 +147,7 @@ Item {
                             leftPadding: 40
                             echoMode: TextField.Password
                             text: QLogin.loggedPassword()
+                            enabled: stack.empty
                             background: Rectangle {
                                 implicitWidth: 200
                                 implicitHeight: 50

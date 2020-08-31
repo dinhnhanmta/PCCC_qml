@@ -13,7 +13,7 @@ void HieuChinhThongSo::readJson()
     QStringList fields;
     fields.append("iParameter");
     QVariantMap conditions;
-    QVariantMap result = database->queryRecord("vehicles", fields, conditions);
+    QVariantMap result = database->queryRecord("deviceModels", fields, conditions);
     QJsonDocument json = QJsonDocument::fromJson(result.value("iParameter").toString().toUtf8());
     QStringList list;
     if (parameterList.isEmpty()&&json.isArray())
