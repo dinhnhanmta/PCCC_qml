@@ -8,7 +8,6 @@ Item {
     //property alias mouseArea: mouseArea
     visible: true
     property int test : 45;
-    property string thu : "??";
     property var pThu: []
     property var pLamviec: []
     property var pHientai: []
@@ -28,7 +27,6 @@ Item {
             height: 450
 
             onPaint: {
-
                 line({
                          labels : xValue,
                          datasets : [
@@ -37,19 +35,18 @@ Item {
                                  strokeColor : "rgba(220,220,220,1)",
                                  pointColor : "rgba(220,220,220,1)",
                                  pointStrokeColor : "#fff",
-                                 data : pThu
+                                 data : pHientai
                              },
                              {
                                  fillColor : "rgba(151,187,205,0.5)",
                                  strokeColor : "rgba(151,187,205,1)",
                                  pointColor : "rgba(151,187,205,1)",
                                  pointStrokeColor : "#fff",
-                                 data : [20,3,4,1,0]
+                                 data :  pThu
                              }
                          ]
 
                      });
-
 
            }
 
@@ -65,6 +62,7 @@ Item {
                 time +=1;
                 xValue.push(time)
                 pThu.push(apSuatThu.text.replace(" MPa",""))
+                pHientai.push(time)
                 chartID.requestPaint();
             }
         }

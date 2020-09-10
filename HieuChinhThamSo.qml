@@ -62,7 +62,6 @@ Item {
             anchors.fill: parent
             onClicked:
             {
-                console.log()
                 var obj = {};
                 for (var i=0;i<repeat.count;i++)
                 {

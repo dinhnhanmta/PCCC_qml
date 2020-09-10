@@ -26,7 +26,6 @@ void HieuChinhThongSo::readJson()
     {
         foreach (const QVariant &it, json.array().toVariantList()){
             parameterList.append(it.toString());
-            qDebug()<< it.toString();
         }
     } else {
      //TODO: Handle exceptions   exceptions

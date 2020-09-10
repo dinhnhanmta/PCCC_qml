@@ -330,7 +330,7 @@ Canvas{
                 scaleShowGridLines : true,
                 scaleGridLineColor : "rgba(0,0,0,.05)",
                 scaleGridLineWidth : 1,
-                bezierCurve : true,
+                bezierCurve : false,
                 pointDot : true,
                 pointDotRadius : 4,
                 pointDotStrokeWidth : 2,
