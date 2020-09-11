@@ -1,41 +1,86 @@
 #include "hieuchinhthongso.hpp"
-
-HieuChinhThongSo::HieuChinhThongSo(QObject *parent) : QObject(parent)
+#include <QDateTime>
+HieuChinhThongSo::HieuChinhThongSo()
 {
-    readJson("thietbi.json");
+
+    network = new Network();
+    localDatabase = new LocalDatabase();
 }
-void HieuChinhThongSo::readJson(QString name)
+
+void HieuChinhThongSo::readJson()
 {
-    QString val;
-    QFile file;
-    file.setFileName(name);
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    val = file.readAll();
-    file.close();
-//    qDebug() << val;
-    QJsonDocument d = QJsonDocument::fromJson(val.toUtf8());
-    QJsonObject sett2 = d.object();
-    qDebug() << sett2;
-    QJsonValue value = sett2.value(QString("iParameter"));
-
-
-    for (int i=0;i<value.toArray().size();i++)
+    database = new LocalDatabase();
+    QStringList fields;
+    fields.append("vehicleId");
+    QVariantMap conditions;
+    conditions["code"] = settings->defautConfig.getDeviceCode();
+    QVariantMap result = database->queryRecord("devices", fields, conditions);
+    fields.clear();
+    fields.append("iParameter");
+    conditions.clear();
+    conditions["id"] = result.value("vehicleId").toString();
+    result = database->queryRecord("vehicles", fields, conditions);
+    QJsonDocument json = QJsonDocument::fromJson(result.value("iParameter").toString().toUtf8());
+    QStringList list;
+    if (parameterList.isEmpty()&&json.isArray())
     {
-         qDebug() << value[i].toString();
-         parameterList.append(value[i].toString());
+        foreach (const QVariant &it, json.array().toVariantList()){
+            parameterList.append(it.toString());
+            qDebug()<< it.toString();
+        }
+    } else {
+     //TODO: Handle exceptions   exceptions
+        qDebug()<< "READ DATABASE ERROR";
     }
     emit paraChanged();
-    //QJsonObject item = value.to();
-    //qDebug() << tr("QJsonObject of description: ") << item;
+}
 
-//    /* in case of string value get value and convert into string*/
-//    qDebug() << tr("QJsonObject[appName] of description: ") << item["description"];
-//    QJsonValue subobj = item["description"];
-//    qDebug() << subobj.toString();
+void HieuChinhThongSo::submitData(QString paraData)
+{
+    QJsonObject  object;
+    object.insert("code",settings->defautConfig.getDeviceCode());
+    object.insert("iParameter",paraData);
+    QJsonDocument doc(object);
+    QByteArray jsonData = doc.toJson();
+    if (settings->defautConfig.getToken().isEmpty()){
+        if (saveInspectData(paraData, false)) emit submitSuccess();
+        else emit submitFailed();
+    } else {
+        network->inspect(jsonData);
+        connect(network->reply, &QNetworkReply::finished, [=]() {
+            if(network->reply->error() == QNetworkReply::NoError){
+                QJsonObject obj = QJsonDocument::fromJson(network->reply->readAll()).object();
+                qDebug()<<obj;
+                if (obj.value("code").toInt() == 0 && this->saveInspectData(paraData, true)){
+                    settings->defautConfig.setDeviceCode(obj.value("data").toObject().value("code").toString());
+                    qDebug()<<"thanh cong";
+                    emit submitSuccess();
+                } else {
+                    emit submitFailed();
+                }
+            } else if (network->reply->error() == QNetworkReply::TimeoutError || network->reply->error() == QNetworkReply::HostNotFoundError){
+                if (saveInspectData(paraData, false)) emit submitSuccess();
+                else emit submitFailed();
+            } else if (network->reply->error() == QNetworkReply::AuthenticationRequiredError){
+                if (saveInspectData(paraData, false)) emit submitSuccess();
+                else emit submitFailed();
+                settings->defautConfig.setToken("");
+                logger->printLog(LoggerLevel::FATAL, network->reply->errorString());
+                emit unauthorized();
+            } else {
+                settings->defautConfig.setDeviceCode("");
+                logger->printLog(LoggerLevel::FATAL, network->reply->errorString());
+                emit submitFailed();
+            }
+        });
+    }
+}
 
-//    /* in case of array get array and convert into string*/
-//    qDebug() << tr("QJsonObject[appName] of value: ") << item["imp"];
-//    QJsonArray test = item["imp"].toArray();
-//    qDebug() << test[1].toString();
-
+bool HieuChinhThongSo::saveInspectData(QString jsonData, bool sync){
+    QVariantMap mapConditions;
+    mapConditions["code"] = settings->defautConfig.getDeviceCode();
+    QVariantMap mapUpdatedData;
+    mapUpdatedData["iParameter"] = jsonData;
+    if (sync) mapUpdatedData["syncAt"] = QDateTime::currentDateTime().toString();
+    return localDatabase->updateRecord("devices",mapUpdatedData,mapConditions);
 }

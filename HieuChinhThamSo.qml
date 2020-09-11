@@ -3,92 +3,76 @@ import "FlatUI-Controls-QML-master"
 import QtQuick.Layouts 1.12
 Item {
     anchors.fill: parent
-    Component.onCompleted: screenLabel.text = qsTr("HIỆU CHỈNH THAM SỐ HỆ THỐNG")
+    Component.onCompleted:
+    {
+        screenLabel.text = qsTr("HIỆU CHỈNH THAM SỐ HỆ THỐNG")
+        var i = 0
+        if (repeat.count===0)
+        for (i = 0;i<HieuChinh.q_parameterList.length;i++)
+        {
+            parameter_name.append({name: HieuChinh.q_parameterList[i]})
+        }
+    }
 
     Rectangle{
         anchors.fill: parent
         color: "lightblue"
-        Row {
-            anchors.centerIn: parent
-            width: parent - 60
-            height: parent.height
-            spacing: 60
 
-            Column {
-                y: 60
-                height: parent.height - 120
-                Column {
-                    height: parent.height/3
+        GridLayout{
+            width: parent.width
+            height:parent.height
+            columns: 4
+            anchors.left: parent.left
+            anchors.leftMargin: 50
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 100
+            anchors.top: parent.top
+            Repeater {
+                id: repeat
+                model: parameter_name
+
+                Input{
+                    width: 153
+                    height: 53
+                    digiOnly:( modelData == "Nơi sản xuất") ? false :true
                     Text {
-                        text: qsTr("HỆ SỐ HIỆU CHỈNH ÁP SUẤT")
-                    }
-                    Input {
-                    }
-                }
-
-                Column {
-                    height: parent.height/3
-                    Text {
-                        text: qsTr("TỐC ĐỘ NHỎ NHẤT")
-                    }
-                    Input {
-                    }
-                }
-            }
-
-
-            Column{
-                y: 60
-                height: parent.height - 120
-                Column {
-                    height: parent.height/3
-                    Text {
-                        text: qsTr("TẦN SỐ LỚN NHẤT")
-                    }
-                    Input {
-                    }
-                }
-
-                Column {
-                    height: parent.height/3
-                    Text {
-                        text: qsTr("NGƯỠNG ÁP SUẤT LẦN 1")
-                    }
-                    Input {
-                    }
-                }
-
-                Column {
-                    height: parent.height/3
-                    Text {
-                        text: qsTr("THỜI GIAN GIỮ")
-                    }
-                    Input {
-                    }
-                }
-            }
-
-            Column{
-                y: 60
-                height: parent.height - 120
-                Column {
-                    height: parent.height/3
-                    Text {
-                        text: qsTr("NGƯỠNG ÁP SUẤT LẦN 2")
-                    }
-                    Input {
-                    }
-                }
-
-                Column {
-                    height: parent.height/3
-                    Text {
-                        text: qsTr("TỐC ĐỘ GIA TĂNG ÁP SUẤT")
-                    }
-                    Input {
+                        text: modelData
+                        anchors.bottom: parent.top
+                        anchors.bottomMargin: 10
+                        anchors.horizontalCenter:  parent.horizontalCenter
                     }
                 }
             }
         }
+
+        ListModel {
+             id: parameter_name
+        }
+    }
+    PrimaryButton{
+        id: submit
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 40
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: 153
+        height: 53
+        text: "LƯU"
+        MouseArea
+        {
+            anchors.fill: parent
+            onClicked:
+            {
+                console.log()
+                var obj = {};
+                for (var i=0;i<repeat.count;i++)
+                {
+                    obj[repeat.model.get(i).name] = repeat.itemAt(i).text
+                }
+                HieuChinh.submitData(JSON.stringify(obj))
+            }
+        }
+
     }
 }
+
+

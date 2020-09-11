@@ -20,6 +20,16 @@ private:
     QSqlDatabase db;
     QSqlQuery *query;
 
+//    enum States
+//       {
+//           ST_IDLE,
+//           ST_STOP,
+//           ST_START,
+//           ST_CHANGE_SPEED,
+//           ST_MAX_STATES
+//       };
+
 };
+
 
 #endif // KIEMDINHTUDONG_HPP

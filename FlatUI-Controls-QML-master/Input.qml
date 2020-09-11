@@ -6,7 +6,7 @@ TextField {
     id: textField
     height: 40;
     width: 175;
-    inputMethodHints:  Qt.ImhDigitsOnly
+    inputMethodHints:  digiOnly ? Qt.ImhDigitsOnly:Qt.ImhNone
     Constants {
         id: constants;
     }
@@ -20,6 +20,7 @@ TextField {
     property bool disabled: false;
     property bool error: false;
     property bool success: false;
+    property bool digiOnly: true;
     property string initText: "";
     text: textField.initText
     onDisabledChanged: {

@@ -21,9 +21,8 @@ private:
     QSqlQuery buildQueryCmd(QString table, QStringList fields,
                             QVariantMap condition, QString order_by,
                             bool ascOrder, int limit);
-    QSqlDatabase db;
-    QSqlQuery *query;
-    QString getLastExecutedQuery();
+    QString getLastExecutedQuery(QSqlQuery query);
+    QSqlDatabase openDabase();
 };
 
 #endif // LOCALDATABASE_H

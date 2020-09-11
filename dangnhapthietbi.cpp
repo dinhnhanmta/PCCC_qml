@@ -31,10 +31,16 @@ void DangNhapThietBi::login(QString code)
 }
 
 bool DangNhapThietBi::saveDevice(QJsonObject obj){
-    QVariantMap map;
-    map["vehicleId"] = obj.value("vehicleId").toInt();
-    map["code"] = obj.value("code").toString();
-    return localDatabase->insertRecord("devices",map);
+    QVariantMap mapVehicle;
+    mapVehicle["id"] = obj.value("vehicleId").toInt();
+    mapVehicle["name"] = obj.value("deviceModel").toObject().value("vehicleName").toString();
+    mapVehicle["iParameter"] = obj.value("deviceModel").toObject().value("iParameter").toString();
+    bool result1 = localDatabase->insertRecord("vehicles",mapVehicle);
+
+    QVariantMap mapDevice;
+    mapDevice["vehicleId"] = obj.value("vehicleId").toInt();
+    mapDevice["code"] = obj.value("code").toString();
+    return result1 && localDatabase->insertRecord("devices",mapDevice);
 }
 
 void DangNhapThietBi::getDevice(QString code){
@@ -59,6 +65,7 @@ DangNhapThietBi::DangNhapThietBi()
 {
     network = new Network();
     localDatabase = new LocalDatabase();
+
 }
 
 bool DangNhapThietBi::logged()

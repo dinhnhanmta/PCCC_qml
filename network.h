@@ -20,7 +20,7 @@ private:
     QNetworkAccessManager *manager;
     const QString loginPath = "/api/Auth/Login";
     const QString deviceLoginPath = "/api/Devices/DeviceLogin";
-    const QString dataPath = "/api/Vehicles/test-result";
+    const QString dataPath = "/api/Devices/Inspect";
 };
 
 #endif // NETWORK_H

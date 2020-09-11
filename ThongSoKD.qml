@@ -61,7 +61,6 @@ Item {
         anchors.fill: parent
         onClicked: stack.pop("ThongSoKD.qml")
         }
-
     }
 
     Text {

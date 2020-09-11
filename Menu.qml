@@ -6,6 +6,9 @@ Item {
     Component.onCompleted: {
         screenLabel.text = qsTr("MENU")
     }
+    Constants {
+      id: constants;
+    }
     Rectangle{
         anchors.fill: parent
         color: "lightblue"
@@ -13,7 +16,7 @@ Item {
             anchors.centerIn: parent
             spacing: 30
             PrimaryButton {
-                text: qsTr("ĐĂNG XUẤT KIỂM ĐỊNH VIÊN")
+                text: QLogin.logged() ? qsTr("ĐĂNG XUẤT KIỂM ĐỊNH VIÊN") : qsTr("ĐĂNG NHẬP")
 
                 MouseArea {
                     anchors.fill: parent
@@ -27,6 +30,7 @@ Item {
             }
 
             PrimaryButton {
+                color: !LoginTB.logged() ? constants.grayLight : constants.turquoise
                 text: qsTr("ĐĂNG XUẤT THIẾT BỊ")
                 MouseArea {
                     anchors.fill: parent
