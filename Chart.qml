@@ -331,7 +331,7 @@ Canvas{
                 scaleGridLineColor : "rgba(0,0,0,.05)",
                 scaleGridLineWidth : 1,
                 bezierCurve : false,
-                pointDot : true,
+                pointDot : false,
                 pointDotRadius : 4,
                 pointDotStrokeWidth : 2,
                 datasetStroke : true,

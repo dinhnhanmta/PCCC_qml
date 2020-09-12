@@ -7,9 +7,7 @@ Item {
     anchors.fill: parent
     //property alias mouseArea: mouseArea
     visible: true
-    property int test : 45;
-    property var pThu: []
-    property var pLamviec: []
+    property var pRefer: []
     property var pHientai: []
     property var xValue: []
     property int time: 0
@@ -42,7 +40,7 @@ Item {
                                  strokeColor : "rgba(151,187,205,1)",
                                  pointColor : "rgba(151,187,205,1)",
                                  pointStrokeColor : "#fff",
-                                 data :  pThu
+                                 data :  pRefer
                              }
                          ]
 
@@ -53,17 +51,29 @@ Item {
         }
 
         Timer{
-            id:t
+            id:timer_chart
             interval: 1000
             repeat: true
-            running: true
+            //running: true
             triggeredOnStart: true
             onTriggered:{
+
+                var apsuatLV = apSuatLamViec.text.replace(" MPa","");
+                var apsuatT = apSuatThu.text.replace(" MPa","");
+                var time_pre_apsuatlv = apsuatLV/0.5*60
+                var time_apsualv = time_pre_apsuatlv + 180
+                var time_pre_apsuatthu = time_apsualv +(apsuatT-apsuatLV)/0.5*60
+                if (time%10 === 0) xValue.push(time)
+                else xValue.push("")
+                if (time<time_pre_apsuatlv) pRefer.push(0.5/60*time.toFixed(2))
+                if (time >= time_pre_apsuatlv && time<=time_apsualv)  pRefer.push(apsuatLV)
+                if ((time >time_apsualv) && (time<=time_pre_apsuatthu))  pRefer.push(0.5/60*time -1.5)
+                if (time >time_pre_apsuatthu) pRefer.push(apsuatT)
+                if(time == time_pre_apsuatthu+120) timer_chart.stop()
                 time +=1;
-                xValue.push(time)
-                pThu.push(apSuatThu.text.replace(" MPa",""))
-                pHientai.push(time)
+                pHientai.push(Cambien.q_pressure)
                 chartID.requestPaint();
+
             }
         }
 
@@ -74,6 +84,17 @@ Item {
             width: 167
             height: 47
             text: "BẮT ĐẦU KIỂM ĐỊNH"
+            MouseArea{
+                anchors.fill: parent
+                onClicked:
+                {
+                    timer_chart.restart();
+                    pRefer = []
+                    pHientai =  []
+                    xValue = []
+                    time = 0
+                }
+            }
         }
 
         Text {
@@ -90,7 +111,7 @@ Item {
             height: 37
             Image {
                 id: image
-                source: "qrc:/Icon/switch-off.jpg"
+                source: Relay.q_input_vavle_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
                 anchors.fill: parent
             }
 
@@ -109,20 +130,20 @@ Item {
             width: 60
             height: 37
             Image {
-                source: "qrc:/Icon/switch-off.jpg"
+                source: Relay.q_ouput_vavle_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
                 anchors.fill: parent
             }
 
         }
         Text {
-            x: 80
+            x: 70
             y: 107
             text: qsTr("TỐC ĐỘ ĐỘNG CƠ")
         }
 
         Input {
 
-            x: 92
+            x: 76
             y: 131
             width: 103
             height: 34
@@ -170,7 +191,7 @@ Item {
                 width: 300
                 minimumValue: 0
                 maximumValue: 300
-                value: 80
+                value: Cambien.q_pressure
                 visible: false
             }
         }
@@ -181,9 +202,9 @@ Item {
             width: 127
             height: 35
             dropdownTextColor: "black"
+            dropdownItemHeight: 30
             model: listLoaiVoi
-            //Text { text: modelData }
-            z: 2
+            z: 7
             onTextChanged: {
                 var data=Object.values(listLoaiVoi)
                 var i,index;
@@ -192,6 +213,13 @@ Item {
                 }
                 apSuatLamViec.text = listApSuatLamViec[index].item+" MPa"
                 apSuatThu.text = listApSuatThu[index].item +" MPa"
+                pRefer = []
+                pHientai =  []
+                xValue = []
+                time = 0
+                timer_chart.stop()
+                chartID.requestPaint();
+
             }
         }
         Rectangle
@@ -247,3 +275,8 @@ Designer {
     D{i:0;autoSize:true;height:480;width:640}
 }
 ##^##*/
+
+/*##^## Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+ ##^##*/

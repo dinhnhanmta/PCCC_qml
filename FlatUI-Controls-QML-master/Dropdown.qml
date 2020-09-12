@@ -146,9 +146,8 @@ PrimaryButton {
                         text: item;
                         color: dropDown.dropdownTextColor;
                         anchors {
-                            left: parent.left;
-                            leftMargin: 12;
                             verticalCenter: parent.verticalCenter;
+                            horizontalCenter: parent.horizontalCenter
                         }
                         font {
                             pointSize: 10;

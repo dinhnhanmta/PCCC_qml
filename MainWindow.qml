@@ -91,7 +91,8 @@ Item {
                         }
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: stack2.push("DangNhapTB.qml")
+                            onClicked: stack2.push("KiemDinhTD.qml")
+//                            onClicked: stack2.push("DangNhapTB.qml")
                         }
                     }
 
@@ -319,6 +320,7 @@ Item {
                     color: "palegoldenrod"
                     radius: 1
                     width: 100
+                    height: 55
                     anchors.right: parent.right
                     anchors.bottom:  parent.bottom
                     Image {
@@ -336,7 +338,9 @@ Item {
                 id: homeBtn
                 text: "Home"
                 color: "palegoldenrod"
+                radius: 3
                 width: 200
+                height: 55
                 anchors.left: parent.left
                 anchors.bottom:  parent.bottom
                 Image {
@@ -345,6 +349,7 @@ Item {
                     scale: 0.5
                 }
                 MouseArea {
+                    anchors.topMargin: 0
                     anchors.fill: parent
                     onClicked: {
                         screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH VÒI CHỮA CHÁY")
@@ -357,6 +362,8 @@ Item {
 
     }
 }
+
+
 
 
 
