@@ -11,6 +11,7 @@ ThuNghiemBangTay::ThuNghiemBangTay(CamBienApSuat *cbap, Bientan *bientan, Modbus
     m_bienTan = bientan;
     m_modbus = modbus;
     m_relay = relay;
+    m_lcd = new lcd(modbus);
     last_start_state = m_relay->getStartLedState();
 }
 
@@ -23,6 +24,10 @@ void ThuNghiemBangTay::updateLogic()
         count_writeFre = 0;
         m_bienTan->write_friquency((int)(m_camBienApSuat->getValPot()*100));
         m_bienTan->readRealFrequency();
+
+//        m_lcd->writePressureLCD(int16_t(m_camBienApSuat->getPressure()*10));
+        m_lcd->writePressureLCD(200);
+
     }
 
     m_relay->readAllState();

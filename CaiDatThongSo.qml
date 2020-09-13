@@ -23,7 +23,7 @@ Item {
                 spacing: 20
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: qsTr("UART MODBUS")
+                    text: qsTr("MODBUS CONFIGURATION")
                     font.pointSize: 16
                 }
                 Row {
@@ -161,6 +161,7 @@ Item {
                         height: 64
                         text: "Kết nối"
                         color: "lightgreen"
+                        radius: 4
                         MouseArea{
                             anchors.fill: parent
                             onClicked: {
@@ -192,48 +193,23 @@ Item {
             }
             Column {
                 id: column
-                width: parent.width/3
+                width: 250
                 spacing: 25
                 Clock {
                     anchors.horizontalCenter: parent.horizontalCenter
                     width: 361
                     height: 166
                 }
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: qsTr("CÀI ĐẶT ĐỊA CHỈ")
-                    font.pointSize: 16
-                }
                 Row {
                     id: row
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.right: parent.right
                     width: parent.width
-                    Text {
-                        width: parent.width/2
-                        horizontalAlignment: Text.AlignHCenter
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: qsTr("ĐC BIẾN TẦN")
-                    }
-                    Input {
-                        id: inverterID
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
                 }
                 Row {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.right: parent.right
                     width: parent.width
-                    Text {
-                        width: parent.width/2
-                        horizontalAlignment: Text.AlignHCenter
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: qsTr("ĐC VAN")
-                    }
-                    Input {
-                        anchors.verticalCenter: parent.verticalCenter
-                        id: vavleID
-                    }
                 }
             }
             Column {
@@ -241,7 +217,8 @@ Item {
                 spacing: 20
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: qsTr("UART MODBUS")
+                    text: qsTr("UART CẢM BIẾN")
+                    horizontalAlignment: Text.AlignHCenter
                     font.pointSize: 16
                 }
                 Row {
@@ -454,6 +431,10 @@ Item {
         }
     }
 }
+
+
+
+
 
 /*##^## Designer {
     D{i:0;autoSize:true;height:480;width:640}D{i:4;anchors_width:640}
