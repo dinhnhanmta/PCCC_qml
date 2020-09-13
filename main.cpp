@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     CalibParam *m_CalibParam = new CalibParam();
     DangNhapThietBi *m_DangNhapThietBi = new DangNhapThietBi();
     ThuNghiemBangTay *m_thuNghiemBangTay = new ThuNghiemBangTay(m_cambien, m_bientan, m_modbus, m_relay);
-    KiemDinhTuDong *m_kiemDinhTuDong = new KiemDinhTuDong();
+    KiemDinhTuDong *m_kiemDinhTuDong = new KiemDinhTuDong(m_cambien, m_bientan, m_modbus, m_relay);
     HieuChinhThongSo *m_hieuChinhThongSo = new HieuChinhThongSo();
     qmlRegisterType<DialItem>("IVIControls", 1, 0, "DialItem");
     qmlRegisterType<CamBienApSuat>("camBienApSuat", 1, 0, "CamBienApSuat");
@@ -51,10 +51,7 @@ int main(int argc, char *argv[])
     context->setContextProperty("CParam", m_CalibParam);
     context->setContextProperty("Relay", m_relay);
     context->setContextProperty("TnBangTay", m_thuNghiemBangTay);
-    context->setContextProperty("KiemDinhTD", m_kiemDinhTuDong);
-    context->setContextProperty("listLoaiVoi", QVariant::fromValue(m_kiemDinhTuDong->listLoaiVoi));
-    context->setContextProperty("listApSuatThu", QVariant::fromValue(m_kiemDinhTuDong->listApSuatThu));
-    context->setContextProperty("listApSuatLamViec", QVariant::fromValue(m_kiemDinhTuDong->listApSuatLamViec));
+    context->setContextProperty("KiemDinhTDObj", m_kiemDinhTuDong);
     context->setContextProperty("HieuChinh", m_hieuChinhThongSo);
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
