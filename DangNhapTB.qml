@@ -12,6 +12,13 @@ Item {
         text: "Mã thiết bị không tồn tại! Hãy tạo mã mới!"
     }
 
+    MessageDialog {
+        id: messageDialog2
+        title: "Lỗi"
+        icon: StandardIcon.Critical
+        text: "Lỗi lấy danh sách thiết bị"
+    }
+
     Constants {
       id: constants;
     }
@@ -25,6 +32,16 @@ Item {
             messageDialog.visible = true
             deviceLoginBtn.enabled = true
         }
+        onGetDeviceModelsSuccess: {
+            console.log(LoginTB.deviceModels);
+        }
+        onGetDeviceModelsFailed: {
+            messageDialog2.visible = true;
+        }
+        onGetDeviceModelDetailSuccess: {
+            cbDeviceCode.enabled = true;
+            maTB.enabled = true;
+        }
         onUnauthorized: {
             stack2.pop()
             stack.pop()
@@ -37,6 +54,7 @@ Item {
             stack2.push("KiemDinhTD.qml")
         } else {
             screenLabel.text = qsTr("ĐĂNG NHẬP THÔNG SỐ THIẾT BỊ")
+            LoginTB.getListDeviceModels();
         }
     }
 
@@ -61,18 +79,14 @@ Item {
                         },
                         ComboBox {
                             id: cbDeviceModel
-                            model: ListModel {
-                                id: cbItems
-                                ListElement { text: ""; }
-                                ListElement { text: "Vòi"; }
-                                ListElement { text: "Lăng phun"; }
-                                ListElement { text: "Đầu nối chữa cháy"; }
-                                ListElement { text: "Trụ nước chữa cháy"; }
-                            }
+                            model: LoginTB.deviceModels
                             width: 400
                             font.pointSize: 13
                             anchors.horizontalCenter: parent.horizontalCenter
-                            onCurrentIndexChanged: LoginTB.setDeviceModelName(cbItems.get(currentIndex).text)
+                            textRole: "display"
+                            onCurrentIndexChanged: {
+                                LoginTB.setDeviceModelName(cbDeviceModel.currentText)
+                            }
                         }
                     ]
                 },
@@ -92,6 +106,7 @@ Item {
                             children: [
                                 ComboBox {
                                     id: cbDeviceCode
+                                    enabled: LoginTB.deviceModelName() !== ""
                                     model: ListModel {
                                         id: cbItems2
                                         ListElement { text: ""; }
@@ -105,6 +120,7 @@ Item {
                                 },
                                 TextField {
                                     id: maTB
+                                    enabled: LoginTB.deviceModelName() !== ""
                                     width: 235
                                     font.pointSize: 13
                                 }

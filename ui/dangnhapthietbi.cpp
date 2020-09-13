@@ -3,7 +3,7 @@
 void DangNhapThietBi::loginDevice(QString code)
 {
     if (settings->defautConfig.getToken().isEmpty()){
-        getDevice(code);
+        getDeviceLocal(code);
     } else {
         network->deviceLogin('"' + code + '"');
         connect(network->reply, &QNetworkReply::finished, [=]() {
@@ -15,7 +15,7 @@ void DangNhapThietBi::loginDevice(QString code)
                     emit loginFailed();
                 }
             } else if (network->reply->error() == QNetworkReply::TimeoutError || network->reply->error() == QNetworkReply::HostNotFoundError){
-                getDevice(code);
+                getDeviceLocal(code);
             } else if (network->reply->error() == QNetworkReply::AuthenticationRequiredError){
                 settings->defautConfig.setToken("");
                 logger->printLog(LoggerLevel::FATAL, network->reply->errorString());
@@ -42,7 +42,7 @@ void DangNhapThietBi::saveDevice(QString code)
     }
 }
 
-void DangNhapThietBi::getDevice(QString code){
+void DangNhapThietBi::getDeviceLocal(QString code){
     QStringList fields;
     fields.append("iParameter");
 
@@ -58,6 +58,45 @@ void DangNhapThietBi::getDevice(QString code){
     }
 }
 
+bool DangNhapThietBi::getListDeviceModelsLocal()
+{
+    QStringList fields;
+    fields.append("name");
+    QVariantMap conditions;
+
+    QList<QVariantMap> results = localDatabase->queryRecords("deviceModels", fields, conditions);
+    listDeviceModel = QList<QString>() << QString("");
+
+    foreach (const QVariantMap & result, results) {
+        if (result.value("name").isValid()){
+            listDeviceModel << QString(result.value("name").toString());
+        } else {
+            emit getDeviceModelsFailed();
+            return false;
+        }
+    }
+    emit getDeviceModelsSuccess();
+    return true;
+}
+
+bool DangNhapThietBi::saveListDeviceModels(QJsonArray deviceModels)
+{
+    listDeviceModel = QList<QString>() << QString("");
+    foreach (const QJsonValue & deviceModel, deviceModels) {
+        QJsonObject obj = deviceModel.toObject();
+        QVariantMap mapDeviceModel;
+        mapDeviceModel["name"] = obj["vehicleName"].toString();
+        mapDeviceModel["iParameter"] = obj["iParameter"].toString();
+        if (!localDatabase->insertRecord("deviceModels",mapDeviceModel)){
+            return false;
+        } else {
+            listDeviceModel << QString(obj["vehicleName"].toString());
+        }
+    }
+    emit getDeviceModelsSuccess();
+    return true;
+}
+
 void DangNhapThietBi::setDeviceModelName(QString deviceModelName)
 {
     QStringList fields;
@@ -67,12 +106,47 @@ void DangNhapThietBi::setDeviceModelName(QString deviceModelName)
     conditions["name"] = deviceModelName;
     QVariantMap result = localDatabase->queryRecord("deviceModels", fields, conditions);
 
-    if (result.value("name").isValid()){
+    if (result.value("iParameter").isValid()){
         settings->defautConfig.setDeviceModelName(deviceModelName);
-        emit getDeviceModelSuccess();
+        emit getDeviceModelDetailSuccess();
     } else {
-        emit getDeviceModelFailed();
+        emit getDeviceModelDetailFailed();
     }
+}
+
+void DangNhapThietBi::getListDeviceModels()
+{
+    if (settings->defautConfig.getToken().isEmpty()){
+        getListDeviceModelsLocal();
+        emit listDeviceModelsChanged();
+    } else {
+        network->getDeviceModels();
+        connect(network->reply, &QNetworkReply::finished, [=]() {
+            if(network->reply->error() == QNetworkReply::NoError){
+                QJsonObject obj = QJsonDocument::fromJson(network->reply->readAll()).object();
+                if (obj.value("code").toInt() != 0
+                        || !saveListDeviceModels(obj.value("data").toArray())
+                        ){
+                    emit getDeviceModelsFailed();
+                }
+            } else if (network->reply->error() == QNetworkReply::TimeoutError || network->reply->error() == QNetworkReply::HostNotFoundError){
+                getListDeviceModelsLocal();
+            } else if (network->reply->error() == QNetworkReply::AuthenticationRequiredError){
+                settings->defautConfig.setToken("");
+                logger->printLog(LoggerLevel::FATAL, network->reply->errorString());
+                emit unauthorized();
+            } else {
+                logger->printLog(LoggerLevel::FATAL, network->reply->errorString());
+                emit getDeviceModelsFailed();
+            }
+            emit listDeviceModelsChanged();
+        });
+    }
+}
+
+ListDeviceModels* DangNhapThietBi::listDeviceModels()
+{
+    return new ListDeviceModels(listDeviceModel);
 }
 
 DangNhapThietBi::DangNhapThietBi()

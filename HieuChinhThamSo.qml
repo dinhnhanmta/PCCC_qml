@@ -16,7 +16,7 @@ Item {
 
     Rectangle{
         anchors.fill: parent
-        color: "lightblue"
+        color: "#ddf6fe"
 
         GridLayout{
             width: parent.width

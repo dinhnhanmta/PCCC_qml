@@ -59,3 +59,12 @@ void Network::syncData()
     }
     reply = manager->get(request);
 }
+
+void Network::getDeviceModels()
+{
+    request.setUrl(QUrl::fromUserInput(settings->defautConfig.getServerUrl() + deviceModels));
+    if (!settings->defautConfig.getToken().isEmpty()){
+        request.setRawHeader("Authorization", "Bearer " + settings->defautConfig.getToken().toUtf8());
+    }
+    reply = manager->get(request);
+}
