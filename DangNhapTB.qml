@@ -29,6 +29,7 @@ Item {
            stack2.push("KiemDinhTD.qml")
         }
         onLoginFailed: {
+            console.log("OK");
             messageDialog.visible = true
             deviceLoginBtn.enabled = true
         }
@@ -117,12 +118,26 @@ Item {
                                     }
                                     width: 235
                                     font.pointSize: 13
+                                    onCurrentIndexChanged: {
+                                        if (cbItems2.get(cbDeviceCode.currentIndex) === ""){
+                                            deviceLoginBtn.color = constants.grayLight
+                                        } else {
+                                            deviceLoginBtn.color = constants.turquoise
+                                        }
+                                    }
                                 },
                                 TextField {
                                     id: maTB
                                     enabled: LoginTB.deviceModelName() !== ""
                                     width: 235
                                     font.pointSize: 13
+                                    onTextChanged: {
+                                        if (maTB.text === ""){
+                                            generateDeviceBtn.color = constants.grayLight
+                                        } else {
+                                            generateDeviceBtn.color = constants.turquoise
+                                        }
+                                    }
                                 }
                             ]
                         },
@@ -139,12 +154,13 @@ Item {
                                     MouseArea {
                                         onClicked: {
                                             if (cbDeviceCode.currentText !== "") {
-                                                LoginTB.login(cbDeviceCode.text)
+                                                LoginTB.loginDevice(cbDeviceCode.text)
                                             }
                                         }
                                     }
                                 },
                                 PrimaryButton {
+                                    id: generateDeviceBtn
                                     color:  maTB.text === "" ? constants.grayLight : constants.turquoise
                                     width: 235
                                     text: "TẠO MÃ KIỂM ĐỊNH"
@@ -152,7 +168,7 @@ Item {
                                     MouseArea {
                                         onClicked: {
                                             if (maTB.text !== "") {
-                                                LoginTB.generateCode(maTB.text)
+                                                LoginTB.saveDevice(maTB.text)
                                             }
                                         }
                                     }

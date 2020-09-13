@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlEngine>
 #include <QQmlContext>
+#include <calib_param.h>
 #include "dialitem.h"
 #include "modbus.hpp"
 #include "devices/bientan.hpp"
@@ -26,6 +27,7 @@ int main(int argc, char *argv[])
     Relay *m_relay = new Relay(m_modbus);
     CamBienApSuat *m_cambien = new CamBienApSuat();
     Login *m_login = new Login();
+    CalibParam *m_CalibParam = new CalibParam();
     DangNhapThietBi *m_DangNhapThietBi = new DangNhapThietBi();
     ThuNghiemBangTay *m_thuNghiemBangTay = new ThuNghiemBangTay(m_cambien, m_bientan, m_modbus, m_relay);
     KiemDinhTuDong *m_kiemDinhTuDong = new KiemDinhTuDong();
@@ -46,6 +48,7 @@ int main(int argc, char *argv[])
     context->setContextProperty("Cambien", m_cambien);
     context->setContextProperty("QLogin", m_login);
     context->setContextProperty("LoginTB", m_DangNhapThietBi);
+    context->setContextProperty("CParam", m_CalibParam);
     context->setContextProperty("Relay", m_relay);
     context->setContextProperty("TnBangTay", m_thuNghiemBangTay);
     context->setContextProperty("KiemDinhTD", m_kiemDinhTuDong);

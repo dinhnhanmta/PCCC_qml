@@ -80,5 +80,6 @@
         <file>HieuChinhThamSo.qml</file>
         <file>Menu.qml</file>
         <file>thietbi.json</file>
+        <file>CalibParam.qml</file>
     </qresource>
 </RCC>

@@ -55,12 +55,33 @@ public:
     void setDeviceModelName(const QString &value);
 };
 
+class CalibConfig: public QSettings {
+
+public:
+    CalibConfig(const QString savedPath, const QString group);
+
+    float getMaxPressure();
+    void setMaxPressure(float value);
+
+    float getKP();
+    void setKP(const float value);
+
+    float getKD();
+    void setKD(const float value);
+
+    float getKI();
+    void setKI(const float value);
+private:
+    QString group;
+};
+
 class AppSetting {
 public:
     AppSetting(const QString savedPath);
     DefaultConfig defautConfig;
     SerialParameter modbusParam;
     SerialParameter cambienParam;
+    CalibConfig calibParam;
 };
 
 #endif // CONFIG_H

@@ -25,6 +25,7 @@ SOURCES += \
         listModels/deviceparameter.cpp \
         main.cpp \
         ui/baseobject.cpp \
+        ui/calib_param.cpp \
         ui/dangnhapthietbi.cpp \
         ui/dialitem.cpp \
         ui/dothi.cpp \
@@ -69,6 +70,7 @@ HEADERS += \
     listModels/deviceModel.h \
     listModels/deviceparameter.h \
     ui/baseobject.h \
+    ui/calib_param.h \
     ui/dangnhapthietbi.hpp \
     ui/dialitem.h \
     ui/dothi.hpp \

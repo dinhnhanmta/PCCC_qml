@@ -242,9 +242,8 @@ Item {
                             scale: 0.7
                         }
                         MouseArea {
-                            height: 100
                             anchors.fill: parent
-                            onClicked: stack2.push("HieuChinhThamSo2.qml")
+                            onClicked: stack2.push("CalibParam.qml")
                         }
                     }
                 }

@@ -14,7 +14,7 @@ Item {
 
     Rectangle{
         anchors.fill: parent
-        color: "lightblue"
+        color: "#ddf6fe"
         Component.onCompleted: screenLabel.text = qsTr("KIỂM ĐỊNH TỰ ĐỘNG")
 
         Chart{
