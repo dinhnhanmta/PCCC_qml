@@ -178,3 +178,18 @@ void DefaultConfig::setDeviceCode(const QString &value)
     this->setValue("deviceCode", value);
     this->endGroup();
 }
+
+QString DefaultConfig::getDeviceModelName()
+{
+    this->beginGroup("default");
+    QString value = this->value("deviceModelName").toString();
+    this->endGroup();
+    return value;
+}
+
+void DefaultConfig::setDeviceModelName(const QString &value)
+{
+    this->beginGroup("default");
+    this->setValue("deviceModelName", value);
+    this->endGroup();
+}

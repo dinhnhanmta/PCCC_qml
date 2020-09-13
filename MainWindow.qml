@@ -3,16 +3,32 @@ import QtCharts 2.3
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.0
 import "FlatUI-Controls-QML-master"
+import QtQuick.Dialogs 1.1
+
 Item {
     id: window
     width: 1024
     height: 600
     visible: true
 
+    MessageDialog {
+        id: messageDialog
+        icon: StandardIcon.Critical
+        title: "Cấu hình loại thiết bị"
+        text: "Vui lòng kiểm tra cấu hình loại thiết bị"
+        onAccepted: {
+            messageDialog.visible = false
+        }
+    }
+
     Component.onCompleted: {
         Modbus.startConnection();
         Cambien.openSerialPort();
-        screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH KHỚP NỐI")
+        if (LoginTB.deviceModelName() === ""){
+             stack2.push("DangNhapTB.qml")
+        } else {
+            screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH " + LoginTB.deviceModelName());
+        }
     }
 
     Rectangle{
@@ -21,24 +37,18 @@ Item {
         color: "#ddf6fe"
 
         Text {
-
             id: screenLabel
             x: 244
             anchors.top: parent.top
             anchors.topMargin: 16
-
-            //            y: 18
-//            height: 40
             color: "#fd1d1d"
-            text: qsTr("THIẾT BỊ KIỂM ĐỊNH KHỚP NỐI")
+            text: qsTr("THIẾT BỊ KIỂM ĐỊNH " + LoginTB.deviceModelName())
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignLeft
             font.capitalization: Font.AllUppercase
             font.family: "Tahoma"
             font.pixelSize: 27
             font.bold: true
-
-
         }
 
         StackView {
@@ -98,8 +108,13 @@ Item {
                         }
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: stack2.push("KiemDinhTD.qml")
-//                            onClicked: stack2.push("DangNhapTB.qml")
+                            onClicked: {
+                                if (LoginTB.logged()){
+                                    stack2.push("KiemDinhTD.qml")
+                                } else {
+                                    stack2.push("DangNhapTB.qml")
+                                }
+                            }
                         }
                     }
 
@@ -122,8 +137,12 @@ Item {
                             anchors.fill: parent
                             onClicked:
                                 {
-                                HieuChinh.readJson()
-                                stack2.push("HieuChinhThamSo.qml")
+                                    if (LoginTB.logged()){
+                                        HieuChinh.readJson()
+                                        stack2.push("HieuChinhThamSo.qml")
+                                    } else {
+                                        stack2.push("DangNhapTB.qml")
+                                    }
                                 }
                         }
                     }
@@ -175,7 +194,13 @@ Item {
                         MouseArea {
                             height: 64
                             anchors.fill: parent
-                            onClicked: stack2.push("ThuNghiemBangTay.qml")
+                            onClicked: {
+                                if (LoginTB.logged()){
+                                    stack2.push("ThuNghiemBangTay.qml")
+                                } else {
+                                    stack2.push("DangNhapTB.qml")
+                                }
+                            }
                         }
                     }
 
@@ -263,8 +288,6 @@ Item {
             anchors.rightMargin: 0
             anchors.bottomMargin: 0
             anchors.leftMargin: 0
-
-
 
             Rectangle{
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -369,9 +392,13 @@ Item {
                     anchors.topMargin: 0
                     anchors.fill: parent
                     onClicked: {
-                        screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH VÒI CHỮA CHÁY")
-                        if (!stack2.empty) stack2.clear()
-                        screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH VÒI CHỮA CHÁY")
+                        if (LoginTB.deviceModelName() !== ""){
+                            screenLabel.text = "THIẾT BỊ KIỂM ĐỊNH " + LoginTB.deviceModelName()
+                            if (!stack2.empty) stack2.clear()
+                            screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH " + LoginTB.deviceModelName())
+                        } else {
+                            messageDialog.visible = true
+                        }
                     }
                 }
             }

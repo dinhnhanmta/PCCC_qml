@@ -2,8 +2,6 @@
 #define THUNGHIEMBANGTAY_H
 
 #include <QObject>
-#include <icpthread.h>
-#include <modbusthread.h>
 #include <cambienapsuat.hpp>
 #include <devices/bientan.hpp>
 #include <modbus.hpp>

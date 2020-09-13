@@ -1,6 +1,6 @@
 #include "dangnhapthietbi.hpp"
 
-void DangNhapThietBi::login(QString code)
+void DangNhapThietBi::loginDevice(QString code)
 {
     if (settings->defautConfig.getToken().isEmpty()){
         getDevice(code);
@@ -9,9 +9,8 @@ void DangNhapThietBi::login(QString code)
         connect(network->reply, &QNetworkReply::finished, [=]() {
             if(network->reply->error() == QNetworkReply::NoError){
                 QJsonObject obj = QJsonDocument::fromJson(network->reply->readAll()).object();
-                if (obj.value("code").toInt() == 0 && this->saveDevice(obj.value("data").toObject())){
-                    settings->defautConfig.setDeviceCode(obj.value("data").toObject().value("code").toString());
-                    emit loginSuccess();
+                if (obj.value("code").toInt() == 0){
+                    this->saveDevice(obj.value("data").toObject().value("code").toString());
                 } else {
                     emit loginFailed();
                 }
@@ -30,34 +29,49 @@ void DangNhapThietBi::login(QString code)
     }
 }
 
-bool DangNhapThietBi::saveDevice(QJsonObject obj){
-    QVariantMap mapVehicle;
-    mapVehicle["id"] = obj.value("vehicleId").toInt();
-    mapVehicle["name"] = obj.value("deviceModel").toObject().value("vehicleName").toString();
-    mapVehicle["iParameter"] = obj.value("deviceModel").toObject().value("iParameter").toString();
-    bool result1 = localDatabase->insertRecord("vehicles",mapVehicle);
-
+void DangNhapThietBi::saveDevice(QString code)
+{
     QVariantMap mapDevice;
-    mapDevice["vehicleId"] = obj.value("vehicleId").toInt();
-    mapDevice["code"] = obj.value("code").toString();
-    return result1 && localDatabase->insertRecord("devices",mapDevice);
+    mapDevice["deviceModelName"] = settings->defautConfig.getDeviceModelName();
+    mapDevice["code"] = code;
+    if (localDatabase->insertRecord("devices",mapDevice)){
+        settings->defautConfig.setDeviceCode(code);
+        emit loginSuccess();
+    } else {
+        emit loginFailed();
+    }
 }
 
 void DangNhapThietBi::getDevice(QString code){
     QStringList fields;
-    fields.append("id");
     fields.append("iParameter");
-    fields.append("oParameter");
 
     QVariantMap conditions;
     conditions["code"] = code;
     QVariantMap result = localDatabase->queryRecord("devices", fields, conditions);
 
-    if (result.value("id").isValid()){
+    if (result.value("iParameter").isValid()){
         settings->defautConfig.setDeviceCode(code);
         emit loginSuccess();
     } else {
         emit loginFailed();
+    }
+}
+
+void DangNhapThietBi::setDeviceModelName(QString deviceModelName)
+{
+    QStringList fields;
+    fields.append("iParameter");
+
+    QVariantMap conditions;
+    conditions["name"] = deviceModelName;
+    QVariantMap result = localDatabase->queryRecord("deviceModels", fields, conditions);
+
+    if (result.value("name").isValid()){
+        settings->defautConfig.setDeviceModelName(deviceModelName);
+        emit getDeviceModelSuccess();
+    } else {
+        emit getDeviceModelFailed();
     }
 }
 
@@ -76,4 +90,8 @@ bool DangNhapThietBi::logged()
 void DangNhapThietBi::logout()
 {
     settings->defautConfig.setDeviceCode("");
+}
+
+QString DangNhapThietBi::deviceModelName() {
+    return settings->defautConfig.getDeviceModelName().toUpper();
 }

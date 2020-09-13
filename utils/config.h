@@ -2,7 +2,7 @@
 #define CONFIG_H
 
 #include <QSettings>
-#include <constant.h>
+#include "constant.h"
 #include <QString>
 
 class SerialParameter: public QSettings {
@@ -50,6 +50,9 @@ public:
 
     QString getDeviceCode();
     void setDeviceCode(const QString &value);
+
+    QString getDeviceModelName();
+    void setDeviceModelName(const QString &value);
 };
 
 class AppSetting {

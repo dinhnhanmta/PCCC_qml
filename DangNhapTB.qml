@@ -12,6 +12,10 @@ Item {
         text: "Mã thiết bị không tồn tại! Hãy tạo mã mới!"
     }
 
+    Constants {
+      id: constants;
+    }
+
     Connections {
         target: LoginTB
         onLoginSuccess: {
@@ -39,43 +43,109 @@ Item {
     Rectangle{
         id: rectangle
         anchors.fill: parent
-        color: "lightblue"
+        color: "#ddf6fe"
 
-        Text {
-            id: name
+        Row {
+            spacing: 50
             anchors.centerIn: parent
-            anchors.verticalCenterOffset: -100
-            text: qsTr("MÃ THIẾT BỊ")
-        }
-        TextField {
-            id: maTB
-            width: 800
-            anchors.verticalCenterOffset: -50
-            anchors.centerIn: parent
-        }
-
-        PrimaryButton {
-            id: deviceLoginBtn
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: -200
-            anchors.top: maTB.bottom
-            anchors.topMargin: 50
-            text: "ĐĂNG NHẬP MÃ KIỂM ĐỊNH"
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    deviceLoginBtn.enabled = false
-                    LoginTB.login(maTB.text)
+            children: [
+                Column {
+                    id: column1
+                    spacing: 50
+                    children: [
+                        Text {
+                            text: qsTr("LOẠI THIẾT BỊ")
+                            font.bold: true
+                            font.pointSize: 16
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        },
+                        ComboBox {
+                            id: cbDeviceModel
+                            model: ListModel {
+                                id: cbItems
+                                ListElement { text: ""; }
+                                ListElement { text: "Vòi"; }
+                                ListElement { text: "Lăng phun"; }
+                                ListElement { text: "Đầu nối chữa cháy"; }
+                                ListElement { text: "Trụ nước chữa cháy"; }
+                            }
+                            width: 400
+                            font.pointSize: 13
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            onCurrentIndexChanged: LoginTB.setDeviceModelName(cbItems.get(currentIndex).text)
+                        }
+                    ]
+                },
+                Column {
+                    id: column
+                    spacing: 50
+                    children: [
+                        Text {
+                            text: qsTr("MÃ THIẾT BỊ")
+                            font.bold: true
+                            font.pointSize: 16
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        },
+                        Row {
+                            spacing: 30
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            children: [
+                                ComboBox {
+                                    id: cbDeviceCode
+                                    model: ListModel {
+                                        id: cbItems2
+                                        ListElement { text: ""; }
+                                        ListElement { text: "ABDC"; }
+                                        ListElement { text: "XYZ"; }
+                                        ListElement { text: "123"; }
+                                        ListElement { text: "321"; }
+                                    }
+                                    width: 235
+                                    font.pointSize: 13
+                                },
+                                TextField {
+                                    id: maTB
+                                    width: 235
+                                    font.pointSize: 13
+                                }
+                            ]
+                        },
+                        Row {
+                            spacing: 30
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            children: [
+                                PrimaryButton {
+                                    id: deviceLoginBtn
+                                    width: 235
+                                    color: cbDeviceCode.currentText === "" ? constants.grayLight : constants.turquoise
+                                    text: "ĐĂNG NHẬP MÃ KIỂM ĐỊNH"
+                                    pointSize: 10
+                                    MouseArea {
+                                        onClicked: {
+                                            if (cbDeviceCode.currentText !== "") {
+                                                LoginTB.login(cbDeviceCode.text)
+                                            }
+                                        }
+                                    }
+                                },
+                                PrimaryButton {
+                                    color:  maTB.text === "" ? constants.grayLight : constants.turquoise
+                                    width: 235
+                                    text: "TẠO MÃ KIỂM ĐỊNH"
+                                    pointSize: 10
+                                    MouseArea {
+                                        onClicked: {
+                                            if (maTB.text !== "") {
+                                                LoginTB.generateCode(maTB.text)
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ]
                 }
-            }
-        }
-
-        PrimaryButton {
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.horizontalCenterOffset: 200
-            anchors.top: maTB.bottom
-            anchors.topMargin: 50
-            text: "TẠO MÃ KIỂM ĐỊNH"
+            ]
         }
     }
 }

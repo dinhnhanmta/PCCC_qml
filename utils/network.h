@@ -20,6 +20,7 @@ private:
     QNetworkAccessManager *manager;
     const QString loginPath = "/api/Auth/Login";
     const QString deviceLoginPath = "/api/Devices/DeviceLogin";
+    const QString deviceModelDetailsPath = "/api/DeviceModels/Details";
     const QString dataPath = "/api/Devices/Inspect";
 };
 

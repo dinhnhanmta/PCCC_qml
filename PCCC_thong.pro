@@ -14,29 +14,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        baseobject.cpp \
-        cambienapsuat.cpp \
-        config.cpp \
-        dangnhapthietbi.cpp \
-        dataobject.cpp \
-        deviceparameter.cpp \
         devices/bientan.cpp \
+        devices/cambienapsuat.cpp \
         devices/lcd.cpp \
+        devices/master.cpp \
+        devices/modbus.cpp \
         devices/relay.cpp \
         devices/vavle.cpp \
-        dialitem.cpp \
-        dothi.cpp \
-        hieuchinhthongso.cpp \
-        icpthread.cpp \
-        kiemdinhtudong.cpp \
-        localdatabase.cpp \
-        logger.cpp \
-        login.cpp \
+        listModels/deviceModel.cpp \
+        listModels/deviceparameter.cpp \
         main.cpp \
-        master.cpp \
-        modbus.cpp \
-        network.cpp \
-        thunghiembangtay.cpp
+        ui/baseobject.cpp \
+        ui/dangnhapthietbi.cpp \
+        ui/dialitem.cpp \
+        ui/dothi.cpp \
+        ui/hieuchinhthongso.cpp \
+        ui/kiemdinhtudong.cpp \
+        ui/login.cpp \
+        ui/thunghiembangtay.cpp \
+        utils/config.cpp \
+        utils/dataobject.cpp \
+        utils/localdatabase.cpp \
+        utils/logger.cpp \
+        utils/network.cpp
 
 RESOURCES += qml.qrc
 
@@ -51,29 +51,34 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-HEADERS += \
-    baseobject.h \
-    cambienapsuat.hpp \
-    config.h \
-    constant.h \
-    dangnhapthietbi.hpp \
-    dataobject.h \
-    deviceparameter.h \
-    devices/bientan.hpp \
-    devices/lcd.h \
-    devices/relay.hpp \
-    devices/vavle.hpp \
-    dialitem.h \
-    dothi.hpp \
-    hieuchinhthongso.hpp \
-    icpthread.h \
-    kiemdinhtudong.hpp \
-    localdatabase.h \
-    logger.h \
-    login.hpp \
-    master.h \
-    modbus.hpp \
-    network.h \
-    thunghiembangtay.h
+INCLUDEPATH += devices \
+    listModels \
+    ui \
+    utils
 
 DISTFILES +=
+
+HEADERS += \
+    devices/bientan.hpp \
+    devices/cambienapsuat.hpp \
+    devices/lcd.h \
+    devices/master.h \
+    devices/modbus.hpp \
+    devices/relay.hpp \
+    devices/vavle.hpp \
+    listModels/deviceModel.h \
+    listModels/deviceparameter.h \
+    ui/baseobject.h \
+    ui/dangnhapthietbi.hpp \
+    ui/dialitem.h \
+    ui/dothi.hpp \
+    ui/hieuchinhthongso.hpp \
+    ui/kiemdinhtudong.hpp \
+    ui/login.hpp \
+    ui/thunghiembangtay.h \
+    utils/config.h \
+    utils/constant.h \
+    utils/dataobject.h \
+    utils/localdatabase.h \
+    utils/logger.h \
+    utils/network.h

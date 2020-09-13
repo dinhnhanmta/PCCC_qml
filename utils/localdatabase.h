@@ -6,7 +6,7 @@
 class LocalDatabase
 {
 public:
-    LocalDatabase(const QString sqlPath = SQL_PATH);
+    LocalDatabase();
     bool insertRecord(QString table, QVariantMap data);
     bool updateRecord(QString table, QVariantMap data, QVariantMap condition);
     bool deleteRecord(QString table, QVariantMap condition);
