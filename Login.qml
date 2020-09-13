@@ -14,18 +14,20 @@ Item {
     property color popupBackGroundColor: "#b44"
     property color popupTextCOlor: "#ffffff"
     Rectangle{
+        color: "#f42a2a"
         anchors.fill: parent
-        color: backGroundColor
 
         Text {
             id: label
             anchors.top: parent.top
-            anchors.topMargin: 10
+            anchors.topMargin: 37
             anchors.horizontalCenter: parent.horizontalCenter
             text: "ĐĂNG NHẬP KIỂM ĐỊNH VIÊN"
+            anchors.horizontalCenterOffset: 1
+            font.family: "Tahoma"
             font.pixelSize: 26
             font.bold: true
-            color: "white"
+            color: "yellow"
         }
 
         Item {
@@ -47,7 +49,7 @@ Item {
             Connections {
                 target: QLogin
                 onLoginSuccess: {
-                   stack.push("MainWindow.qml")
+                    stack.push("MainWindow.qml")
                 }
                 onLoginFailed: {
                     messageDialog.visible = true
@@ -72,23 +74,31 @@ Item {
                 }
 
                 Item {
+                    anchors.rightMargin: 20
+                    anchors.bottomMargin: 32
+                    anchors.leftMargin: 20
+                    anchors.topMargin: 8
                     anchors.fill: parent
                     anchors.margins: 20
 
                     Rectangle {
                         id: iconRect
+                        y: -7
                         height: parent.height / 3
                         color: backGroundColor
+                        anchors.rightMargin: 0
+                        anchors.leftMargin: 0
                         anchors.left: parent.left
                         anchors.right: parent.right
 
-                        Text {
-                            id: icontext
-                            text: qsTr("\uf170")
-                            anchors.centerIn: parent
-                            font.pointSize: 112
-                            font.family: "fontawesome"
-                            color: mainAppColor
+                        Image {
+                            id: image
+                            x: 250
+                            y: 7
+                            width: 100
+                            height: 100
+                            fillMode: Image.PreserveAspectFit
+                            source: "../pccc410.png"
                         }
                     }
 
@@ -111,7 +121,7 @@ Item {
                             font.family: "fontawesome"
                             leftPadding: 40
                             text: QLogin.loggedUsername()
-                            enabled: stack.empty
+                            //                            enabled: stack.empty
                             background: Rectangle {
                                 radius: implicitHeight / 2
                                 color: "transparent"
@@ -147,7 +157,7 @@ Item {
                             leftPadding: 40
                             echoMode: TextField.Password
                             text: QLogin.loggedPassword()
-                            enabled: stack.empty
+                            //                            enabled: stack.empty
                             background: Rectangle {
                                 implicitWidth: 200
                                 implicitHeight: 50
@@ -180,6 +190,7 @@ Item {
                         CButton{
                             id: loginBtn
                             height: 50
+                            font.family: "Tahoma"
                             Layout.alignment: Qt.AlignCenter
                             Layout.preferredWidth: 200
                             name: "Đăng nhập"
@@ -210,3 +221,24 @@ Item {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*##^## Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+ ##^##*/

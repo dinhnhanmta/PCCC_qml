@@ -30,7 +30,7 @@ Item
 
     Rectangle {
         anchors.fill: parent
-        color: "lightblue"
+        color: "#e4f9ff"
 
         Row {
             id: row
@@ -227,7 +227,8 @@ Item
                 }
                 Text {
                     color: "#fd410b"
-                    text: Bientan.q_real_frequency/100
+//                    text: "#Bientan.q_real_frequency/100#"
+                    text: (Bientan.q_real_frequency/100).toFixed(1)
                     font.family: "Tahoma"
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.bold: true

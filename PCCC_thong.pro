@@ -15,12 +15,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         baseobject.cpp \
-        bientan.cpp \
         cambienapsuat.cpp \
         config.cpp \
         dangnhapthietbi.cpp \
         dataobject.cpp \
         deviceparameter.cpp \
+        devices/bientan.cpp \
+        devices/lcd.cpp \
+        devices/relay.cpp \
+        devices/vavle.cpp \
         dialitem.cpp \
         dothi.cpp \
         hieuchinhthongso.cpp \
@@ -33,9 +36,7 @@ SOURCES += \
         master.cpp \
         modbus.cpp \
         network.cpp \
-        relay.cpp \
-        thunghiembangtay.cpp \
-        vavle.cpp
+        thunghiembangtay.cpp
 
 RESOURCES += qml.qrc
 
@@ -52,13 +53,16 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     baseobject.h \
-    bientan.hpp \
     cambienapsuat.hpp \
     config.h \
     constant.h \
     dangnhapthietbi.hpp \
     dataobject.h \
     deviceparameter.h \
+    devices/bientan.hpp \
+    devices/lcd.h \
+    devices/relay.hpp \
+    devices/vavle.hpp \
     dialitem.h \
     dothi.hpp \
     hieuchinhthongso.hpp \
@@ -70,8 +74,6 @@ HEADERS += \
     master.h \
     modbus.hpp \
     network.h \
-    relay.hpp \
-    thunghiembangtay.h \
-    vavle.hpp
+    thunghiembangtay.h
 
 DISTFILES +=

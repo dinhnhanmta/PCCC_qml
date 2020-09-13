@@ -58,7 +58,7 @@ Item {
             id:t
             interval: 1000
             repeat: true
-            running: true
+            running: false
             triggeredOnStart: true
             onTriggered:{
                 time +=1;
@@ -70,8 +70,8 @@ Item {
 
 
         PrimaryButton {
-            x: 70
-            y: 381
+            x: 55
+            y: 391
             width: 167
             height: 47
             text: "BẮT ĐẦU KIỂM ĐỊNH"
@@ -158,7 +158,7 @@ Item {
             dialColor: "darkblue"
             Image {
                 id: needle
-                anchors.verticalCenterOffset: -176
+                anchors.verticalCenterOffset: -174
                 anchors.horizontalCenterOffset: -204
                 source: "./Icon/needle.png"
                 scale: 0.8
@@ -208,6 +208,8 @@ Item {
                 id: apSuatLamViec
                 anchors.centerIn: parent
                 text: listApSuatLamViec[0].item+" MPa"
+                anchors.verticalCenterOffset: 0
+                anchors.horizontalCenterOffset: -3
             }
         }
 

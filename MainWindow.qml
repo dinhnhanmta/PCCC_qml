@@ -12,28 +12,33 @@ Item {
     Component.onCompleted: {
         Modbus.startConnection();
         Cambien.openSerialPort();
-        screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH VÒI CHỮA CHÁY")
+        screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH KHỚP NỐI")
     }
 
     Rectangle{
+        id: rectangle
         anchors.fill: parent
-        color: "lightblue"
+        color: "#ddf6fe"
 
         Text {
 
             id: screenLabel
-            y: 18
-            height: 40
-            color: "#0335b8"
-            text: qsTr("THIẾT BỊ KIỂM ĐỊNH VÒI CHỮA CHÁY")
-            font.capitalization: Font.AllUppercase
-            font.weight: Font.ExtraBold
-            style: Text.Outline
-            anchors.horizontalCenterOffset: 13
-            font.bold: true
-            font.family: "Tahoma"
+            x: 244
+            anchors.top: parent.top
+            anchors.topMargin: 16
+
+            //            y: 18
+//            height: 40
+            color: "#fd1d1d"
+            text: qsTr("THIẾT BỊ KIỂM ĐỊNH KHỚP NỐI")
             anchors.horizontalCenter: parent.horizontalCenter
+            horizontalAlignment: Text.AlignLeft
+            font.capitalization: Font.AllUppercase
+            font.family: "Tahoma"
             font.pixelSize: 27
+            font.bold: true
+
+
         }
 
         StackView {
@@ -76,8 +81,10 @@ Item {
                     PrimaryButton{
                         id: thuNghiem
                         height: 100
-                        radius: 1
-                        text: "              TIẾN HÀNH THỬ NGHIỆM"
+                        radius: 4
+                        text: "              KIỂM ĐỊNH TỰ ĐỘNG"
+                        textColor: "black"
+                        pointSize: 13
                         border.color: "#4dade9"
                         activeFocusOnTab: false
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -99,8 +106,9 @@ Item {
                     PrimaryButton {
                         id: capNhat
                         height: 100
-                        radius: 1
+                        radius: 4
                         text: "                 CẬP NHẬT THÔNG SỐ\n                        KIỂM ĐỊNH"
+                        pointSize: 13
                         anchors.horizontalCenter: parent.horizontalCenter
                         enabled: stack2.empty
                         Image {
@@ -123,8 +131,10 @@ Item {
                     PrimaryButton {
                         id: thuNghiem5
                         height: 100
-                        radius: 1
+                        radius: 4
                         text: "         CÀI ĐẶT HỆ THỐNG"
+                        border.color: "#1b26d2"
+                        pointSize: 13
                         anchors.horizontalCenter: parent.horizontalCenter
                         enabled: stack2.empty
                         Image {
@@ -150,8 +160,9 @@ Item {
                     PrimaryButton {
                         id: thuNghiemBangTay
                         height: 100
-                        radius: 1
-                        text: "                THỬ NGHIỆM BẰNG TAY"
+                        radius: 4
+                        text: "                KIỂM ĐỊNH BẰNG TAY"
+                        pointSize: 13
                         anchors.horizontalCenter: parent.horizontalCenter
                         enabled: stack2.empty
                         Image {
@@ -172,8 +183,9 @@ Item {
                         id: thuNghiem2
                         y: 175
                         height: 100
-                        radius: 1
-                        text: "LỊCH SỬ KIỂM ĐỊNH"
+                        radius: 4
+                        text: "      LỊCH SỬ KIỂM ĐỊNH"
+                        pointSize: 13
                         anchors.horizontalCenter: parent.horizontalCenter
                         enabled: stack2.empty
                         Image {
@@ -192,8 +204,9 @@ Item {
                     PrimaryButton {
                         id: thuNghiem4
                         height: 100
-                        radius: 1
-                        text: "         HIỆU CHỈNH THÔNG SỐ"
+                        radius: 4
+                        text: "              HIỆU CHỈNH THÔNG SỐ"
+                        pointSize: 13
                         anchors.horizontalCenter: parent.horizontalCenter
                         enabled: stack2.empty
                         Image {
@@ -253,12 +266,12 @@ Item {
 
 
 
-
             Rectangle{
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom:  parent.bottom
                 height: homeBtn.height
                 color: "palegoldenrod"
+                radius: 5
                 width: perphiralStatusTxt.width + perphiralStatus.width + 30
                 Text {
                     id: perphiralStatusTxt
@@ -266,29 +279,30 @@ Item {
                     anchors.right: perphiralStatus.left
                     height: homeBtn.height
                     text: qsTr("Kết nối\nngoại vi")
+                    font.bold: false
                     horizontalAlignment: Text.AlignHCenter
                     style: Text.Normal
                     font.weight: Font.ExtraBold
-                    font.capitalization: Font.AllUppercase
+                    font.capitalization: Font.MixedCase
                     font.family: "Tahoma"
                     anchors.rightMargin: 15
                     anchors.leftMargin: 15
                     verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 15
+                    font.pixelSize: 12
                 }
                 DangerButton {
                     id: perphiralStatus
                     width: 100
                     height: homeBtn.height
                     text: ""
-                    radius: 1
+                    radius: 7
                     color: "palegoldenrod"
                     anchors.right: parent.right
                     anchors.bottom:  parent.bottom
                     Image {
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
-                        source: Cambien.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
+                        source: Modbus.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
                         scale: 0.7
                     }
                 }
@@ -299,6 +313,7 @@ Item {
                 anchors.bottom:  parent.bottom
                 height: homeBtn.height
                 color: "palegoldenrod"
+                radius: 5
                 width: sensorStatusTxt.width + sensorStatus.width + 30
                 Text {
                     id: sensorStatusTxt
@@ -306,27 +321,29 @@ Item {
                     anchors.right: sensorStatus.left
                     height: homeBtn.height
                     text: qsTr("Kết nối\ncảm biến")
+                    font.family: "Tahoma"
+                    font.bold: false
                     horizontalAlignment: Text.AlignHCenter
                     font.weight: Font.ExtraBold
-                    font.capitalization: Font.AllUppercase
+                    font.capitalization: Font.MixedCase
                     anchors.rightMargin: 15
                     anchors.leftMargin: 15
                     verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 15
+                    font.pixelSize: 12
                 }
                 DangerButton {
                     id: sensorStatus
                     text: ""
                     color: "palegoldenrod"
-                    radius: 1
+                    radius: 3
                     width: 100
-                    height: 55
+                    height: 50
                     anchors.right: parent.right
                     anchors.bottom:  parent.bottom
                     Image {
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.verticalCenter: parent.verticalCenter
-                        source: Modbus.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
+                        source: Cambien.q_connectionState ? "qrc:/Icon/tick.png" : "qrc:/Icon/close.png"
                         scale: 0.7
                     }
                 }
@@ -340,7 +357,7 @@ Item {
                 color: "palegoldenrod"
                 radius: 3
                 width: 200
-                height: 55
+                height: 50
                 anchors.left: parent.left
                 anchors.bottom:  parent.bottom
                 Image {
@@ -377,7 +394,13 @@ Item {
 
 
 
+
+
+
+
+
 /*##^## Designer {
-    D{i:28;anchors_height:50;anchors_width:100}D{i:32;anchors_height:50;anchors_width:100}
+    D{i:27;anchors_height:50;anchors_width:100}D{i:28;anchors_height:50;anchors_width:100}
+D{i:31;anchors_height:50;anchors_width:100}D{i:32;anchors_height:50;anchors_width:100}
 }
  ##^##*/
