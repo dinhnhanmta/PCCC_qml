@@ -63,6 +63,7 @@ void KiemDinhTuDong::updateLogic()
         }
         _xValue.append(QDateTime::currentDateTime());
         _pRefer.append(updatePRefer(_pRefer.last()));
+        saveData.append(_pRefer);
         _pCurrent.append(m_camBienApSuat->getPressure());
         emit xValueChange();
     }
@@ -94,6 +95,8 @@ bool KiemDinhTuDong::isRunning()
 }
 
 void KiemDinhTuDong::start(){
+    startTime = QDateTime::currentDateTime();
+    saveData = QList<double>();
     running = true;
 }
 

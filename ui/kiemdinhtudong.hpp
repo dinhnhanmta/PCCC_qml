@@ -57,6 +57,10 @@ private:
     bool running = false;
     int counter = -1;
 
+
+    QList<double> saveData;
+    QDateTime startTime;
+
     enum States
        {
            ST_IDLE = 0,

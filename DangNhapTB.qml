@@ -34,7 +34,7 @@ Item {
             deviceLoginBtn.enabled = true
         }
         onGetDeviceModelsSuccess: {
-            console.log(LoginTB.deviceModels);
+
         }
         onGetDeviceModelsFailed: {
             messageDialog2.visible = true;
@@ -57,6 +57,7 @@ Item {
             screenLabel.text = qsTr("ĐĂNG NHẬP THÔNG SỐ THIẾT BỊ")
             LoginTB.getListDeviceModels();
         }
+
     }
 
     Rectangle{
@@ -86,7 +87,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
                             textRole: "display"
                             onCurrentIndexChanged: {
-                                LoginTB.setDeviceModelName(cbDeviceModel.currentText)
+                                LoginTB.setDeviceModelName(cbDeviceModel.textAt(cbDeviceModel.currentIndex))
                             }
                         }
                     ]
@@ -152,9 +153,10 @@ Item {
                                     text: "ĐĂNG NHẬP MÃ KIỂM ĐỊNH"
                                     pointSize: 10
                                     MouseArea {
+                                        anchors.fill: parent
                                         onClicked: {
                                             if (cbDeviceCode.currentText !== "") {
-                                                LoginTB.loginDevice(cbDeviceCode.text)
+                                                LoginTB.loginDevice(cbDeviceCode.currentText)
                                             }
                                         }
                                     }
@@ -166,6 +168,7 @@ Item {
                                     text: "TẠO MÃ KIỂM ĐỊNH"
                                     pointSize: 10
                                     MouseArea {
+                                        anchors.fill: parent
                                         onClicked: {
                                             if (maTB.text !== "") {
                                                 LoginTB.saveDevice(maTB.text)
