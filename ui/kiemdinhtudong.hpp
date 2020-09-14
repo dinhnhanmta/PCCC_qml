@@ -7,17 +7,15 @@
 #include <bientan.hpp>
 #include <cambienapsuat.hpp>
 #include <lcd.h>
+#include <localdatabase.h>
 #include <relay.hpp>
 #include "dataobject.h"
-class KiemDinhTuDong : public QObject
+class KiemDinhTuDong : public QObject, BaseObject
 {
     Q_OBJECT
 
 
 public:
-    Q_PROPERTY(QList<double> pCurrent READ getPCurrent)
-    Q_PROPERTY(QList<double> pRefer READ getPRefer)
-    Q_PROPERTY(QList<QString> xValue READ getXValue NOTIFY xValueChange)
 
     Q_PROPERTY(double q_pReference READ getRefer)
     Q_PROPERTY(int q_counter_test READ getCounter )
@@ -30,35 +28,16 @@ public:
     Q_INVOKABLE bool isRunning();
     KiemDinhTuDong (CamBienApSuat *cbap, Bientan *bientan, Modbus *modbus, Relay *relay);
 
-    Q_INVOKABLE void start();
-
-//    void setRefer(double refer) {_pReferCurrent = refer;}
     double getRefer(){return _pReferCurrent;}
     int getCounter(){return counter; }
-
-signals:
-    void pCurrentChange();
-    void pReferChange();
-    void xValueChange();
-
 
 private:
     QSqlDatabase db;
     QSqlQuery *query;
 
-    QList<double> getPCurrent();
-    QList<double> getPRefer();
-    QList<QString> getXValue();
-
     float _pWorking = 16;
     float _pTried = 20;
     double _pReferCurrent =0;
-    QList<double> _pCurrent;
-    QList<double> _pRefer;
-    QList<QDateTime> _xValue;
-
-
-//    QDateTime _xValue;
 
     CamBienApSuat * m_camBienApSuat;
     Bientan *m_bienTan;
@@ -69,7 +48,6 @@ private:
     bool last_start_state;
     bool running = false;
     int counter = -1;
-
 
     QList<double> saveData;
     QDateTime startTime;
@@ -90,6 +68,8 @@ private:
     States state = ST_IDLE;
     double updatePRefer(double _currentPRefer);
     void stop();
+    void saveRecordData();
+    LocalDatabase *localDatabase;
 };
 
 

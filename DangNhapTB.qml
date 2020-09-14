@@ -87,10 +87,11 @@ Item {
                             textRole: "display"
                             onCurrentIndexChanged: {
                                 LoginTB.setDeviceModelName(cbDeviceModel.textAt(cbDeviceModel.currentIndex))
+                                LoginTB.getListDevicesCode()
                             }
                             onModelChanged: {
-                                currentIndex = LoginTB.currentDeviceModelIndex()
-                                LoginTB.getListDevicesCode()
+                                currentIndex = LoginTB.currentDeviceModelIndex();
+                                LoginTB.getListDevicesCode();
                             }
                         }
                     ]

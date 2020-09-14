@@ -11,14 +11,14 @@ Item {
     anchors.fill: parent
     visible: true
 
-//    Timer cho cap nhat gia tri led
+    //    Timer cho cap nhat gia tri led
     Timer {
         interval: 1000; running: true; repeat: true
         onTriggered:{
             KiemDinhTDObj.checkState()
         }
     }
-// Timer cap nhat state machine
+    // Timer cap nhat state machine
     Timer {
         interval: 100; running: true; repeat: true
         onTriggered:{
@@ -26,7 +26,7 @@ Item {
         }
     }
 
-//    Timer cap nhat ngoai vi
+    //    Timer cap nhat ngoai vi
     Timer {
         interval: 100; running: true; repeat: true
         onTriggered:{
@@ -34,11 +34,8 @@ Item {
         }
     }
 
-
     //    Timer cap nhat Chart
-
     property var x_var: 0
-    property var y_var: 0
     Constants {
         id: constants
     }
@@ -47,31 +44,16 @@ Item {
         interval: 1000; running: true; repeat: true
         onTriggered:{
             x_var ++;
-            y_var ++;
-        if(lineSeries1.count > 100)
-            lineSeries1.remove(0);
+            if(lineSeries1.count > 100) lineSeries1.remove(0);
             lineSeries1.append(x_var, Cambien.q_pressure);
-//            lineSeries1.append(x_var, y_var);
-            axisX.min = lineSeries1.at(0).x
-            axisX.max = lineSeries1.at(lineSeries1.count-1).x
 
-        if(lineSeries2.count > 100)
-            lineSeries2.remove(0);
+            if(lineSeries2.count > 100) lineSeries2.remove(0);
             lineSeries2.append(x_var, KiemDinhTDObj.q_pReference);
-//            lineSeries2.append(x_var, y_var+2);
+
             axisX.min = lineSeries2.at(0).x
             axisX.max = lineSeries2.at(lineSeries1.count-1).x
         }
     }
-
-//    Connections {
-
-//        target: KiemDinhTDObj
-//        target: Cambien
-//        onXValueChange: {
-
-//        }
-//    }
 
     Rectangle{
         anchors.fill: parent
@@ -100,14 +82,42 @@ Item {
                                     font.bold: false
                                     horizontalAlignment: Text.AlignLeft
                                 },
-                                Dropdown {
-                                    id: dropdownListLoaiVoi
+                                ComboBox {
+                                    id: cbListLoaiVoi
                                     width: col2.width/1.5
                                     height: 35
-                                    dropdownTextColor: "black"
-                                    dropdownItemHeight: 30
-                                    z: 3
-                                    onTextChanged: {
+                                    model: ListModel {
+                                        id: loaiVoiModel
+                                        ListElement {
+                                            text: "VP 51"
+                                            working: 1.6
+                                            test: 2.0
+                                        }
+                                        ListElement {
+                                            text: "VP 66"
+                                            working: 1.6
+                                            test: 2.0
+                                        }
+                                        ListElement {
+                                            text: "VP 77"
+                                            working: 1.6
+                                            test: 2.0
+                                        }
+                                        ListElement {
+                                            text: "VP 110"
+                                            working: 1.4
+                                            test: 1.8
+                                        }
+                                        ListElement {
+                                            text: "VP 150"
+                                            working: 1.2
+                                            test: 1.4
+                                        }
+                                    }
+
+                                    onCurrentIndexChanged: {
+                                        apSuatLamViec.text = loaiVoiModel.get(cbListLoaiVoi.currentIndex).working
+                                        apSuatThu.text = loaiVoiModel.get(cbListLoaiVoi.currentIndex).test
                                     }
                                 }
                             ]
@@ -156,7 +166,6 @@ Item {
                                 },
                                 Text {
                                     width: col2.width/4
-//                                    id: apSuat
                                     text: KiemDinhTDObj.q_pReference
                                     horizontalAlignment: Text.AlignRight
                                     font.bold: true
@@ -344,7 +353,6 @@ Item {
                     width: 700
                     height: 450
                     antialiasing: true
-                    //                    title: "Biểu đồ áp suất"
                     ValueAxis {
                             id: axisY1
                             min: 0
@@ -355,50 +363,50 @@ Item {
                             labelFormat: "%.0f"
                         }
 
-                       ValueAxis {
-                            id: axisX
-                            min: 0
-                            max: 50
-                            gridVisible: false
-                            color: "black"
-                            labelsColor: "black"
-                            labelFormat: "%.0f"
-                            tickCount: 5
-                        }
+                   ValueAxis {
+                        id: axisX
+                        min: 0
+                        max: 50
+                        gridVisible: false
+                        color: "black"
+                        labelsColor: "black"
+                        labelFormat: "%.0f"
+                        tickCount: 5
+                    }
                     LineSeries {
-                                id: lineSeries1
-                                name: "Áp suất vòi"
-                                color: "red"
-                                axisX: axisX
-                                axisY: axisY1
-                            }
+                        id: lineSeries1
+                        name: "Áp suất vòi"
+                        color: "red"
+                        axisX: axisX
+                        axisY: axisY1
+                    }
                     LineSeries {
-                                id: lineSeries2
-                                name: "Áp suất tham chieu"
-                                color: "blue"
-                                axisX: axisX
-                                axisY: axisY1
+                        id: lineSeries2
+                        name: "Áp suất tham chiếu"
+                        color: "blue"
+                        axisX: axisX
+                        axisY: axisY1
                     }
 
                     MouseArea{
-                               anchors.fill: parent
-                               onDoubleClicked: chartView.zoomReset();
-                           }
+                       anchors.fill: parent
+                       onDoubleClicked: chartView.zoomReset();
+                   }
 
-                           PinchArea{
-                               id: pa
-                               anchors.fill: parent
-                               onPinchUpdated: {
-                                   chartView.zoomReset();
-                                   var center_x = pinch.center.x
-                                   var center_y = pinch.center.y
-                                   var width_zoom = height/pinch.scale;
-                                   var height_zoom = width/pinch.scale;
-                                   var r = Qt.rect(center_x-width_zoom/2, center_y - height_zoom/2, width_zoom, height_zoom)
-                                   chartView.zoomIn(r)
-                               }
+                   PinchArea{
+                       id: pa
+                       anchors.fill: parent
+                       onPinchUpdated: {
+                           chartView.zoomReset();
+                           var center_x = pinch.center.x
+                           var center_y = pinch.center.y
+                           var width_zoom = height/pinch.scale;
+                           var height_zoom = width/pinch.scale;
+                           var r = Qt.rect(center_x-width_zoom/2, center_y - height_zoom/2, width_zoom, height_zoom)
+                           chartView.zoomIn(r)
+                       }
 
-                           }
+                   }
                 }
 
             ]
