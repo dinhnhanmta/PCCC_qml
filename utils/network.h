@@ -15,12 +15,14 @@ public:
     void inspect(QByteArray jsonData);
     void syncData();
     void getDeviceModels();
+    void getDevicesByName(QString modelName);
     QNetworkReply *reply;
 private:
     QNetworkRequest request;
     QNetworkAccessManager *manager;
     const QString loginPath = "/api/Auth/Login";
     const QString deviceLoginPath = "/api/Devices/DeviceLogin";
+    const QString devicesByModelName = "/api/Devices/DeviceList/ByName/";
     const QString deviceModels = "/api/DeviceModels/All";
     const QString dataPath = "/api/Devices/Inspect";
 };

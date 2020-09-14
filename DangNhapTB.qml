@@ -29,14 +29,13 @@ Item {
            stack2.push("KiemDinhTD.qml")
         }
         onLoginFailed: {
-            console.log("OK");
             messageDialog.visible = true
             deviceLoginBtn.enabled = true
         }
-        onGetDeviceModelsSuccess: {
-
-        }
         onGetDeviceModelsFailed: {
+            messageDialog2.visible = true;
+        }
+        onGetDevicesFailed: {
             messageDialog2.visible = true;
         }
         onGetDeviceModelDetailSuccess: {
@@ -89,6 +88,10 @@ Item {
                             onCurrentIndexChanged: {
                                 LoginTB.setDeviceModelName(cbDeviceModel.textAt(cbDeviceModel.currentIndex))
                             }
+                            onModelChanged: {
+                                currentIndex = LoginTB.currentDeviceModelIndex()
+                                LoginTB.getListDevicesCode()
+                            }
                         }
                     ]
                 },
@@ -109,18 +112,12 @@ Item {
                                 ComboBox {
                                     id: cbDeviceCode
                                     enabled: LoginTB.deviceModelName() !== ""
-                                    model: ListModel {
-                                        id: cbItems2
-                                        ListElement { text: ""; }
-                                        ListElement { text: "ABDC"; }
-                                        ListElement { text: "XYZ"; }
-                                        ListElement { text: "123"; }
-                                        ListElement { text: "321"; }
-                                    }
+                                    model: LoginTB.deviceCodes
                                     width: 235
+                                    textRole: "display"
                                     font.pointSize: 13
                                     onCurrentIndexChanged: {
-                                        if (cbItems2.get(cbDeviceCode.currentIndex) === ""){
+                                        if (cbDeviceCode.textAt(cbDeviceCode.currentIndex) === ""){
                                             deviceLoginBtn.color = constants.grayLight
                                         } else {
                                             deviceLoginBtn.color = constants.turquoise

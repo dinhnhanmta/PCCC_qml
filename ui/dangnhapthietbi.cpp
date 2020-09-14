@@ -75,7 +75,27 @@ bool DangNhapThietBi::getListDeviceModelsLocal()
             return false;
         }
     }
-    emit getDeviceModelsSuccess();
+    return true;
+}
+
+bool DangNhapThietBi::getListDevicesLocal()
+{
+    QStringList fields;
+    fields.append("code");
+    QVariantMap conditions;
+    conditions["deviceModelName"] = settings->defautConfig.getDeviceModelName();
+
+    QList<QVariantMap> results = localDatabase->queryRecords("devices", fields, conditions);
+    listDevicesCode = QList<QString>() << QString("");
+
+    foreach (const QVariantMap & result, results) {
+        if (result.value("code").isValid()){
+            listDevicesCode << QString(result.value("code").toString());
+        } else {
+            emit getDevicesFailed();
+            return false;
+        }
+    }
     return true;
 }
 
@@ -93,8 +113,35 @@ bool DangNhapThietBi::saveListDeviceModels(QJsonArray deviceModels)
             listDeviceModel << QString(obj["vehicleName"].toString());
         }
     }
-    emit getDeviceModelsSuccess();
     return true;
+}
+
+bool DangNhapThietBi::saveListDevices(QJsonArray devices)
+{
+    listDevicesCode = QList<QString>() << QString("");
+    foreach (const QJsonValue & device, devices) {
+        QJsonObject obj = device.toObject();
+        QVariantMap mapDevice;
+        mapDevice["deviceModelName"] = settings->defautConfig.getDeviceModelName();
+        mapDevice["code"] = obj["code"].toString();
+        mapDevice["iParameter"] = obj["iParameter"].toString();
+        if (!localDatabase->insertRecord("devices",mapDevice)){
+            return false;
+        } else {
+            listDevicesCode << QString(obj["code"].toString());
+        }
+    }
+    return true;
+}
+
+ListDeviceModels *DangNhapThietBi::listDeviceModels()
+{
+    return new ListDeviceModels(listDeviceModel);
+}
+
+ListDeviceModels *DangNhapThietBi::listDevicesCodes()
+{
+    return new ListDeviceModels(listDevicesCode);
 }
 
 void DangNhapThietBi::setDeviceModelName(QString deviceModelName)
@@ -144,16 +191,58 @@ void DangNhapThietBi::getListDeviceModels()
     }
 }
 
-ListDeviceModels* DangNhapThietBi::listDeviceModels()
+void DangNhapThietBi::getListDevicesCode()
 {
-    return new ListDeviceModels(listDeviceModel);
+    if (settings->defautConfig.getDeviceModelName().isEmpty()){
+        listDevicesCode = QList<QString>() << QString("");
+        return;
+    }
+    if (settings->defautConfig.getToken().isEmpty()){
+        getListDevicesLocal();
+        emit listDevicesChanged();
+    } else {
+        network->getDevicesByName(settings->defautConfig.getDeviceModelName());
+        connect(network->reply, &QNetworkReply::finished, [=]() {
+            if(network->reply->error() == QNetworkReply::NoError){
+                QJsonObject obj = QJsonDocument::fromJson(network->reply->readAll()).object();
+                if (obj.value("code").toInt() != 0
+                        || !saveListDevices(obj.value("data").toArray())
+                        ){
+                    emit getDevicesFailed();
+                }
+            } else if (network->reply->error() == QNetworkReply::TimeoutError || network->reply->error() == QNetworkReply::HostNotFoundError){
+                getListDevicesLocal();
+            } else if (network->reply->error() == QNetworkReply::AuthenticationRequiredError){
+                settings->defautConfig.setToken("");
+                logger->printLog(LoggerLevel::FATAL, network->reply->errorString());
+                emit unauthorized();
+            } else {
+                logger->printLog(LoggerLevel::FATAL, network->reply->errorString());
+                emit getDevicesFailed();
+            }
+            emit listDevicesChanged();
+        });
+    }
+}
+
+int DangNhapThietBi::currentDeviceModelIndex()
+{
+    int index = listDeviceModel.indexOf(settings->defautConfig.getDeviceModelName());
+    if (index >= 0) return index;
+    else return 0;
+}
+
+int DangNhapThietBi::currentDeviceIndex()
+{
+    int index = listDevicesCode.indexOf(settings->defautConfig.getDeviceCode());
+    if (index >= 0) return index;
+    else return 0;
 }
 
 DangNhapThietBi::DangNhapThietBi()
 {
     network = new Network();
     localDatabase = new LocalDatabase();
-
 }
 
 bool DangNhapThietBi::logged()
