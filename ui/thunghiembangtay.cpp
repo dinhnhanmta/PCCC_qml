@@ -25,8 +25,8 @@ void ThuNghiemBangTay::updateLogic()
         m_bienTan->write_friquency((int)(m_camBienApSuat->getValPot()*100));
         m_bienTan->readRealFrequency();
 
-//        m_lcd->writePressureLCD(int16_t(m_camBienApSuat->getPressure()*10));
-        m_lcd->writePressureLCD(200);
+        m_lcd->writePressureLCD(int16_t(m_camBienApSuat->getPressure()*10));
+//        m_lcd->writePressureLCD(200);
 
     }
 

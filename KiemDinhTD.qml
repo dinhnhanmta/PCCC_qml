@@ -3,35 +3,75 @@ import "FlatUI-Controls-QML-master"
 import QtQuick.Controls.Styles 1.2
 import QtQuick.Controls 1.2
 import IVIControls 1.0
+import QtQuick.Extras 1.4
+import QtCharts 2.3
+
+
 Item {
     anchors.fill: parent
     visible: true
 
+//    Timer cho cap nhat gia tri led
     Timer {
         interval: 1000; running: true; repeat: true
         onTriggered:{
             KiemDinhTDObj.checkState()
         }
     }
-
+// Timer cap nhat state machine
     Timer {
-        interval: 1000; running: true; repeat: true
+        interval: 100; running: true; repeat: true
+        onTriggered:{
+            KiemDinhTDObj.updateState()
+        }
+    }
+
+//    Timer cap nhat ngoai vi
+    Timer {
+        interval: 100; running: true; repeat: true
         onTriggered:{
             KiemDinhTDObj.updateLogic()
         }
     }
 
 
+    //    Timer cap nhat Chart
+
+    property var x_var: 0
+    property var y_var: 0
     Constants {
         id: constants
     }
 
-    Connections {
-        target: KiemDinhTDObj
-        onXValueChange: {
-            chartID.requestPaint();
+    Timer {
+        interval: 1000; running: true; repeat: true
+        onTriggered:{
+            x_var ++;
+            y_var ++;
+        if(lineSeries1.count > 100)
+            lineSeries1.remove(0);
+            lineSeries1.append(x_var, Cambien.q_pressure);
+//            lineSeries1.append(x_var, y_var);
+            axisX.min = lineSeries1.at(0).x
+            axisX.max = lineSeries1.at(lineSeries1.count-1).x
+
+        if(lineSeries2.count > 100)
+            lineSeries2.remove(0);
+            lineSeries2.append(x_var, KiemDinhTDObj.q_pReference);
+//            lineSeries2.append(x_var, y_var+2);
+            axisX.min = lineSeries2.at(0).x
+            axisX.max = lineSeries2.at(lineSeries1.count-1).x
         }
     }
+
+//    Connections {
+
+//        target: KiemDinhTDObj
+//        target: Cambien
+//        onXValueChange: {
+
+//        }
+//    }
 
     Rectangle{
         anchors.fill: parent
@@ -42,141 +82,332 @@ Item {
             spacing: 24
             children: [
                 Column {
-                    width: 300
-                    spacing: 10
+                    id: col2
+                    anchors.topMargin: 50
+                    width: 250
+                    spacing: 17
                     children: [
-                        Text {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            font.pointSize: 11
-                            text: qsTr("ÁP SUẤT")
-                        },
-                        Rectangle {
-                            width: parent.width - 20
-                            anchors.horizontalCenter: parent.horizontalCenter
+                        Row {
+                            spacing: 10
                             height: 35
-                            color: dropdownListLoaiVoi.color
-                            Text {
-                                id: apSuat
-                                anchors.centerIn: parent
-                                text: Cambien.q_val_pot.toFixed(1)
-                                font.pointSize: 10
-                            }
-                        },
-                        Text {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            font.pointSize: 11
-                            text: qsTr("LOẠI VÒI")
-                        },
-                        Dropdown {
-                            id: dropdownListLoaiVoi
-                            width: parent.width - 20
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            height: 35
-                            dropdownTextColor: "black"
-                            dropdownItemHeight: 30
-                            z: 7
-                            onTextChanged: {
-                            }
-                        },
-                        Text {
-                            text: qsTr("ÁP SUẤT LÀM VIỆC")
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            font.pointSize: 11
-                        },
-                        Input {
-                            id: apSuatLamViec
-                            width: parent.width - 20
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            height: 35
-                            Text {
-                                anchors.centerIn: parent
-                                font.pointSize: 10
-                            }
-                        },
-                        Text {
-                            text: qsTr("ÁP SUẤT THỬ")
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            font.pointSize: 11
-                        },
-                        Input {
-                            id: apSuatThu
-                            width: parent.width - 20
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            height: 35
-                            Text {
-                                anchors.centerIn: parent
-                                font.pointSize: 10
-                            }
-                        },
-                        Text {
-                            text: qsTr("ĐÈN BẮT ĐẦU")
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            font.pointSize: 11
-                        },
-                        Rectangle {
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            width: 120
-                            height: 35
-                            Image {
-                                source: Relay.q_start_led_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
-                                anchors.fill: parent
-                            }
-                        },
-                        PrimaryButton {
-                            id: btnStart
-                            width: 200
-                            height: 47
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            text: "BẮT ĐẦU"
-                            MouseArea{
-                                anchors.fill: parent
-                                onClicked:
-                                {
-                                    if (!KiemDinhTDObj.isRunning()){
-                                        btnStart.text = "DỪNG";
-                                        btnStart.color = constants.carrot;
-                                        KiemDinhTDObj.setPWorking(apSuatLamViec.text);
-                                        KiemDinhTDObj.setPTried(apSuatThu.text);
-                                        KiemDinhTDObj.start();
-                                    } else {
-                                        btnStart.text = "BẮT ĐẦU";
-                                        btnStart.color = constants.turquoise;
-                                        KiemDinhTDObj.stop();
+                            width: col2.width
+                            children: [
+                                Text {
+                                    width: col2.width/2.5
+                                    font.pointSize: 16
+                                    height: 35
+                                    text: qsTr("  Loại vòi ")
+                                    font.bold: false
+                                    horizontalAlignment: Text.AlignLeft
+                                },
+                                Dropdown {
+                                    id: dropdownListLoaiVoi
+                                    width: col2.width/1.5
+                                    height: 35
+                                    dropdownTextColor: "black"
+                                    dropdownItemHeight: 30
+                                    z: 3
+                                    onTextChanged: {
                                     }
                                 }
-                            }
+                            ]
+                        },
+
+                        Row {
+                            spacing: 10
+                            height: 35
+                            width: col2.width
+                            children: [
+                                Text {
+                                    width: col2.width/2
+                                    font.pointSize: 16
+                                    text: qsTr("  P ")
+                                    font.bold: false
+                                    horizontalAlignment: Text.AlignLeft
+                                },
+                                Text {
+                                    width: col2.width/4
+                                    id: apSuat
+                                    text: Cambien.q_pressure.toFixed(1)
+                                    font.bold: true
+                                    horizontalAlignment: Text.AlignRight
+                                    font.pointSize: 16
+                                    color: "red"
+                                },
+                                Text {
+                                    width: col2.width/4
+                                    font.pointSize: 16
+                                    text: qsTr("bar ")
+                                    horizontalAlignment: Text.AlignRight
+                                }
+                            ]
+                        },
+                        Row {
+                            spacing: 10
+                            height: 35
+                            width: col2.width
+                            children: [
+                                Text {
+                                    width: col2.width/2
+                                    font.pointSize: 16
+                                    text: qsTr("  Pref")
+                                    font.bold: false
+                                    horizontalAlignment: Text.AlignLeft
+                                },
+                                Text {
+                                    width: col2.width/4
+//                                    id: apSuat
+                                    text: KiemDinhTDObj.q_pReference
+                                    horizontalAlignment: Text.AlignRight
+                                    font.bold: true
+                                    font.pointSize: 16
+                                    color: "#2a00ff"
+                                },
+                                Text {
+                                    width: col2.width/4
+                                    font.pointSize: 16
+                                    text: qsTr("bar ")
+                                    horizontalAlignment: Text.AlignRight
+                                }
+                            ]
+                        },
+                        Row {
+                            spacing: 10
+                            height: 35
+                            width: col2.width
+                            children: [
+                                Text {
+                                    width: col2.width/2
+                                    font.pointSize: 16
+                                    text: qsTr("  P làm việc ")
+                                    font.bold: false
+                                    horizontalAlignment: Text.AlignLeft
+                                },
+                                Input {
+                                    id: apSuatLamViec
+                                    width: col2.width/4
+                                    height: 35
+                                    text: "16"
+                                    pointSize: 16
+                                    Text {
+                                        anchors.centerIn: parent
+                                        font.pointSize: 10
+                                    }
+                                },
+                                Text {
+                                    width: col2.width/4
+                                    font.pointSize: 16
+                                    text: qsTr("bar ")
+                                    horizontalAlignment: Text.AlignRight
+                                }
+                            ]
+                        },
+                        Row {
+                            spacing: 10
+                            height: 35
+                            width: col2.width
+                            children: [
+                                Text {
+                                    width: col2.width/2
+                                    font.pointSize: 16
+                                    text: qsTr("  P thử ")
+                                    font.bold: false
+                                    horizontalAlignment: Text.AlignLeft
+                                },
+                                Input {
+                                    id: apSuatThu
+                                    width: col2.width/4
+                                    height: 35
+                                    text: "20"
+                                    pointSize: 15
+                                    Text {
+                                        anchors.centerIn: parent
+                                        font.pointSize: 10
+                                    }
+                                },
+                                Text {
+                                    width: col2.width/4
+                                    font.pointSize: 16
+                                    text: qsTr("bar ")
+                                    horizontalAlignment: Text.AlignRight
+                                }
+                            ]
+                        },
+
+
+                        Row {
+                            spacing: 10
+                            height: 35
+                            width: col2.width
+                            children: [
+                                Text {
+                                    width: col2.width/2
+                                    font.pointSize: 16
+                                    text: qsTr("  F biến tần")
+                                    font.bold: false
+                                    horizontalAlignment: Text.AlignLeft
+                                },
+                                Text {
+                                    width: col2.width/4
+                                    text: (Bientan.q_real_frequency/100).toFixed(1)
+                                    font.bold: true
+                                    horizontalAlignment: Text.AlignHCenter
+                                    font.pointSize: 16
+                                    color: "blue"
+                                },
+                                Text {
+                                    width: col2.width/4
+                                    font.pointSize: 16
+                                    text: qsTr("Hz ")
+                                    horizontalAlignment: Text.AlignRight
+                                }
+                            ]
+                        },
+                        Row {
+                            spacing: 10
+                            height: 35
+                            width: col2.width
+                            children: [
+                                Text {
+                                    width: col2.width/2
+                                    height: 35
+                                    font.pointSize: 16
+                                    text: qsTr("  Thời gian")
+                                    verticalAlignment: Text.AlignVCenter
+                                    font.bold: false
+                                    horizontalAlignment: Text.AlignLeft
+                                },
+                                Text {
+                                    width: col2.width/4
+                                    text: KiemDinhTDObj.q_counter_test
+                                    font.bold: true
+                                    horizontalAlignment: Text.AlignHCenter
+                                    font.pointSize: 16
+                                    color: "blue"
+                                },
+                                Text {
+                                    width: col2.width/4
+                                    font.pointSize: 16
+                                    text: qsTr(" s  ")
+                                    horizontalAlignment: Text.AlignRight
+                                }
+                            ]
+                        },
+                        Row {
+                            spacing: 10
+                            height: 55
+                            width: col2.width
+                            children: [
+                                Text {
+                                    width: col2.width/2
+                                    height: 60
+                                    font.pointSize: 16
+                                    text: qsTr("  Bắt đầu: ")
+                                    font.bold: false
+                                    verticalAlignment: Text.AlignVCenter
+                                    horizontalAlignment: Text.AlignLeft
+                                },
+                                Button{
+                                    id: denBatDau
+                                    width: col2.width/2
+                                    height: 60
+                                    property bool press: false
+                                    Image {
+                                        anchors.rightMargin: -2
+                                        anchors.bottomMargin: 1
+                                        anchors.leftMargin: 2
+                                        anchors.topMargin: -1
+                                        source: Relay.q_start_led_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
+                                        anchors.fill: parent
+                                    }
+                                    onClicked: {
+                                        press= !press
+                                        Relay.writeStartLed(!Relay.q_start_led_state)
+                                        if (!KiemDinhTDObj.isRunning()){
+                                            KiemDinhTDObj.setPWorking(apSuatLamViec.text);
+                                            KiemDinhTDObj.setPTried(apSuatThu.text);
+                                        } else {
+                                            KiemDinhTDObj.stop();
+                                        }
+                                    }
+                                }
+                            ]
                         }
+
                     ]
                 },
-                Chart{
-                    id: chartID
+
+                ChartView {
+                    id: spline
+                    x: 340
+                    y: 16
                     width: 700
                     height: 450
-                    onPaint: {
-                        line({
-                         labels : KiemDinhTDObj.xValue,
-                         datasets : [
-                             {
-                                 fillColor : "rgba(220,220,220,0)",
-                                 strokeColor : "rgba(220,220,220,1)",
-                                 pointColor : "rgba(220,220,220,1)",
-                                 pointStrokeColor : "#fff",
-                                 data : KiemDinhTDObj.pCurrent
-                             },
-                             {
-                                 fillColor : "rgba(151,187,205,0)",
-                                 strokeColor : "rgba(151,187,205,1)",
-                                 pointColor : "rgba(151,187,205,1)",
-                                 pointStrokeColor : "#fff",
-                                 data :  KiemDinhTDObj.pRefer
-                             }
-                         ]
-                     });
-                   }
+                    antialiasing: true
+                    //                    title: "Biểu đồ áp suất"
+                    ValueAxis {
+                            id: axisY1
+                            min: 0
+                            max: 25
+                            gridVisible: false
+                            color: "black"
+                            labelsColor: "black"
+                            labelFormat: "%.0f"
+                        }
+
+                       ValueAxis {
+                            id: axisX
+                            min: 0
+                            max: 50
+                            gridVisible: false
+                            color: "black"
+                            labelsColor: "black"
+                            labelFormat: "%.0f"
+                            tickCount: 5
+                        }
+                    LineSeries {
+                                id: lineSeries1
+                                name: "Áp suất vòi"
+                                color: "red"
+                                axisX: axisX
+                                axisY: axisY1
+                            }
+                    LineSeries {
+                                id: lineSeries2
+                                name: "Áp suất tham chieu"
+                                color: "blue"
+                                axisX: axisX
+                                axisY: axisY1
+                    }
+
+                    MouseArea{
+                               anchors.fill: parent
+                               onDoubleClicked: chartView.zoomReset();
+                           }
+
+                           PinchArea{
+                               id: pa
+                               anchors.fill: parent
+                               onPinchUpdated: {
+                                   chartView.zoomReset();
+                                   var center_x = pinch.center.x
+                                   var center_y = pinch.center.y
+                                   var width_zoom = height/pinch.scale;
+                                   var height_zoom = width/pinch.scale;
+                                   var r = Qt.rect(center_x-width_zoom/2, center_y - height_zoom/2, width_zoom, height_zoom)
+                                   chartView.zoomIn(r)
+                               }
+
+                           }
                 }
+
             ]
+
         }
+
+
     }
+
 }
 
 /*##^##
@@ -184,6 +415,64 @@ Designer {
     D{i:0;autoSize:true;height:480;width:640}
 }
 ##^##*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -16,9 +16,6 @@ public:
     explicit ThuNghiemBangTay(QObject *parent = nullptr);
     ThuNghiemBangTay(CamBienApSuat *cbap, Bientan *bientan, Modbus *modbus, Relay *relay);
 //    ~ThuNghiemBangTay();
-//    Q_INVOKABLE void startICP();
-//    Q_INVOKABLE void startModbus();
-//    Q_INVOKABLE void updateCambien();
     Q_INVOKABLE void updateLogic();
 
 

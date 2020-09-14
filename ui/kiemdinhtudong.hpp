@@ -19,6 +19,9 @@ public:
     Q_PROPERTY(QList<double> pRefer READ getPRefer)
     Q_PROPERTY(QList<QString> xValue READ getXValue NOTIFY xValueChange)
 
+    Q_PROPERTY(double q_pReference READ getRefer)
+    Q_PROPERTY(int q_counter_test READ getCounter )
+
     Q_INVOKABLE void setPWorking(QString value);
     Q_INVOKABLE void setPTried(QString value);
     Q_INVOKABLE void updateLogic();
@@ -28,10 +31,16 @@ public:
     KiemDinhTuDong (CamBienApSuat *cbap, Bientan *bientan, Modbus *modbus, Relay *relay);
 
     Q_INVOKABLE void start();
+
+//    void setRefer(double refer) {_pReferCurrent = refer;}
+    double getRefer(){return _pReferCurrent;}
+    int getCounter(){return counter; }
+
 signals:
     void pCurrentChange();
     void pReferChange();
     void xValueChange();
+
 
 private:
     QSqlDatabase db;
@@ -41,11 +50,15 @@ private:
     QList<double> getPRefer();
     QList<QString> getXValue();
 
-    float _pWorking;
-    float _pTried;
+    float _pWorking = 16;
+    float _pTried = 20;
+    double _pReferCurrent =0;
     QList<double> _pCurrent;
     QList<double> _pRefer;
     QList<QDateTime> _xValue;
+
+
+//    QDateTime _xValue;
 
     CamBienApSuat * m_camBienApSuat;
     Bientan *m_bienTan;
@@ -60,6 +73,8 @@ private:
 
     QList<double> saveData;
     QDateTime startTime;
+
+    QThread *threadUpdateState;
 
     enum States
        {

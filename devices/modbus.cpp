@@ -59,7 +59,7 @@ void Modbus::writeSingleHoldingRegister(int add, int value,int server)
 }
 void Modbus::writeSingleHoldingRegisterCompleted()
 {
-    qDebug() << "Write Single Holding Resister Completed!";
+//    qDebug() << "Write Single Holding Resister Completed!";
 }
 
 void Modbus::readSingleHoldingRegister (int add, int ID,int *data)
@@ -101,7 +101,7 @@ void Modbus::writeSingleCoil (int add, bool value, int server)
 
 void Modbus::writeSingleCoilComleted()
 {
-    qDebug() << "Write Single Coil Completed!";
+//    qDebug() << "Write Single Coil Completed!";
 }
 
 void Modbus::readHoldingRegister(int server,int start_add, int number_register)

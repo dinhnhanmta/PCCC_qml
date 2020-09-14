@@ -46,6 +46,32 @@ Item
                 spacing: 12
                 height: parent.height
 
+
+                Text {
+                    text: qsTr("ĐÈN BẮT ĐẦU")
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    font.bold: false
+                    font.pointSize: 18
+                }
+
+                Button{
+                    id: denBatDau
+                    width: 150
+                    height: 80
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    enabled: Modbus.q_connectionState
+                    property bool press: false
+                    Image {
+                        id: buttonImage4
+                        source: Relay.q_start_led_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
+                        anchors.fill: parent
+                    }
+                    onClicked: {
+                        press= !press
+                        Relay.writeStartLed(!Relay.q_start_led_state)
+                    }
+                }
+
                 Text {
                     text: qsTr("PUML UP")
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -92,31 +118,6 @@ Item
                     onClicked: {
                         press= !press
                         Relay.writeInputVavle(!Relay.q_input_vavle_state)
-                    }
-                }
-
-                Text {
-                    text: qsTr("ĐÈN BẮT ĐẦU")
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    font.bold: false
-                    font.pointSize: 18
-                }
-
-                Button{
-                    id: denBatDau
-                    width: 150
-                    height: 80
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    enabled: Modbus.q_connectionState
-                    property bool press: false
-                    Image {
-                        id: buttonImage4
-                        source: Relay.q_start_led_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
-                        anchors.fill: parent
-                    }
-                    onClicked: {
-                        press= !press
-                        Relay.writeStartLed(!Relay.q_start_led_state)
                     }
                 }
 
@@ -240,18 +241,3 @@ Item
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-/*##^## Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
- ##^##*/

@@ -4,6 +4,8 @@
 #include <QString>
 
 //const QString CONFIG_PATH = "./config.ini";
+//const QString LOG_PATH = "./log";
+//const QString SQL_PATH = "./database.sql";
 const QString CONFIG_PATH = "/opt/PCCC_thong/bin/config.ini";
 const QString LOG_PATH = "/opt/PCCC_thong/bin/log";
 const QString SQL_PATH = "/opt/PCCC_thong/bin/database.sql";
