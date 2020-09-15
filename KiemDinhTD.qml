@@ -44,10 +44,10 @@ Item {
         interval: 1000; running: true; repeat: true
         onTriggered:{
             x_var ++;
-            if(lineSeries1.count > 100) lineSeries1.remove(0);
+            if(lineSeries1.count > 300) lineSeries1.remove(0);
             lineSeries1.append(x_var, Cambien.q_pressure);
 
-            if(lineSeries2.count > 100) lineSeries2.remove(0);
+            if(lineSeries2.count > 300) lineSeries2.remove(0);
             lineSeries2.append(x_var, KiemDinhTDObj.q_pReference);
 
             axisX.min = lineSeries2.at(0).x
@@ -90,28 +90,28 @@ Item {
                                         id: loaiVoiModel
                                         ListElement {
                                             text: "VP 51"
-                                            working: 1.6
-                                            test: 2.0
+                                            working: 16
+                                            test: 20
                                         }
                                         ListElement {
                                             text: "VP 66"
-                                            working: 1.6
-                                            test: 2.0
+                                            working: 16
+                                            test: 20
                                         }
                                         ListElement {
                                             text: "VP 77"
-                                            working: 1.6
-                                            test: 2.0
+                                            working: 16
+                                            test: 20
                                         }
                                         ListElement {
                                             text: "VP 110"
-                                            working: 1.4
-                                            test: 1.8
+                                            working: 14
+                                            test: 18
                                         }
                                         ListElement {
                                             text: "VP 150"
-                                            working: 1.2
-                                            test: 1.4
+                                            working: 12
+                                            test: 14
                                         }
                                     }
 

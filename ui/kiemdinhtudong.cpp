@@ -12,6 +12,10 @@ void KiemDinhTuDong::setPTried(QString value)
 
 KiemDinhTuDong::KiemDinhTuDong(CamBienApSuat *cbap, Bientan *bientan, Modbus *modbus, Relay *relay)
 {
+    _pWorking = 16;
+    _pTried = 20;
+    _pReferCurrent = 0;
+
     m_camBienApSuat = cbap;
     m_bienTan = bientan;
     m_modbus = modbus;
@@ -38,6 +42,7 @@ void KiemDinhTuDong::updateLogic()
             state = ST_IDLE;
         }
         _pReferCurrent = updatePRefer(_pReferCurrent);
+        emit varChanged();
     }
 
     // Cap nhat trang thai nut nhan
@@ -54,10 +59,13 @@ void KiemDinhTuDong::updateLogic()
 void KiemDinhTuDong::checkState(){
     if (counter > 0){
         counter --;
+        emit varChanged();
     }
     qDebug()<< "state = "<< state;
     qDebug()<< "counter" << counter;
     qDebug()<< "current Refer" << _pReferCurrent;
+//    qDebug()<< "p working" << _pWorking;
+//    qDebug()<< "p tried" << _pTried;
 }
 
 bool KiemDinhTuDong::isRunning()
