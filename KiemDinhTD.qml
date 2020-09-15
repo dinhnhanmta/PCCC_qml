@@ -331,13 +331,13 @@ Item {
                                     }
                                     onClicked: {
                                         press= !press
-                                        Relay.writeStartLed(!Relay.q_start_led_state)
-                                        if (!KiemDinhTDObj.isRunning()){
-                                            KiemDinhTDObj.setPWorking(apSuatLamViec.text);
-                                            KiemDinhTDObj.setPTried(apSuatThu.text);
-                                        } else {
-                                            KiemDinhTDObj.stop();
-                                        }
+//                                        Relay.writeStartLed(!Relay.q_start_led_state)
+//                                        if (!KiemDinhTDObj.isRunning()){
+//                                            KiemDinhTDObj.setPWorking(apSuatLamViec.text);
+//                                            KiemDinhTDObj.setPTried(apSuatThu.text);
+//                                        } else {
+//                                            KiemDinhTDObj.stop();
+//                                        }
                                     }
                                 }
                             ]

@@ -4,25 +4,21 @@
 #include <QObject>
 #include "modbus.hpp"
 
-#define INPUT_VALVE_ADDRESS 2
-#define OUTPUT_VALVE_ADDRESS 3
+#define INPUT_VALVE_ADDRESS 3
+#define OUTPUT_VALVE_ADDRESS 2
 #define START_LED_ADDRESS 1
 
 class Relay : public QObject
 {
-    Q_OBJECT
-    Q_PROPERTY(bool q_start_led_state READ getStartLedState  NOTIFY stateChanged)
-    Q_PROPERTY(bool q_ouput_vavle_state READ getOuputVavleState  NOTIFY stateChanged)
-    Q_PROPERTY(bool q_input_vavle_state READ getInputVavleState  NOTIFY stateChanged)
 public:
     explicit Relay(QObject *parent = nullptr);
     Relay(Modbus *modbus);
 
-    Q_INVOKABLE void writeInputVavle(bool value);
-    Q_INVOKABLE void writeOutputVavle(bool value);
-    Q_INVOKABLE void writeStartLed(bool value);
+    void writeInputVavle(bool value);
+    void writeOutputVavle(bool value);
+    void writeStartLed(bool value);
 
-    Q_INVOKABLE void readAllState();
+    void readAllState();
 
     int getID() {return RELAY_ID;}
     void setID(int id)
@@ -31,20 +27,15 @@ public:
     }
 
     void readStateCompleted();
-
     void readDiscreteCompleted();
 
-    bool getStartLedState(){return start_led_state;}
+    bool getStartLedState(){ return start_led_state;}
     bool getOuputVavleState(){return ouput_vavle_state;}
     bool getInputVavleState(){return input_vavle_state;}
-//    bool getStartButton(){return last_start_led_state;}
-signals:
-
-    void stateChanged();
 
 private:
-    int RELAY_ID = 11;
 
+    int RELAY_ID;
     Modbus *relay_modbus;
     bool input_vavle_state = false;
     bool ouput_vavle_state = false;

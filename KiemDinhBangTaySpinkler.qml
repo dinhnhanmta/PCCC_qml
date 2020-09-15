@@ -10,9 +10,12 @@ Item
     Component.onCompleted:
         {
 
-        screenLabel.text = qsTr("THỬ NGHIỆM BẰNG TAY ")
-        TnBangTay.swapTuLuuLuong(false);
-//        TnBangTay.setBienTanID(1)
+        screenLabel.text = qsTr("KIỂM ĐỊNH BẰNG TAY LƯU LƯỢNG SPINKLER")
+
+        TnBangTay.swapTuLuuLuong(true);
+        TnBangTay.setLcdID(20)
+        TnBangTay.setRelayD(21)
+        TnBangTay.setBienTanID(2)
     }
 
     Timer {
@@ -23,11 +26,10 @@ Item
                 interval: 200; running: true; repeat: true
                 onTriggered:
                 {
-//                     Relay.readAllState()
-                  // Bientan.readVelocity()
                     TnBangTay.updateLogic()
                 }
             }
+
 
     Rectangle {
         anchors.fill: parent
@@ -46,6 +48,7 @@ Item
                 width: 350
                 spacing: 12
                 height: parent.height
+
 
                 Text {
                     text: qsTr("ĐÈN BẮT ĐẦU")
@@ -167,7 +170,7 @@ Item
                         anchors.horizontalCenterOffset: -55
                         minimumValue: 0
                         maximumValue: 300
-                        value: Cambien.q_pressure*12
+                        value: Cambien.q_pressure_ll*12
                         visible: false
                     }
 
@@ -175,7 +178,7 @@ Item
                 }
                 Text {
                     id: pressure_value
-                    text: Cambien.q_pressure.toFixed(1)
+                    text: Cambien.q_pressure_ll.toFixed(1)
                     anchors.horizontalCenter: parent.horizontalCenter
                     elide: Text.ElideNone
                     font.pointSize: 18

@@ -14,7 +14,6 @@ class KiemDinhTuDong : public QObject, BaseObject
 {
     Q_OBJECT
 
-
 public:
 
     Q_PROPERTY(double q_pReference READ getRefer NOTIFY varChanged)
