@@ -2,12 +2,11 @@
 #define THUNGHIEMBANGTAY_H
 
 #include <QObject>
-#include <icpthread.h>
-#include <modbusthread.h>
 #include <cambienapsuat.hpp>
-#include <bientan.hpp>
+#include <devices/bientan.hpp>
 #include <modbus.hpp>
-#include <relay.hpp>
+#include <devices/relay.hpp>
+#include <devices/lcd.h>
 //#include <QThread>
 
 class ThuNghiemBangTay : public QObject
@@ -33,6 +32,7 @@ private:
     Bientan *m_bienTan;
     Modbus *m_modbus;
     Relay * m_relay;
+    lcd *m_lcd;
 
     bool last_start_state;
     int8_t bien_tan_start  = 5;

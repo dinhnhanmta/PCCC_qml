@@ -1,49 +1,60 @@
 {
- "Lăng" : [{
-      "1234567890" : {
-              "Nơi sản xuất": "",
-              "Năm sản xuất": "",
-              "Kích thước cơ bản": "",
-              "Áp suất làm việc": "",
-              "Khối lượng": "",
-              "D1": "",
-              "D2": "",
-              "d": "",
-              "l": "",
-              "L": "",
-              "d1": "",
-              "d2": "",
-              "Độ cứng":""
-       }}],
-  "Đầu nối" : [{
-      "123" : {
-              "Nơi sản xuất": "",
-              "Năm sản xuất": "",
-              "Kích thước cơ bản": "",
-              "Áp suất làm việc": "",
-              "Khối lượng": "",
-              "D1": "",
-              "D2": "",
-              "d": "",
-              "l": "",
-              "L": "",
-              "d1": "",
-              "d2": "",
-              "Độ cứng":""
-       }}],
-  "Trụ nước" : [{
-      "1234" : {
-              "Nơi sản xuất": "",
-              "Năm sản xuất": "",
-              "Kích thước cơ bản": "",
-              "Điểm thử": "",
-              "P": "",
-              "D": "",
-              "H": "",
-              "v": "",
-              "r": ""
-       }}]
-  
+    "Vòi": [
+        "Nơi sản xuất",
+        "Năm sản xuất",
+        "Khối lượng 20m (kg)",
+        "Chiều dài",
+        "Kiểu đầu nối theo TCVN 5739:1993",
+        "Áp suất làm việc (MPa)",
+        "Áp suất làm thử (MPa)",
+        "Lớp bộp tan",
+        "Đường kính trong (mm)",
+        "Chiều dày lớp tráng cao su",
+        "Số khuyết tật trên mặt ngoài",
+        "Ghi chú"
+    ],
+    "Lăng phun": [
+        "Nơi sản xuất",
+        "Năm sản xuất",
+        "Kích thước cơ bản",
+        "Áp suất làm việc",
+        "Khối lượng",
+        "D1",
+        "D2",
+        "d",
+        "l",
+        "L",
+        "d1",
+        "d2",
+        "Độ cứng",
+        "Ghi chú"
+    ],
+    "Đầu nối chữa cháy": [
+        "Nơi sản xuất",
+        "Năm sản xuất",
+        "Kích thước cơ bản",
+        "Áp suất làm việc",
+        "Khối lượng",
+        "D1",
+        "D2",
+        "d",
+        "l",
+        "L",
+        "d1",
+        "d2",
+        "Độ cứng",
+        "Ghi chú"
+    ],
+    "Trụ nước chữa cháy": [
+        "Nơi sản xuất",
+        "Năm sản xuất",
+        "Kích thước cơ bản",
+        "Điểm thử",
+        "P (MPa)",
+        "D (mm)",
+        "H (mm)",
+        "v",
+        "r..",
+        "Ghi chú"
+    ]
 }
-  
-

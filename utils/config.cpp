@@ -3,7 +3,8 @@
 AppSetting::AppSetting(const QString savedPath):
     defautConfig(savedPath),
     modbusParam(savedPath, "Modbus"),
-    cambienParam(savedPath, "Cambien")
+    cambienParam(savedPath, "Cambien"),
+    calibParam(savedPath, "CalibParam")
 {}
 
 SerialParameter::SerialParameter(const QString savedPath, const QString group)
@@ -178,3 +179,86 @@ void DefaultConfig::setDeviceCode(const QString &value)
     this->setValue("deviceCode", value);
     this->endGroup();
 }
+
+QString DefaultConfig::getDeviceModelName()
+{
+    this->beginGroup("default");
+    QString value = this->value("deviceModelName").toString();
+    this->endGroup();
+    return value;
+}
+
+void DefaultConfig::setDeviceModelName(const QString &value)
+{
+    this->beginGroup("default");
+    this->setValue("deviceModelName", value);
+    this->endGroup();
+}
+
+CalibConfig::CalibConfig(const QString savedPath, const QString group)
+    : QSettings(savedPath, QSettings::Format::IniFormat, nullptr), group(group)
+{}
+
+float CalibConfig::getMaxPressure()
+{
+    this->beginGroup(group);
+    float value = this->value("maxPressure").toFloat();
+    this->endGroup();
+    return value;
+}
+
+void CalibConfig::setMaxPressure(float value)
+{
+    this->beginGroup(group);
+    this->setValue("maxPressure", value);
+    this->endGroup();
+}
+
+float CalibConfig::getKP()
+{
+    this->beginGroup(group);
+    float value = this->value("KP").toFloat();
+    this->endGroup();
+    return value;
+}
+
+void CalibConfig::setKP(const float value)
+{
+    this->beginGroup(group);
+    this->setValue("KP", value);
+    this->endGroup();
+}
+
+
+float CalibConfig::getKI()
+{
+    this->beginGroup(group);
+    float value = this->value("KI").toFloat();
+    this->endGroup();
+    return value;
+}
+
+void CalibConfig::setKI(const float value)
+{
+    this->beginGroup(group);
+    this->setValue("KI", value);
+    this->endGroup();
+}
+
+
+
+float CalibConfig::getKD()
+{
+    this->beginGroup(group);
+    float value = this->value("KD").toFloat();
+    this->endGroup();
+    return value;
+}
+
+void CalibConfig::setKD(const float value)
+{
+    this->beginGroup(group);
+    this->setValue("KD", value);
+    this->endGroup();
+}
+

@@ -11,15 +11,10 @@ void HieuChinhThongSo::readJson()
 {
     database = new LocalDatabase();
     QStringList fields;
-    fields.append("vehicleId");
-    QVariantMap conditions;
-    conditions["code"] = settings->defautConfig.getDeviceCode();
-    QVariantMap result = database->queryRecord("devices", fields, conditions);
-    fields.clear();
     fields.append("iParameter");
-    conditions.clear();
-    conditions["id"] = result.value("vehicleId").toString();
-    result = database->queryRecord("vehicles", fields, conditions);
+    QVariantMap conditions;
+    conditions["name"] = settings->defautConfig.getDeviceModelName();
+    QVariantMap result = database->queryRecord("deviceModels", fields, conditions);
     QJsonDocument json = QJsonDocument::fromJson(result.value("iParameter").toString().toUtf8());
     QStringList list;
     if (parameterList.isEmpty()&&json.isArray())

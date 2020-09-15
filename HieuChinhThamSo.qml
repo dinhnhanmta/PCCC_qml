@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import "FlatUI-Controls-QML-master"
 import QtQuick.Layouts 1.12
+
+
 Item {
     anchors.fill: parent
     Component.onCompleted:
@@ -8,15 +10,19 @@ Item {
         screenLabel.text = qsTr("HIỆU CHỈNH THAM SỐ HỆ THỐNG")
         var i = 0
         if (repeat.count===0)
-        for (i = 0;i<HieuChinh.q_parameterList.length;i++)
+        for (i = 0; i < HieuChinh.q_parameterList.length;i++)
         {
             parameter_name.append({name: HieuChinh.q_parameterList[i]})
         }
     }
 
+    Constants {
+      id: constants;
+    }
+
     Rectangle{
         anchors.fill: parent
-        color: "lightblue"
+        color: "#ddf6fe"
 
         GridLayout{
             width: parent.width
@@ -32,11 +38,11 @@ Item {
                 model: parameter_name
 
                 Input{
-                    width: 153
-                    height: 53
                     digiOnly:( modelData == "Nơi sản xuất") ? false :true
+
                     Text {
                         text: modelData
+                        font.pointSize: 13
                         anchors.bottom: parent.top
                         anchors.bottomMargin: 10
                         anchors.horizontalCenter:  parent.horizontalCenter
@@ -49,29 +55,79 @@ Item {
              id: parameter_name
         }
     }
-    PrimaryButton{
-        id: submit
+    Row {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 40
         anchors.horizontalCenter: parent.horizontalCenter
-        width: 153
-        height: 53
-        text: "LƯU"
-        MouseArea
-        {
-            anchors.fill: parent
-            onClicked:
-            {
-                var obj = {};
-                for (var i=0;i<repeat.count;i++)
+        spacing: 200
+        children: [
+            PrimaryButton{
+                id: failedBtn
+                width: 153
+                height: 53
+                color: constants.carrot
+                text: "CHƯA ĐẠT"
+                MouseArea
                 {
-                    obj[repeat.model.get(i).name] = repeat.itemAt(i).text
+                    anchors.fill: parent
+                    onClicked:
+                    {
+                        var obj = {};
+                        for (var i=0;i<repeat.count;i++)
+                        {
+                            obj[repeat.model.get(i).name] = repeat.itemAt(i).text
+                        }
+                        HieuChinh.submitData(JSON.stringify(obj))
+                    }
                 }
-                HieuChinh.submitData(JSON.stringify(obj))
+            },
+            PrimaryButton{
+                id: submit
+                width: 153
+                height: 53
+                text: "LƯU"
+                MouseArea
+                {
+                    anchors.fill: parent
+                    onClicked:
+                    {
+                        var obj = {};
+                        for (var i=0;i<repeat.count;i++)
+                        {
+                            obj[repeat.model.get(i).name] = repeat.itemAt(i).text
+                        }
+                        HieuChinh.submitData(JSON.stringify(obj))
+                    }
+                }
+            },
+            PrimaryButton{
+                id: passBtn
+                width: 153
+                height: 53
+                color: constants.carrot
+                text: "ĐẠT"
+                MouseArea
+                {
+                    anchors.fill: parent
+                    onClicked:
+                    {
+                        var obj = {};
+                        for (var i=0;i<repeat.count;i++)
+                        {
+                            obj[repeat.model.get(i).name] = repeat.itemAt(i).text
+                        }
+                        HieuChinh.submitData(JSON.stringify(obj))
+                    }
+                }
             }
-        }
+        ]
 
     }
 }
 
 
+
+/*##^## Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+ ##^##*/

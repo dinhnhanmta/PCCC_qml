@@ -30,5 +30,6 @@ void Bientan::readVelocityCompleted()
 
 void Bientan::readRealFrequency()
 {
+//    qDebug()<<"Doc toc do thuc";
     bientan_modbus->readSingleHoldingRegister(12288, 1, &real_frequency);
 }

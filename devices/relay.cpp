@@ -31,10 +31,31 @@ void Relay::writeStartLed(bool value)
     relay_modbus->writeSingleCoil(START_LED_ADDRESS,value,RELAY_ID);
 }
 
+// TU 2
+void Relay::writeInputVavleLL(bool value)
+{
+    relay_modbus->writeSingleCoil(INPUT_VALVE_ADDRESS,value,RELAY_ID_LL);
+}
+void Relay::writeOutputVavleLL(bool value)
+{
+    relay_modbus->writeSingleCoil(OUTPUT_VALVE_ADDRESS,value,RELAY_ID_LL);
+}
+
+void Relay::writeStartLedLL(bool value)
+{
+    relay_modbus->writeSingleCoil(START_LED_ADDRESS,value,RELAY_ID_LL);
+}
+
 void Relay::readAllState()
 {
     relay_modbus -> readMultiCoils(RELAY_ID,START_LED_ADDRESS,3,data_receive);
     relay_modbus -> readMultiDiscrete(RELAY_ID,0,3,discrete_receive);
+}
+
+void Relay::readAllStateLL()
+{
+    relay_modbus -> readMultiCoils(RELAY_ID_LL,START_LED_ADDRESS,3,data_receive);
+    relay_modbus -> readMultiDiscrete(RELAY_ID_LL,0,3,discrete_receive);
 }
 
 void Relay::readDiscreteCompleted()
@@ -62,6 +83,29 @@ void Relay::readDiscreteCompleted()
         relay_modbus ->writeSingleCoil(OUTPUT_VALVE_ADDRESS,ouput_vavle_state,RELAY_ID);
     }
     if(discrete_receive[1] ==0 ) last_ouput_vavle_state =false;
+
+    if(discrete_receiveLL[0] ==1 && last_start_led_stateLL ==false)
+    {
+        last_start_led_stateLL = true;
+        start_led_stateLL = !start_led_stateLL;
+        relay_modbus ->writeSingleCoil(START_LED_ADDRESS,start_led_stateLL,RELAY_ID_LL);
+    }
+    if(discrete_receiveLL[0] ==0) last_start_led_stateLL = false;
+
+    if(discrete_receiveLL[2] ==1 && last_input_vavle_stateLL ==false)
+    {
+        last_input_vavle_stateLL = true;
+        input_vavle_stateLL = !input_vavle_stateLL;
+        relay_modbus ->writeSingleCoil(INPUT_VALVE_ADDRESS,input_vavle_stateLL,RELAY_ID_LL);
+    }
+    if(discrete_receiveLL[2] ==0 ) last_input_vavle_stateLL =false;
+    if(discrete_receiveLL[1] ==1 && last_ouput_vavle_stateLL ==false)
+    {
+        last_ouput_vavle_stateLL = true;
+        ouput_vavle_stateLL = !ouput_vavle_stateLL;
+        relay_modbus ->writeSingleCoil(OUTPUT_VALVE_ADDRESS,ouput_vavle_stateLL,RELAY_ID_LL);
+    }
+    if(discrete_receiveLL[1] ==0 ) last_ouput_vavle_stateLL =false;
 }
 void Relay::readStateCompleted()
 {

@@ -2,7 +2,7 @@
 #define CONFIG_H
 
 #include <QSettings>
-#include <constant.h>
+#include "constant.h"
 #include <QString>
 
 class SerialParameter: public QSettings {
@@ -50,6 +50,29 @@ public:
 
     QString getDeviceCode();
     void setDeviceCode(const QString &value);
+
+    QString getDeviceModelName();
+    void setDeviceModelName(const QString &value);
+};
+
+class CalibConfig: public QSettings {
+
+public:
+    CalibConfig(const QString savedPath, const QString group);
+
+    float getMaxPressure();
+    void setMaxPressure(float value);
+
+    float getKP();
+    void setKP(const float value);
+
+    float getKD();
+    void setKD(const float value);
+
+    float getKI();
+    void setKI(const float value);
+private:
+    QString group;
 };
 
 class AppSetting {
@@ -58,6 +81,7 @@ public:
     DefaultConfig defautConfig;
     SerialParameter modbusParam;
     SerialParameter cambienParam;
+    CalibConfig calibParam;
 };
 
 #endif // CONFIG_H
