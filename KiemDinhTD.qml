@@ -4,6 +4,7 @@ import QtQuick.Controls.Styles 1.2
 import QtQuick.Controls 1.2
 import IVIControls 1.0
 Item {
+    anchors.fill: parent
     visible: true
 
     Timer {
