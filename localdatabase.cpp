@@ -18,6 +18,12 @@ LocalDatabase::LocalDatabase(const QString dbPath)
               "iParameter varchar(2048) DEFAULT '{}', "
               "syncAt DATETIME NULL, UNIQUE(code), "
               "FOREIGN KEY(vehicleId) REFERENCES deviceModels(id))");
+
+    query.exec("create table IF NOT EXISTS lichsukiemdinh "
+              "(code varchar(255) NOT NULL, "
+              "pRefer REAL, "
+              "pHientai REAL, "
+              "time integer)");
 }
 
 QSqlDatabase LocalDatabase::openDabase(){
