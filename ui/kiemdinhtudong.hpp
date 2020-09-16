@@ -7,17 +7,19 @@
 #include <bientan.hpp>
 #include <cambienapsuat.hpp>
 #include <lcd.h>
+#include <localdatabase.h>
 #include <relay.hpp>
 #include "dataobject.h"
-class KiemDinhTuDong : public QObject
+class KiemDinhTuDong : public QObject, BaseObject
 {
     Q_OBJECT
 
-
 public:
-    Q_PROPERTY(QList<double> pCurrent READ getPCurrent)
-    Q_PROPERTY(QList<double> pRefer READ getPRefer)
-    Q_PROPERTY(QList<QString> xValue READ getXValue NOTIFY xValueChange)
+
+    Q_PROPERTY(double q_pReference READ getRefer NOTIFY varChanged)
+    Q_PROPERTY(int q_counter_test READ getCounter NOTIFY varChanged)
+//    Q_PROPERTY(float q_val_pot READ getValPot NOTIFY pressureChanged)
+
 
     Q_INVOKABLE void setPWorking(QString value);
     Q_INVOKABLE void setPTried(QString value);
@@ -27,25 +29,20 @@ public:
     Q_INVOKABLE bool isRunning();
     KiemDinhTuDong (CamBienApSuat *cbap, Bientan *bientan, Modbus *modbus, Relay *relay);
 
-    Q_INVOKABLE void start();
+    double getRefer(){return _pReferCurrent;}
+    int getCounter(){return counter; }
+
+
 signals:
-    void pCurrentChange();
-    void pReferChange();
-    void xValueChange();
+    void varChanged ();
 
 private:
     QSqlDatabase db;
     QSqlQuery *query;
 
-    QList<double> getPCurrent();
-    QList<double> getPRefer();
-    QList<QString> getXValue();
-
-    float _pWorking;
-    float _pTried;
-    QList<double> _pCurrent;
-    QList<double> _pRefer;
-    QList<QDateTime> _xValue;
+    float _pWorking = 16;
+    float _pTried = 20;
+    double _pReferCurrent;
 
     CamBienApSuat * m_camBienApSuat;
     Bientan *m_bienTan;
@@ -57,9 +54,10 @@ private:
     bool running = false;
     int counter = -1;
 
-
     QList<double> saveData;
     QDateTime startTime;
+
+    QThread *threadUpdateState;
 
     enum States
        {
@@ -75,6 +73,8 @@ private:
     States state = ST_IDLE;
     double updatePRefer(double _currentPRefer);
     void stop();
+    void saveRecordData();
+    LocalDatabase *localDatabase;
 };
 
 

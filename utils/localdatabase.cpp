@@ -16,6 +16,11 @@ LocalDatabase::LocalDatabase()
               "iParameter varchar(2048) DEFAULT '{}', "
               "syncAt DATETIME NULL, UNIQUE(code))");
 
+    query.exec("create table IF NOT EXISTS records "
+              "(deviceModelName varchar(255) NOT NULL, "
+              "code varchar(255) NOT NULL, "
+              "data TEXT DEFAULT '{}', "
+              "createdAt DATETIME NULL");
 }
 
 QSqlDatabase LocalDatabase::openDabase(){

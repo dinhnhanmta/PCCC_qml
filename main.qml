@@ -16,7 +16,7 @@ Window {
         flickableDirection: Flickable.VerticalFlick
         StackView {
                id: stack
-               initialItem: "KiemDinhTD.qml"
+               initialItem: "Login.qml"
                anchors.fill: parent
            }
     }

@@ -171,10 +171,10 @@ Item {
                 }
 
                 Column {
-                    anchors.top: parent.top
-                    width: parent.width/2
-                    anchors.topMargin: 30
-                    spacing: parent.height/3 - 120
+                anchors.top: parent.top
+                width: parent.width/2
+                anchors.topMargin: 30
+                spacing: parent.height/3 - 120
 
                     PrimaryButton {
                         id: thuNghiemBangTay
@@ -195,11 +195,12 @@ Item {
                             height: 64
                             anchors.fill: parent
                             onClicked: {
-                                if (LoginTB.logged()){
-                                    stack2.push("ThuNghiemBangTay.qml")
-                                } else {
-                                    stack2.push("DangNhapTB.qml")
-                                }
+//                                if (LoginTB.logged()){
+//                                    stack2.push("ThuNghiemBangTay.qml")
+//                                } else {
+//                                    stack2.push("DangNhapTB.qml")
+//                                }
+                                  stack2.push("SelectCabinetManualMode.qml")
                             }
                         }
                     }

@@ -72,22 +72,26 @@ public:
    void readMultiCoils(int server,int start_add, int number_coils, bool *data);
    void readMultiDiscrete(int server,int start_add, int number_coils, bool *data);
    void readDiscreteCompleted();
+   void readDiscreteRegister(int server, int start_add, int number_register, int *data);
+   void readDiscreteRegisterCompleted() const;
 signals:
    //void readSingleHoldingRegisterCompleted(int value);
    void readSingleHoldingRegisterCompleted();
    void readCoilsCompletedSignal();
-    void readDiscreteCompletedSignal();
+   void readDiscreteCompletedSignal();
 private:
    QModbusRtuSerialMaster *modbusDevice;
    QTimer *serialTimer;
    void saveSettings();
    int nBytes;
+   int nBytesInputResgister;
    int ID;
    int start_address;
    bool connection_state= false;
    bool *discrete_result;
    bool *coil_result;
    int *holding_register_result;
+   int *input_register_result;
    int nDiscrete;
 };
 
