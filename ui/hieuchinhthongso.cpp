@@ -44,10 +44,7 @@ void HieuChinhThongSo::submitData(QString paraData)
         connect(network->reply, &QNetworkReply::finished, [=]() {
             if(network->reply->error() == QNetworkReply::NoError){
                 QJsonObject obj = QJsonDocument::fromJson(network->reply->readAll()).object();
-                qDebug()<<obj;
                 if (obj.value("code").toInt() == 0 && this->saveInspectData(paraData, true)){
-                    settings->defautConfig.setDeviceCode(obj.value("data").toObject().value("code").toString());
-                    qDebug()<<"thanh cong";
                     emit submitSuccess();
                 } else {
                     emit submitFailed();

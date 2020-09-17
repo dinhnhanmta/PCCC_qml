@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import "FlatUI-Controls-QML-master"
 import QtQuick.Layouts 1.12
-
+import QtQuick.Dialogs 1.1
 
 Item {
     anchors.fill: parent
@@ -13,6 +13,28 @@ Item {
         for (i = 0; i < HieuChinh.q_parameterList.length;i++)
         {
             parameter_name.append({name: HieuChinh.q_parameterList[i]})
+        }
+    }
+
+    MessageDialog {
+        id: messageDialog
+        title: "Lỗi"
+        icon: StandardIcon.Critical
+        text: "Lưu dữ liệu không thành công"
+    }
+
+    Connections {
+        target: HieuChinh
+        onSubmitSuccess: {
+            if (!stack2.empty) stack2.clear()
+        }
+        onSubmitFailed: {
+            messageDialog.visible = true;
+        }
+        onUnauthorized: {
+            stack2.pop()
+            stack.pop()
+            stack.push("Login.qml")
         }
     }
 
@@ -67,19 +89,6 @@ Item {
                 height: 53
                 color: constants.carrot
                 text: "CHƯA ĐẠT"
-                MouseArea
-                {
-                    anchors.fill: parent
-                    onClicked:
-                    {
-                        var obj = {};
-                        for (var i=0;i<repeat.count;i++)
-                        {
-                            obj[repeat.model.get(i).name] = repeat.itemAt(i).text
-                        }
-                        HieuChinh.submitData(JSON.stringify(obj))
-                    }
-                }
             },
             PrimaryButton{
                 id: submit
@@ -106,19 +115,6 @@ Item {
                 height: 53
                 color: constants.carrot
                 text: "ĐẠT"
-                MouseArea
-                {
-                    anchors.fill: parent
-                    onClicked:
-                    {
-                        var obj = {};
-                        for (var i=0;i<repeat.count;i++)
-                        {
-                            obj[repeat.model.get(i).name] = repeat.itemAt(i).text
-                        }
-                        HieuChinh.submitData(JSON.stringify(obj))
-                    }
-                }
             }
         ]
 
