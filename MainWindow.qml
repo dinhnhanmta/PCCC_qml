@@ -27,6 +27,7 @@ Item {
         if (LoginTB.deviceModelName() === ""){
              stack2.push("DangNhapTB.qml")
         } else {
+//            screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH " + LoginTB.deviceModelName());
             screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH " + LoginTB.deviceModelName());
         }
     }

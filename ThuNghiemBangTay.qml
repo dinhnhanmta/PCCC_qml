@@ -10,7 +10,7 @@ Item
     Component.onCompleted:
         {
 
-        screenLabel.text = qsTr("THỬ NGHIỆM BẰNG TAY")
+        screenLabel.text = qsTr("KIỂM ĐỊNH BẰNG TAY")
 
     }
 
@@ -42,10 +42,9 @@ Item
             Column {
                 id: column1
                 y: 20
-                width: 350
+                width: 450
                 spacing: 12
                 height: parent.height
-
 
                 Text {
                     text: qsTr("ĐÈN BẮT ĐẦU")
@@ -73,7 +72,7 @@ Item
                 }
 
                 Text {
-                    text: qsTr("PUML UP")
+                    text: qsTr("PUML DOWN")
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.bold: false
                     font.pointSize: 18
@@ -97,7 +96,7 @@ Item
                 }
 
                 Text {
-                    text: qsTr("PUMP DOWN")
+                    text: qsTr("PUMP UP")
                     anchors.horizontalCenter: parent.horizontalCenter
                     font.bold: false
                     font.pointSize: 18
@@ -121,10 +120,12 @@ Item
                     }
                 }
 
+
+
             }
             Column {
                 id: column2
-                width: 350
+                width: 450
                 spacing: 16
                 height: parent.height
                 Text {
@@ -177,64 +178,9 @@ Item
                     text: Cambien.q_pressure.toFixed(1)
                     anchors.horizontalCenter: parent.horizontalCenter
                     elide: Text.ElideNone
-                    font.pointSize: 18
+                    font.pointSize: 20
                 }
 
-
-            }
-            Column {
-                id: column
-                width: 350
-                spacing: 50
-                height: parent.height
-                anchors.top: parent.top
-                anchors.topMargin: 20
-                Text {
-                    id: tocDoText
-                    text: qsTr("TỐC ĐỘ ĐẶT")
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    font.pointSize: 18
-                    font.bold: false
-                }
-                Row
-                {
-                    id: row_speed
-//                    layoutDirection: Qt.LeftToRight
-                    anchors.horizontalCenter: parent.horizontalCenter
-//                    anchors.leftMargin: 0
-                    Text {
-                        width: 108
-                        height: 37
-                        color: "#0410d6"
-                        text: Cambien.q_val_pot.toFixed(1)
-
-                        font.weight: Font.Bold
-                        font.pointSize: 24
-                    }
-                    //                Text {
-                    //                    width: 108
-                    //                    height: 37
-                    //                    text: "Hz"
-                    //                    anchors.horizontalCenter: parent.horizontalCenter
-                    //                    font.weight: Font.Bold
-                    //                    font.pointSize: 24
-                    //                }
-                }
-                Text {
-                    text: qsTr("TỐC ĐỘ THỰC TẾ")
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    font.bold: false
-                    font.pointSize: 18
-                }
-                Text {
-                    color: "#fd410b"
-//                    text: "#Bientan.q_real_frequency/100#"
-                    text: (Bientan.q_real_frequency/100).toFixed(1)
-                    font.family: "Tahoma"
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    font.bold: true
-                    font.pointSize: 18
-                }
 
             }
         }

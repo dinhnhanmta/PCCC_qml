@@ -38,6 +38,7 @@ void KiemDinhTuDong::updateLogic()
             state = ST_IDLE;
         }
         _pReferCurrent = updatePRefer(_pReferCurrent);
+        emit varChanged();
     }
 
     // Cap nhat trang thai nut nhan

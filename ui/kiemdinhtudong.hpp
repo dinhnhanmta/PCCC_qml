@@ -17,8 +17,8 @@ class KiemDinhTuDong : public QObject, BaseObject
 
 public:
 
-    Q_PROPERTY(double q_pReference READ getRefer)
-    Q_PROPERTY(int q_counter_test READ getCounter )
+    Q_PROPERTY(double q_pReference READ getRefer NOTIFY varChanged)
+    Q_PROPERTY(int q_counter_test READ getCounter NOTIFY varChanged)
 
     Q_INVOKABLE void setPWorking(QString value);
     Q_INVOKABLE void setPTried(QString value);
@@ -31,6 +31,8 @@ public:
     double getRefer(){return _pReferCurrent;}
     int getCounter(){return counter; }
 
+signals:
+    void varChanged();
 private:
     QSqlDatabase db;
     QSqlQuery *query;

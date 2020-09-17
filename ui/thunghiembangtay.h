@@ -14,7 +14,7 @@ class ThuNghiemBangTay : public QObject
     Q_OBJECT
 public:
     explicit ThuNghiemBangTay(QObject *parent = nullptr);
-    ThuNghiemBangTay(CamBienApSuat *cbap, Bientan *bientan, Modbus *modbus, Relay *relay);
+    ThuNghiemBangTay(CamBienApSuat *cbap, Modbus *modbus, Relay *relay);
 //    ~ThuNghiemBangTay();
     Q_INVOKABLE void updateLogic();
 
@@ -26,7 +26,6 @@ public slots:
 
 private:
     CamBienApSuat * m_camBienApSuat;
-    Bientan *m_bienTan;
     Modbus *m_modbus;
     Relay * m_relay;
     lcd *m_lcd;

@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     Login *m_login = new Login();
     CalibParam *m_CalibParam = new CalibParam();
     DangNhapThietBi *m_DangNhapThietBi = new DangNhapThietBi();
-    ThuNghiemBangTay *m_thuNghiemBangTay = new ThuNghiemBangTay(m_cambien, m_bientan, m_modbus, m_relay);
+    ThuNghiemBangTay *m_thuNghiemBangTay = new ThuNghiemBangTay(m_cambien, m_modbus, m_relay);
     KiemDinhTuDong *m_kiemDinhTuDong = new KiemDinhTuDong(m_cambien, m_bientan, m_modbus, m_relay);
     HieuChinhThongSo *m_hieuChinhThongSo = new HieuChinhThongSo();
     qmlRegisterType<DialItem>("IVIControls", 1, 0, "DialItem");
