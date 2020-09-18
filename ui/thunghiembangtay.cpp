@@ -19,13 +19,13 @@ void ThuNghiemBangTay::updateLogic()
 {
     static int count_writeFre = 0;
     count_writeFre ++;
-    if(count_writeFre ==10)  // cap nhat cham hon 10 lan
+    if(count_writeFre ==5)  // cap nhat cham hon 10 lan
     {
         count_writeFre = 0;
         m_bienTan->write_friquency((int)(m_camBienApSuat->getValPot()*100));
         m_bienTan->readRealFrequency();
 
-        m_lcd->writePressureLCD(int16_t(m_camBienApSuat->getPressure()*10));
+//        m_lcd->writePressureLCD(int16_t(m_camBienApSuat->getPressure()*10));
 //        m_lcd->writePressureLCD(200);
 
     }

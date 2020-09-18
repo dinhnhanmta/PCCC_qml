@@ -56,7 +56,6 @@ private:
     int counter = -1;
 
     QList<double> saveData;
-    QDateTime startTime;
 
     QThread *threadUpdateState;
 

@@ -15,7 +15,7 @@ Item
     }
 
     Timer {
-            interval: 200; running: true; repeat: true
+            interval: 100; running: true; repeat: true
           onTriggered: Cambien.sendRequest()
         }
     Timer {
@@ -174,7 +174,7 @@ Item
                 }
                 Text {
                     id: pressure_value
-                    text: Cambien.q_pressure.toFixed(1)
+                    text: Cambien.q_pressure.toFixed(2)
                     anchors.horizontalCenter: parent.horizontalCenter
                     elide: Text.ElideNone
                     font.pointSize: 18

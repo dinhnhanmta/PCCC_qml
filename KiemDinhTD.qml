@@ -19,20 +19,20 @@ Item {
         }
     }
     // Timer cap nhat state machine
-    Timer {
-        interval: 100; running: true; repeat: true
-        onTriggered:{
-            KiemDinhTDObj.updateState()
-        }
-    }
+//    Timer {
+//        interval: 100; running: true; repeat: true
+//        onTriggered:{
+//            KiemDinhTDObj.updateState()
+//        }
+//    }
 
     //    Timer cap nhat ngoai vi
-    Timer {
-        interval: 100; running: true; repeat: true
-        onTriggered:{
-            KiemDinhTDObj.updateLogic()
-        }
-    }
+//    Timer {
+//        interval: 100; running: true; repeat: true
+//        onTriggered:{
+//            KiemDinhTDObj.updateLogic()
+//        }
+//    }
 
     //    Timer cap nhat Chart
     property var x_var: 0

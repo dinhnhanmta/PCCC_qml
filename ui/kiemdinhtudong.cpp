@@ -23,6 +23,10 @@ KiemDinhTuDong::KiemDinhTuDong(CamBienApSuat *cbap, Bientan *bientan, Modbus *mo
     m_lcd = new lcd(modbus);
     last_start_state = m_relay->getStartLedState();
     localDatabase = new LocalDatabase();
+
+    saveData = QList<double>();
+
+
 }
 
 void KiemDinhTuDong::updateLogic()
@@ -35,7 +39,7 @@ void KiemDinhTuDong::updateLogic()
     {
         count_writeFre = 0;
         m_bienTan->readRealFrequency();
-        m_lcd->writePressureLCD(m_camBienApSuat->getPressure()*10);
+//        m_lcd->writePressureLCD(m_camBienApSuat->getPressure()*10);
         if(!running)
         {
             m_bienTan->setStart(5);
@@ -61,6 +65,17 @@ void KiemDinhTuDong::checkState(){
         counter --;
         emit varChanged();
     }
+    _pReferCurrent ++;
+
+    saveData.append(_pReferCurrent);
+
+    if(_pReferCurrent==10)
+    {
+        saveRecordData();
+//        _pReferCurrent =
+
+    }
+
     qDebug()<< "state = "<< state;
     qDebug()<< "counter" << counter;
     qDebug()<< "current Refer" << _pReferCurrent;
@@ -94,7 +109,6 @@ void KiemDinhTuDong::updateState()
         case ST_PREPARATION:
             if (currentPressure > 0.3) {
                 state = ST_START;
-                startTime = QDateTime::currentDateTime();
                 saveData = QList<double>();
             }
             break;
@@ -210,6 +224,5 @@ void KiemDinhTuDong::saveRecordData(){
     }
     savedDataString += "]";
     mapRecord["data"] = savedDataString;
-    mapRecord["createdAt"] = startTime.toString();
     localDatabase->insertRecord("records",mapRecord);
 }
