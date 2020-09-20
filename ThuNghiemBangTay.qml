@@ -10,9 +10,8 @@ Item
     Component.onCompleted:
         {
 
-        screenLabel.text = qsTr("THỬ NGHIỆM BẰNG TAY ")
-        TnBangTay.swapTuLuuLuong(false);
-//        TnBangTay.setBienTanID(1)
+        screenLabel.text = qsTr("THỬ NGHIỆM BẰNG TAY")
+
     }
 
     Timer {
@@ -47,6 +46,7 @@ Item
                 spacing: 12
                 height: parent.height
 
+
                 Text {
                     text: qsTr("ĐÈN BẮT ĐẦU")
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -63,12 +63,12 @@ Item
                     property bool press: false
                     Image {
                         id: buttonImage4
-                        source: TnBangTay.q_led_start ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
+                        source: Relay.q_start_led_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
                         anchors.fill: parent
                     }
                     onClicked: {
                         press= !press
-                        TnBangTay.setLedStart(!TnBangTay.q_led_start);
+                        Relay.writeStartLed(!Relay.q_start_led_state)
                     }
                 }
 
@@ -88,12 +88,11 @@ Item
                     property bool press: false
                     Image {
                         id: buttonImage
-                        source: TnBangTay.q_led_vavle_up ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
+                        source: Relay.q_ouput_vavle_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
                         anchors.fill: parent
                     }
                     onClicked: {
-                        press= !press
-                        TnBangTay.setLedValveUp(!TnBangTay.q_led_vavle_up);
+                        Relay.writeOutputVavle(!Relay.q_ouput_vavle_state)
                     }
                 }
 
@@ -113,12 +112,12 @@ Item
                     property bool press: false
                     Image {
                         id: buttonImage2
-                        source: TnBangTay.q_led_vavle_down ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
+                        source: Relay.q_input_vavle_state ? "./Icon/switch-on.jpg" : "./Icon/switch-off.jpg"
                         anchors.fill: parent
                     }
                     onClicked: {
                         press= !press
-                        TnBangTay.setLedValveDown(!TnBangTay.q_led_vavle_down)
+                        Relay.writeInputVavle(!Relay.q_input_vavle_state)
                     }
                 }
 

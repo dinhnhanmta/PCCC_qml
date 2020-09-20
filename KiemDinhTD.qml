@@ -44,10 +44,10 @@ Item {
         interval: 1000; running: true; repeat: true
         onTriggered:{
             x_var ++;
-            if(lineSeries1.count > 300) lineSeries1.remove(0);
+            if(lineSeries1.count > 100) lineSeries1.remove(0);
             lineSeries1.append(x_var, Cambien.q_pressure);
 
-            if(lineSeries2.count > 300) lineSeries2.remove(0);
+            if(lineSeries2.count > 100) lineSeries2.remove(0);
             lineSeries2.append(x_var, KiemDinhTDObj.q_pReference);
 
             axisX.min = lineSeries2.at(0).x
@@ -90,28 +90,28 @@ Item {
                                         id: loaiVoiModel
                                         ListElement {
                                             text: "VP 51"
-                                            working: 16
-                                            test: 20
+                                            working: 1.6
+                                            test: 2.0
                                         }
                                         ListElement {
                                             text: "VP 66"
-                                            working: 16
-                                            test: 20
+                                            working: 1.6
+                                            test: 2.0
                                         }
                                         ListElement {
                                             text: "VP 77"
-                                            working: 16
-                                            test: 20
+                                            working: 1.6
+                                            test: 2.0
                                         }
                                         ListElement {
                                             text: "VP 110"
-                                            working: 14
-                                            test: 18
+                                            working: 1.4
+                                            test: 1.8
                                         }
                                         ListElement {
                                             text: "VP 150"
-                                            working: 12
-                                            test: 14
+                                            working: 1.2
+                                            test: 1.4
                                         }
                                     }
 
@@ -331,13 +331,13 @@ Item {
                                     }
                                     onClicked: {
                                         press= !press
-//                                        Relay.writeStartLed(!Relay.q_start_led_state)
-//                                        if (!KiemDinhTDObj.isRunning()){
-//                                            KiemDinhTDObj.setPWorking(apSuatLamViec.text);
-//                                            KiemDinhTDObj.setPTried(apSuatThu.text);
-//                                        } else {
-//                                            KiemDinhTDObj.stop();
-//                                        }
+                                        Relay.writeStartLed(!Relay.q_start_led_state)
+                                        if (!KiemDinhTDObj.isRunning()){
+                                            KiemDinhTDObj.setPWorking(apSuatLamViec.text);
+                                            KiemDinhTDObj.setPTried(apSuatThu.text);
+                                        } else {
+                                            KiemDinhTDObj.stop();
+                                        }
                                     }
                                 }
                             ]

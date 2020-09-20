@@ -12,12 +12,10 @@ public:
     lcd(Modbus *modbus);
     void writePressureLCD(int16_t pressure);
 
-    void setId(int id){LCD_ID = id;}
-    int getId(){return LCD_ID;}
-
 signals:
 
 public slots:
+
 
 private:
     Modbus *lcd_modbus;

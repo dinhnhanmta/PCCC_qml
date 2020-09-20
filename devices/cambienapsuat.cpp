@@ -65,8 +65,7 @@ void CamBienApSuat::OnReceiveCompleted()
 //     qDebug()<< "splitted";
     QStringList splitted ;
     splitted = m_receiveText.split("+");
-    pressure = (splitted[7].toFloat()-0.88)*60/(4.4-0.88);
-    pressure_ll = (splitted[5].toFloat()-0.88)*40/(4.4-0.88);
+    pressure = (splitted[7].toFloat()-0.88)*25/(4.4-0.88); //2.5*10;
     val_pot = splitted[6].toFloat()*5; //2.5*10;
 //    qDebug()<<"val_pot = "<<val_pot;
 //    qDebug()<<"pressure = "<<pressure;

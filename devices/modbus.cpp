@@ -5,7 +5,6 @@
 Modbus::Modbus()  {
     modbusDevice = new QModbusRtuSerialMaster();
     nBytes= 0;
-    nBytesInputResgister = 0;
 }
 
 bool Modbus::startConnection() {
@@ -121,38 +120,6 @@ void Modbus::readHoldingRegister(int server,int start_add, int number_register)
       qDebug() << "request error";
 
 }
-
-void Modbus::readDiscreteRegister(int server,int start_add, int number_register, int *data)
-{
-    nBytesInputResgister = number_register;
-    start_address = start_add;
-    ID = server;
-
-    QModbusDataUnit readUnit(QModbusDataUnit::InputRegisters, start_address,
-                             static_cast<unsigned short>(nBytesInputResgister));
-
-    if (auto *reply = modbusDevice->sendReadRequest(readUnit, ID)) {
-      if (!reply->isFinished())
-        connect(reply, &QModbusReply::finished, this, &Modbus::readDiscreteRegisterCompleted);
-    } else
-      qDebug() << "request error";
-    input_register_result = data;
-}
-
-void Modbus::readDiscreteRegisterCompleted() const {
-  QModbusReply *reply = qobject_cast<QModbusReply *>(sender());
-  const QModbusDataUnit result = reply->result();
-  qDebug() << "complete reading discrete register ";
-//  qDebug() << "";
-
-  for (int j = 0; j < nBytesInputResgister; j++)
-  {
-      input_register_result[j] =result.value(j);
-//      qDebug() << QString("The value of %1 is %2").arg(j).arg(result.value(j));
-  }
-
-}
-
 
 void Modbus::readHoldingRegisterCompleted() const {
   QModbusReply *reply = qobject_cast<QModbusReply *>(sender());

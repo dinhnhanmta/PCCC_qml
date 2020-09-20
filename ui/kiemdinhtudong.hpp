@@ -14,12 +14,11 @@ class KiemDinhTuDong : public QObject, BaseObject
 {
     Q_OBJECT
 
+
 public:
 
-    Q_PROPERTY(double q_pReference READ getRefer NOTIFY varChanged)
-    Q_PROPERTY(int q_counter_test READ getCounter NOTIFY varChanged)
-//    Q_PROPERTY(float q_val_pot READ getValPot NOTIFY pressureChanged)
-
+    Q_PROPERTY(double q_pReference READ getRefer)
+    Q_PROPERTY(int q_counter_test READ getCounter )
 
     Q_INVOKABLE void setPWorking(QString value);
     Q_INVOKABLE void setPTried(QString value);
@@ -32,17 +31,13 @@ public:
     double getRefer(){return _pReferCurrent;}
     int getCounter(){return counter; }
 
-
-signals:
-    void varChanged ();
-
 private:
     QSqlDatabase db;
     QSqlQuery *query;
 
     float _pWorking = 16;
     float _pTried = 20;
-    double _pReferCurrent;
+    double _pReferCurrent =0;
 
     CamBienApSuat * m_camBienApSuat;
     Bientan *m_bienTan;

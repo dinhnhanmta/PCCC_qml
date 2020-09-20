@@ -16,7 +16,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         devices/bientan.cpp \
         devices/cambienapsuat.cpp \
-        devices/dongholuuluong.cpp \
         devices/lcd.cpp \
         devices/master.cpp \
         devices/modbus.cpp \
@@ -63,7 +62,6 @@ DISTFILES +=
 HEADERS += \
     devices/bientan.hpp \
     devices/cambienapsuat.hpp \
-    devices/dongholuuluong.h \
     devices/lcd.h \
     devices/master.h \
     devices/modbus.hpp \

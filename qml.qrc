@@ -81,7 +81,5 @@
         <file>Menu.qml</file>
         <file>thietbi.json</file>
         <file>CalibParam.qml</file>
-        <file>KiemDinhBangTaySpinkler.qml</file>
-        <file>SelectCabinetManualMode.qml</file>
     </qresource>
 </RCC>
