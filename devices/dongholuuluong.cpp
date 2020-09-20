@@ -1,4 +1,5 @@
 #include "dongholuuluong.h"
+#include <QThread>
 
 DongHoLuuLuong::DongHoLuuLuong(QObject *parent) : QObject(parent)
 {
@@ -25,6 +26,16 @@ float DongHoLuuLuong::getLuuLuong()
 
 void DongHoLuuLuong::buffertoFloat(int *buffer)
 {
+
+}
+
+void DongHoLuuLuong::process()
+{
+    while (true) {
+            getLuuLuong();
+            qDebug()<<" process do luu luong";
+            QThread::msleep(300);
+    }
 
 }
 

@@ -20,6 +20,8 @@ public:
 
     void readAllState();
 
+    void pump(bool value);
+
     int getID() {return RELAY_ID;}
     void setID(int id)
     {
@@ -32,6 +34,10 @@ public:
     bool getStartLedState(){ return start_led_state;}
     bool getOuputVavleState(){return ouput_vavle_state;}
     bool getInputVavleState(){return input_vavle_state;}
+
+signals:
+
+public slots:
 
 private:
 

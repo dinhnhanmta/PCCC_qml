@@ -27,7 +27,8 @@ Item {
         if (LoginTB.deviceModelName() === ""){
              stack2.push("DangNhapTB.qml")
         } else {
-            screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH " + LoginTB.deviceModelName());
+//            screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH " + LoginTB.deviceModelName());
+             screenLabel.text = qsTr("THIẾT BỊ KIỂM ĐỊNH  ");
         }
     }
 
@@ -109,11 +110,11 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                if (LoginTB.logged()){
-                                    stack2.push("KiemDinhTD.qml")
-                                } else {
-                                    stack2.push("DangNhapTB.qml")
-                                }
+//                                if (LoginTB.logged()){
+                                    stack2.push("KiemDinhTuDong.qml")
+//                                } else {
+//                                    stack2.push("DangNhapTB.qml")
+//                                }
                             }
                         }
                     }

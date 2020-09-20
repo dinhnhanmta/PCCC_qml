@@ -35,6 +35,11 @@ void Relay::readAllState()
     relay_modbus -> readMultiDiscrete(RELAY_ID,0,3,discrete_receive);
 }
 
+void Relay::pump(bool value)
+{
+     relay_modbus ->writeSingleCoil(0,value,RELAY_ID);
+}
+
 void Relay::readDiscreteCompleted()
 {
 
@@ -52,7 +57,7 @@ void Relay::readDiscreteCompleted()
         last_input_vavle_state = true;
         input_vavle_state = !input_vavle_state;
         relay_modbus ->writeSingleCoil(INPUT_VALVE_ADDRESS,input_vavle_state,RELAY_ID);
-        relay_modbus ->writeSingleCoil(0,input_vavle_state,RELAY_ID);
+
     }
     if(discrete_receive[1] ==0 ) last_input_vavle_state =false;
     if(discrete_receive[2] ==1 && last_ouput_vavle_state ==false)
@@ -62,8 +67,8 @@ void Relay::readDiscreteCompleted()
         relay_modbus ->writeSingleCoil(OUTPUT_VALVE_ADDRESS,ouput_vavle_state,RELAY_ID);
     }
     if(discrete_receive[2] ==0 ) last_ouput_vavle_state =false;
-
 }
+
 
 void Relay::readStateCompleted()
 {

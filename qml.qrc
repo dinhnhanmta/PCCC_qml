@@ -83,5 +83,6 @@
         <file>CalibParam.qml</file>
         <file>KiemDinhBangTaySpinkler.qml</file>
         <file>SelectCabinetManualMode.qml</file>
+        <file>KiemDinhTuDong.qml</file>
     </qresource>
 </RCC>

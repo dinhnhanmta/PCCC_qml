@@ -15,8 +15,11 @@ public:
 
     void buffertoFloat(int *buffer);
 signals:
+    void finish();
+    void error(QString err);
 
 public slots:
+    void process();
 
 private:
     Modbus *cbll_modbus;

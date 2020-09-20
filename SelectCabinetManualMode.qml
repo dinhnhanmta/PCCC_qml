@@ -17,8 +17,8 @@ Item {
             x: 500
             width: 312
             height: 128
-            color: "#a2fde4"
-            radius: 6
+            color: "#1abc9c"
+            radius: 10
             text: "THỬ NGHIỆM KHẢ NĂNG RÒ RỈ \n VÀ ĐỘ BỀN THỦY TĨNH"
             anchors.verticalCenterOffset: 0
             anchors.horizontalCenterOffset: 238
@@ -40,8 +40,8 @@ Item {
             x: 0
             width: 312
             height: 128
-            color: "#a2fde4"
-            radius: 6
+            color: "#1abc9c"
+            radius: 10
             text: "THỬ NGHIỆM \n LƯU LƯỢNG LƯỚC"
             anchors.verticalCenterOffset: 0
             anchors.horizontalCenterOffset: -233

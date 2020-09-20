@@ -16,7 +16,6 @@ public:
     int getId(){return LCD_ID;}
 
 signals:
-
 public slots:
 
 private:

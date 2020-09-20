@@ -8,7 +8,7 @@
 #include <devices/relay.hpp>
 #include <devices/lcd.h>
 #include "dongholuuluong.h"
-//#include <QThread>
+#include <QThread>
 
 class ThuNghiemBangTay : public QObject
 {
@@ -18,14 +18,14 @@ class ThuNghiemBangTay : public QObject
     Q_PROPERTY(bool q_led_vavle_down READ getValveDown  WRITE setLedValveDown NOTIFY stateChanged)
 public:
     explicit ThuNghiemBangTay(QObject *parent = nullptr);
-    ThuNghiemBangTay(CamBienApSuat *cbap, Modbus *modbus);
+    ThuNghiemBangTay(CamBienApSuat *cbap, Modbus *modbus, Relay * _relay, lcd *_lcd, Bientan* _bientan);
     ~ThuNghiemBangTay();
     Q_INVOKABLE void updateLogic();
-
 
     bool getLedStart();
     bool getValveUp();
     bool getValveDown();
+
     Q_INVOKABLE bool setLedStart(bool val);
     Q_INVOKABLE void setLedValveUp(bool val);
     Q_INVOKABLE void setLedValveDown(bool val);
@@ -34,6 +34,8 @@ public:
      Q_INVOKABLE void setBienTanID(int id);
      Q_INVOKABLE void setRelayID(int id);
      Q_INVOKABLE void swapTuLuuLuong(bool value);
+
+//    Q_INVOKABLE void threadRelay
 
     void readRelayDone();
     void readButtonDone();
@@ -51,6 +53,10 @@ private:
     Relay * m_relay;
     lcd *m_lcd;
     DongHoLuuLuong * m_dong_ho_ll;
+
+    QThread *threadLCD;
+    QThread *threadRelay;
+    QThread *threadLuuLuong;
 
     bool is_test_luu_luong = false;
 
