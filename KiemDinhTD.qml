@@ -6,7 +6,6 @@ import IVIControls 1.0
 import QtQuick.Extras 1.4
 import QtCharts 2.3
 
-
 Item {
     anchors.fill: parent
     visible: true
@@ -82,42 +81,42 @@ Item {
                                     font.bold: false
                                     horizontalAlignment: Text.AlignLeft
                                 },
-                                ComboBox {
+                                Dropdown {
                                     id: cbListLoaiVoi
                                     width: col2.width/1.5
                                     height: 35
                                     model: ListModel {
                                         id: loaiVoiModel
                                         ListElement {
-                                            text: "VP 51"
+                                            item: "VP 51"
                                             working: 1.6
                                             test: 2.0
                                         }
                                         ListElement {
-                                            text: "VP 66"
+                                            item: "VP 66"
                                             working: 1.6
                                             test: 2.0
                                         }
                                         ListElement {
-                                            text: "VP 77"
+                                            item: "VP 77"
                                             working: 1.6
                                             test: 2.0
                                         }
                                         ListElement {
-                                            text: "VP 110"
+                                            item: "VP 110"
                                             working: 1.4
                                             test: 1.8
                                         }
                                         ListElement {
-                                            text: "VP 150"
+                                            item: "VP 150"
                                             working: 1.2
                                             test: 1.4
                                         }
                                     }
 
-                                    onCurrentIndexChanged: {
-                                        apSuatLamViec.text = loaiVoiModel.get(cbListLoaiVoi.currentIndex).working
-                                        apSuatThu.text = loaiVoiModel.get(cbListLoaiVoi.currentIndex).test
+                                    onDropPress: {
+                                            apSuatLamViec.text = loaiVoiModel.get(cbListLoaiVoi.currentIndex).working
+                                            apSuatThu.text = loaiVoiModel.get(cbListLoaiVoi.currentIndex).test
                                     }
                                 }
                             ]

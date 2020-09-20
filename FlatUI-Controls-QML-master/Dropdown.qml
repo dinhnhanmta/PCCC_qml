@@ -8,7 +8,7 @@ PrimaryButton {
     signal dropPress()
     width: 175
     height: 40
-    onButton_press: dropDown.dropPress()
+    //onButton_press: dropDown.dropPress()
     Image {
 
         anchors {
@@ -32,6 +32,7 @@ PrimaryButton {
     }
 
     property string dropdownColor: "#f3f4f5";
+    property int currentIndex: 0;
     property string highlightColor: "#dee1e2";
     property string dropdownTextColor: "#606d7a";
     property int dropdownItemHeight: 40;
@@ -140,6 +141,8 @@ PrimaryButton {
                         onEntered: {
 
                             listView.currentIndex = index;
+                            dropDown.currentIndex = index;
+                            dropDown.dropPress();
                         }
                     }
                     Text {

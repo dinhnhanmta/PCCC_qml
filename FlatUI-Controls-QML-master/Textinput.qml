@@ -4,7 +4,7 @@ import QtQuick.Controls.Styles 1.2
 
 TextField {
     id: textField
-    height: 40;
+    height: 60;
     width: 175;
     Constants {
         id: constants;
