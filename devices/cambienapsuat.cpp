@@ -61,14 +61,23 @@ void CamBienApSuat::readData()
 
 void CamBienApSuat::OnReceiveCompleted()
 {
-//    qDebug()<< "receive complete"<< m_receiveText;
+    qDebug()<< "receive complete"<< m_receiveText;
 //     qDebug()<< "splitted";
     QStringList splitted ;
     splitted = m_receiveText.split("+");
-    pressure = (splitted[7].toFloat()-0.88)*25/(4.4-0.88); //2.5*10;
+    qDebug()<<"pressure = "<<splitted[7].toFloat();
+    pressure = (splitted[7].toFloat()-0.877)*25/(4.380-0.877); //2.5*10; // Tu Voi
+
+//    pressure = (splitted[7].toFloat()-0.878)*25/(4.385-0.878); //2.5*10; // Tu khop noi
+//    pressure = (splitted[7].toFloat()-0.879)*60/(4.390-0.879); //2.5*10; // Tu spinkler ap luc
+//    pressure = (splitted[7].toFloat()-0.878)*40/(4.385-0.878); //2.5*10; // Tu spinkler luu luong
+//    pressure = ((splitted[7].toFloat()-0.874)*1/(4.37-0.874)) -1 ; //2.5*10; // Ap suat am vali
+//      pressure = (splitted[7].toFloat()-0.88)*250/(4.396-0.88); //2.5*10; // Tu thu no binh chua chay
+//       pressure = (splitted[7].toFloat()-0.879)*40/(4.391-0.879); //2.5*10; // tu kiem dinh tru
+//        pressure = (splitted[7].toFloat()-0.878)*25/(4.384-0.878); //2.5*10; // tu kiem dinh Lang
     val_pot = splitted[6].toFloat()*5; //2.5*10;
 //    qDebug()<<"val_pot = "<<val_pot;
-//    qDebug()<<"pressure = "<<pressure;
+
     m_receiveText = "";
     emit pressureChanged();
 

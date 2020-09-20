@@ -19,8 +19,10 @@ LocalDatabase::LocalDatabase()
     query.exec("create table IF NOT EXISTS records "
               "(deviceModelName varchar(255) NOT NULL, "
               "code varchar(255) NOT NULL, "
-              "data TEXT DEFAULT '{}', "
-              "createdAt DATETIME NULL");
+              "data TEXT DEFAULT '[]', "
+              "sampleRate INT DEFAULT 1000, "
+              "createdAt DATETIME DEFAULT (datetime('now','localtime')))");
+
 }
 
 QSqlDatabase LocalDatabase::openDabase(){

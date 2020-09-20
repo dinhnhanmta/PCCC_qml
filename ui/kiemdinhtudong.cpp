@@ -12,6 +12,10 @@ void KiemDinhTuDong::setPTried(QString value)
 
 KiemDinhTuDong::KiemDinhTuDong(CamBienApSuat *cbap, Bientan *bientan, Modbus *modbus, Relay *relay)
 {
+    _pWorking = 16;
+    _pTried = 20;
+    _pReferCurrent = 0;
+
     m_camBienApSuat = cbap;
     m_bienTan = bientan;
     m_modbus = modbus;
@@ -19,6 +23,10 @@ KiemDinhTuDong::KiemDinhTuDong(CamBienApSuat *cbap, Bientan *bientan, Modbus *mo
     m_lcd = new lcd(modbus);
     last_start_state = m_relay->getStartLedState();
     localDatabase = new LocalDatabase();
+
+    saveData = QList<double>();
+
+
 }
 
 void KiemDinhTuDong::updateLogic()
@@ -31,13 +39,14 @@ void KiemDinhTuDong::updateLogic()
     {
         count_writeFre = 0;
         m_bienTan->readRealFrequency();
-        m_lcd->writePressureLCD(m_camBienApSuat->getPressure()*10);
+//        m_lcd->writePressureLCD(m_camBienApSuat->getPressure()*10);
         if(!running)
         {
             m_bienTan->setStart(5);
             state = ST_IDLE;
         }
         _pReferCurrent = updatePRefer(_pReferCurrent);
+        emit varChanged();
     }
 
     // Cap nhat trang thai nut nhan
@@ -54,10 +63,24 @@ void KiemDinhTuDong::updateLogic()
 void KiemDinhTuDong::checkState(){
     if (counter > 0){
         counter --;
+        emit varChanged();
     }
+    _pReferCurrent ++;
+
+    saveData.append(_pReferCurrent);
+
+    if(_pReferCurrent==10)
+    {
+        saveRecordData();
+//        _pReferCurrent =
+
+    }
+
     qDebug()<< "state = "<< state;
     qDebug()<< "counter" << counter;
     qDebug()<< "current Refer" << _pReferCurrent;
+//    qDebug()<< "p working" << _pWorking;
+//    qDebug()<< "p tried" << _pTried;
 }
 
 bool KiemDinhTuDong::isRunning()
@@ -86,7 +109,6 @@ void KiemDinhTuDong::updateState()
         case ST_PREPARATION:
             if (currentPressure > 0.3) {
                 state = ST_START;
-                startTime = QDateTime::currentDateTime();
                 saveData = QList<double>();
             }
             break;
@@ -202,6 +224,5 @@ void KiemDinhTuDong::saveRecordData(){
     }
     savedDataString += "]";
     mapRecord["data"] = savedDataString;
-    mapRecord["createdAt"] = startTime.toString();
     localDatabase->insertRecord("records",mapRecord);
 }

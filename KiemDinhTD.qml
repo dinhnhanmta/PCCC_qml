@@ -18,20 +18,20 @@ Item {
         }
     }
     // Timer cap nhat state machine
-    Timer {
-        interval: 100; running: true; repeat: true
-        onTriggered:{
-            KiemDinhTDObj.updateState()
-        }
-    }
+//    Timer {
+//        interval: 100; running: true; repeat: true
+//        onTriggered:{
+//            KiemDinhTDObj.updateState()
+//        }
+//    }
 
     //    Timer cap nhat ngoai vi
-    Timer {
-        interval: 100; running: true; repeat: true
-        onTriggered:{
-            KiemDinhTDObj.updateLogic()
-        }
-    }
+//    Timer {
+//        interval: 100; running: true; repeat: true
+//        onTriggered:{
+//            KiemDinhTDObj.updateLogic()
+//        }
+//    }
 
     //    Timer cap nhat Chart
     property var x_var: 0
@@ -43,10 +43,10 @@ Item {
         interval: 1000; running: true; repeat: true
         onTriggered:{
             x_var ++;
-            if(lineSeries1.count > 100) lineSeries1.remove(0);
+            if(lineSeries1.count > 300) lineSeries1.remove(0);
             lineSeries1.append(x_var, Cambien.q_pressure);
 
-            if(lineSeries2.count > 100) lineSeries2.remove(0);
+            if(lineSeries2.count > 300) lineSeries2.remove(0);
             lineSeries2.append(x_var, KiemDinhTDObj.q_pReference);
 
             axisX.min = lineSeries2.at(0).x
@@ -88,6 +88,7 @@ Item {
                                     model: ListModel {
                                         id: loaiVoiModel
                                         ListElement {
+<<<<<<< HEAD
                                             item: "VP 51"
                                             working: 1.6
                                             test: 2.0
@@ -111,6 +112,31 @@ Item {
                                             item: "VP 150"
                                             working: 1.2
                                             test: 1.4
+=======
+                                            text: "VP 51"
+                                            working: 16
+                                            test: 20
+                                        }
+                                        ListElement {
+                                            text: "VP 66"
+                                            working: 16
+                                            test: 20
+                                        }
+                                        ListElement {
+                                            text: "VP 77"
+                                            working: 16
+                                            test: 20
+                                        }
+                                        ListElement {
+                                            text: "VP 110"
+                                            working: 14
+                                            test: 18
+                                        }
+                                        ListElement {
+                                            text: "VP 150"
+                                            working: 12
+                                            test: 14
+>>>>>>> a6070ab65274312938d2d69348a22d71707027bd
                                         }
                                     }
 
