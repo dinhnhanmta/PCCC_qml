@@ -258,3 +258,7 @@ void DangNhapThietBi::logout()
 QString DangNhapThietBi::deviceModelName() {
     return settings->defautConfig.getDeviceModelName().toUpper();
 }
+
+QString DangNhapThietBi::deviceModelCode() {
+    return settings->defautConfig.getDeviceCode().toUpper();
+}

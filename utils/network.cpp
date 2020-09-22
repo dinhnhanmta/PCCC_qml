@@ -51,6 +51,26 @@ void Network::inspect(QByteArray jsonData)
     reply = manager->post(request, jsonData);
 }
 
+QString Network::getMacAddress()
+{
+    foreach(QNetworkInterface netInterface, QNetworkInterface::allInterfaces())
+    {
+        // Return only the first non-loopback MAC Address
+        if (!(netInterface.flags() & QNetworkInterface::IsLoopBack))
+            return netInterface.hardwareAddress();
+    }
+    return QString();
+}
+void Network::getDeviceDetail()
+{
+    request.setUrl(QUrl::fromUserInput(settings->defautConfig.getServerUrl() + devices + getMacAddress().remove(":")));//"FFAABBCCDDEE"));
+    if (!settings->defautConfig.getToken().isEmpty()){
+        request.setRawHeader("Authorization", "Bearer " + settings->defautConfig.getToken().toUtf8());
+    }
+    qDebug()<<"link "<<settings->defautConfig.getServerUrl() + devices + getMacAddress().remove(":");
+    reply = manager->get(request);
+}
+
 void Network::syncData()
 {
     request.setUrl(QUrl::fromUserInput(settings->defautConfig.getServerUrl() + dataPath));

@@ -48,10 +48,10 @@ public:
     QString getToken();
     void setToken(const QString &value);
 
-    QString getDeviceCode();
+    Q_INVOKABLE QString getDeviceCode();
     void setDeviceCode(const QString &value);
 
-    QString getDeviceModelName();
+    Q_INVOKABLE QString getDeviceModelName();
     void setDeviceModelName(const QString &value);
 };
 

@@ -88,7 +88,6 @@ Item {
                                     model: ListModel {
                                         id: loaiVoiModel
                                         ListElement {
-<<<<<<< HEAD
                                             item: "VP 51"
                                             working: 1.6
                                             test: 2.0
@@ -112,31 +111,7 @@ Item {
                                             item: "VP 150"
                                             working: 1.2
                                             test: 1.4
-=======
-                                            text: "VP 51"
-                                            working: 16
-                                            test: 20
-                                        }
-                                        ListElement {
-                                            text: "VP 66"
-                                            working: 16
-                                            test: 20
-                                        }
-                                        ListElement {
-                                            text: "VP 77"
-                                            working: 16
-                                            test: 20
-                                        }
-                                        ListElement {
-                                            text: "VP 110"
-                                            working: 14
-                                            test: 18
-                                        }
-                                        ListElement {
-                                            text: "VP 150"
-                                            working: 12
-                                            test: 14
->>>>>>> a6070ab65274312938d2d69348a22d71707027bd
+
                                         }
                                     }
 

@@ -24,6 +24,7 @@ Item {
     Component.onCompleted: {
         Modbus.startConnection();
         Cambien.openSerialPort();
+        HieuChinh.getDeviceData()
         if (LoginTB.deviceModelName() === ""){
              stack2.push("DangNhapTB.qml")
         } else {

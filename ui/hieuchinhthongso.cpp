@@ -65,6 +65,39 @@ void HieuChinhThongSo::submitData(QString paraData)
             }
         });
     }
+
+}
+
+void HieuChinhThongSo::getDeviceData()
+{
+
+    if (settings->defautConfig.getToken().isEmpty()){
+        qDebug()<<"EMPTY";
+    } else {
+        network->getDeviceDetail();
+        connect(network->reply, &QNetworkReply::finished, [=]() {
+            if(network->reply->error() == QNetworkReply::NoError){
+                QJsonObject obj = QJsonDocument::fromJson(network->reply->readAll()).object();
+                QJsonDocument json = QJsonDocument::fromJson(obj.value("data")[0].toObject().value("iParameter").toString().toUtf8());
+                 QJsonObject objValue = json.object();
+                for (int i=0;i<objValue.size();i++)
+                {
+                    parameterValueList.append(QString::number(objValue.value(objValue.keys()[i]).toDouble()));
+                }
+            } else if (network->reply->error() == QNetworkReply::TimeoutError || network->reply->error() == QNetworkReply::HostNotFoundError){
+                qDebug()<<"getDeviceData TIMEOUT   ";
+            } else if (network->reply->error() == QNetworkReply::AuthenticationRequiredError){
+                qDebug()<<"getDeviceData unauthorized   ";
+                settings->defautConfig.setToken("");
+                logger->printLog(LoggerLevel::FATAL, network->reply->errorString());
+                emit unauthorized();
+            } else {
+                settings->defautConfig.setDeviceCode("");
+                logger->printLog(LoggerLevel::FATAL, network->reply->errorString());
+            }
+        });
+    }
+    emit paraChanged();
 }
 
 bool HieuChinhThongSo::saveInspectData(QString jsonData, bool sync){

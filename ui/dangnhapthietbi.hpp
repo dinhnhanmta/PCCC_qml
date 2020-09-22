@@ -19,6 +19,7 @@ public:
     Q_INVOKABLE bool logged();
     Q_INVOKABLE void logout();
     Q_INVOKABLE QString deviceModelName();
+    Q_INVOKABLE QString deviceModelCode();
     Q_INVOKABLE void setDeviceModelName(QString deviceModelName);
     Q_INVOKABLE void getListDeviceModels();
     Q_INVOKABLE int currentDeviceModelIndex();

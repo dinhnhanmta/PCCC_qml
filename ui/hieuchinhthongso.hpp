@@ -16,6 +16,7 @@ class HieuChinhThongSo : public QObject, BaseObject
 {
     Q_OBJECT
     Q_PROPERTY(QStringList q_parameterList READ getPara WRITE setPara NOTIFY paraChanged)
+    Q_PROPERTY(QStringList q_parameterValueList READ getParaValue WRITE setParaValue NOTIFY paraChanged)
 public:
     HieuChinhThongSo();
     HieuChinhThongSo(LocalDatabase *db);
@@ -24,7 +25,11 @@ public:
     Q_INVOKABLE void readJson();
     QStringList getPara(){return parameterList; }
     void setPara(QStringList list){parameterList  = list;}
+    QStringList getParaValue(){return parameterValueList; }
+    void setParaValue(QStringList list){parameterValueList  = list;}
     Q_INVOKABLE void submitData(QString paraData);
+
+    Q_INVOKABLE void getDeviceData();
 signals:
     void paraChanged();
     void submitSuccess();
@@ -49,6 +54,7 @@ private:
     } lang;
 
     QStringList parameterList ;
+    QStringList parameterValueList ;
     LocalDatabase * database;
 
     Network *network;

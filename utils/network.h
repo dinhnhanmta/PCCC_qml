@@ -4,7 +4,7 @@
 #include "baseobject.h"
 #include <QNetworkRequest>
 #include <QNetworkReply>
-
+#include <QNetworkInterface>
 class Network: QObject, BaseObject
 {
     Q_OBJECT
@@ -15,7 +15,9 @@ public:
     void inspect(QByteArray jsonData);
     void syncData();
     void getDeviceModels();
+    void getDeviceDetail();
     void getDevicesByName(QString modelName);
+    QString getMacAddress();
     QNetworkReply *reply;
 private:
     QNetworkRequest request;
@@ -25,6 +27,7 @@ private:
     const QString devicesByModelName = "/api/Devices/DeviceList/ByName/";
     const QString deviceModels = "/api/DeviceModels/All";
     const QString dataPath = "/api/Devices/Inspect";
+    const QString devices = "/api/Devices/UpdatedList/";
 };
 
 #endif // NETWORK_H
