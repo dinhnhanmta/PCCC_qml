@@ -78,11 +78,10 @@ void HieuChinhThongSo::getDeviceData()
         connect(network->reply, &QNetworkReply::finished, [=]() {
             if(network->reply->error() == QNetworkReply::NoError){
                 QJsonObject obj = QJsonDocument::fromJson(network->reply->readAll()).object();
-                QJsonDocument json = QJsonDocument::fromJson(obj.value("data")[0].toObject().value("iParameter").toString().toUtf8());
-                 QJsonObject objValue = json.object();
-                for (int i=0;i<objValue.size();i++)
+                QJsonArray objArray = obj.value("data").toArray();
+                for (int i=0;i<objArray.size();i++)
                 {
-                    parameterValueList.append(QString::number(objValue.value(objValue.keys()[i]).toDouble()));
+                saveDetailDataToLocal(objArray[i].toObject().value("iParameter").toString(),objArray[i].toObject().value("code").toString());
                 }
             } else if (network->reply->error() == QNetworkReply::TimeoutError || network->reply->error() == QNetworkReply::HostNotFoundError){
                 qDebug()<<"getDeviceData TIMEOUT   ";
@@ -98,6 +97,29 @@ void HieuChinhThongSo::getDeviceData()
         });
     }
     emit paraChanged();
+}
+void HieuChinhThongSo::getIParameterFromLocal()
+{
+    database = new LocalDatabase();
+    QStringList fields;
+    fields.append("iParameter");
+    QVariantMap conditions;
+    conditions["code"] = settings->defautConfig.getDeviceCode();
+    QVariantMap result = database->queryRecord("devices", fields, conditions);
+    QJsonDocument json = QJsonDocument::fromJson(result.value("iParameter").toString().toUtf8());
+    QJsonObject objValue = json.object();
+    for (int i=0;i<objValue.size();i++)
+    {
+        parameterValueList.append(QString::number(objValue.value(objValue.keys()[i]).toDouble()));
+    }
+    emit paraChanged();
+}
+bool HieuChinhThongSo::saveDetailDataToLocal(QString jsonData,QString code){
+    QVariantMap mapConditions;
+    mapConditions["code"] = code;
+    QVariantMap mapUpdatedData;
+    mapUpdatedData["iParameter"] = jsonData;
+    return localDatabase->updateRecord("devices",mapUpdatedData,mapConditions);
 }
 
 bool HieuChinhThongSo::saveInspectData(QString jsonData, bool sync){

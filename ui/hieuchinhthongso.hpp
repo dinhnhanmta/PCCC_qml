@@ -30,6 +30,8 @@ public:
     Q_INVOKABLE void submitData(QString paraData);
 
     Q_INVOKABLE void getDeviceData();
+    bool saveDetailDataToLocal(QString jsonData,QString code);
+    Q_INVOKABLE void getIParameterFromLocal();
 signals:
     void paraChanged();
     void submitSuccess();

@@ -31,6 +31,7 @@ SOURCES += \
         ui/dothi.cpp \
         ui/hieuchinhthongso.cpp \
         ui/kiemdinhtudong.cpp \
+        ui/lichsukiemdinh.cpp \
         ui/login.cpp \
         ui/thunghiembangtay.cpp \
         utils/config.cpp \
@@ -76,6 +77,7 @@ HEADERS += \
     ui/dothi.hpp \
     ui/hieuchinhthongso.hpp \
     ui/kiemdinhtudong.hpp \
+    ui/lichsukiemdinh.hpp \
     ui/login.hpp \
     ui/thunghiembangtay.h \
     utils/config.h \

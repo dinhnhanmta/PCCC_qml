@@ -17,11 +17,13 @@ LocalDatabase::LocalDatabase()
               "syncAt DATETIME NULL, UNIQUE(code))");
 
     query.exec("create table IF NOT EXISTS records "
-              "(deviceModelName varchar(255) NOT NULL, "
+              "(id INTEGER NOT NULL UNIQUE,"
+              "deviceModelName varchar(255) NOT NULL, "
               "code varchar(255) NOT NULL, "
               "data TEXT DEFAULT '[]', "
               "sampleRate INT DEFAULT 1000, "
-              "createdAt DATETIME DEFAULT (datetime('now','localtime')))");
+              "createdAt DATETIME DEFAULT (datetime('now','localtime')),"
+              "PRIMARY KEY(\"id\" AUTOINCREMENT))");
 
 }
 
@@ -184,6 +186,7 @@ QList<QVariantMap> LocalDatabase::queryRecords(
     QList<QVariantMap> listResult;
     while( query.next() ) {
         QVariantMap result;
+        qDebug()<<"ressss"<<query.value(0);
         for (int i = 0; i < fields.length(); i++) {
             result[fields[i]] = query.value(i);
         }
