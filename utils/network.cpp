@@ -63,7 +63,7 @@ QString Network::getMacAddress()
 }
 void Network::getDeviceDetail()
 {
-    request.setUrl(QUrl::fromUserInput(settings->defautConfig.getServerUrl() + devices + "FFAABBCCDDEE"));
+    request.setUrl(QUrl::fromUserInput(settings->defautConfig.getServerUrl() + devices + getMacAddress().remove(":")));//"FFAABBCCDDEE"));
     if (!settings->defautConfig.getToken().isEmpty()){
         request.setRawHeader("Authorization", "Bearer " + settings->defautConfig.getToken().toUtf8());
     }

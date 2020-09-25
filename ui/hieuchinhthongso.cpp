@@ -16,10 +16,12 @@ void HieuChinhThongSo::readJson()
     conditions["name"] = settings->defautConfig.getDeviceModelName();
     QVariantMap result = database->queryRecord("deviceModels", fields, conditions);
     QJsonDocument json = QJsonDocument::fromJson(result.value("iParameter").toString().toUtf8());
+
     QStringList list;
     if (parameterList.isEmpty()&&json.isArray())
     {
         foreach (const QVariant &it, json.array().toVariantList()){
+
             parameterList.append(it.toString());
         }
     } else {
@@ -34,6 +36,8 @@ void HieuChinhThongSo::submitData(QString paraData)
     QJsonObject  object;
     object.insert("code",settings->defautConfig.getDeviceCode());
     object.insert("iParameter",paraData);
+    qDebug()<<"paraData"<<paraData;
+    object.insert("piCode",network->getMacAddress().remove(":"));
     QJsonDocument doc(object);
     QByteArray jsonData = doc.toJson();
     if (settings->defautConfig.getToken().isEmpty()){
@@ -68,6 +72,7 @@ void HieuChinhThongSo::submitData(QString paraData)
 
 }
 
+
 void HieuChinhThongSo::getDeviceData()
 {
 
@@ -100,6 +105,7 @@ void HieuChinhThongSo::getDeviceData()
 }
 void HieuChinhThongSo::getIParameterFromLocal()
 {
+    parameterValueList.clear();
     database = new LocalDatabase();
     QStringList fields;
     fields.append("iParameter");
@@ -107,10 +113,12 @@ void HieuChinhThongSo::getIParameterFromLocal()
     conditions["code"] = settings->defautConfig.getDeviceCode();
     QVariantMap result = database->queryRecord("devices", fields, conditions);
     QJsonDocument json = QJsonDocument::fromJson(result.value("iParameter").toString().toUtf8());
-    QJsonObject objValue = json.object();
+    QString data = result.value("iParameter").toString();
+    QJsonObject objValue =  json.object();
+    data = data.mid(1,data.size()-2);
     for (int i=0;i<objValue.size();i++)
     {
-        parameterValueList.append(QString::number(objValue.value(objValue.keys()[i]).toDouble()));
+        parameterValueList.append(data.split(",")[i].split(":")[1].remove("\""));
     }
     emit paraChanged();
 }

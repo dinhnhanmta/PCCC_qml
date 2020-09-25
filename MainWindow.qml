@@ -141,6 +141,7 @@ Item {
                                 {
                                     if (LoginTB.logged()){
                                         HieuChinh.readJson()
+                                        HieuChinh.getIParameterFromLocal();
                                         stack2.push("HieuChinhThamSo.qml")
                                     } else {
                                         stack2.push("DangNhapTB.qml")

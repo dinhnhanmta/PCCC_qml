@@ -2,6 +2,7 @@ import QtQuick 2.0
 import "FlatUI-Controls-QML-master"
 import QtQuick.Layouts 1.12
 import QtQuick.Dialogs 1.1
+import QtQuick.Controls 2.12
 
 Item {
     id: hieuchinhthamso
@@ -14,10 +15,17 @@ Item {
         for (i = 0; i < HieuChinh.q_parameterList.length;i++)
         {
             parameter_name.append({name: HieuChinh.q_parameterList[i],paravalue: HieuChinh.q_parameterValueList[i]})
-
         }
 
     }
+
+//    Timer {
+//       interval: 10000; running: true; repeat: true
+//        onTriggered:{
+//            var msg = {'model': parameter_name,'key': HieuChinh.q_parameterList,'value': HieuChinh.q_parameterValueList};
+//            worker.sendMessage(msg);
+//        }
+//    }
 
     MessageDialog {
         id: messageDialog
@@ -25,11 +33,10 @@ Item {
         icon: StandardIcon.Critical
         text: "Lưu dữ liệu không thành công"
     }
-
     Connections {
         target: HieuChinh
         onSubmitSuccess: {
-            if (!stack2.empty) stack2.clear()
+           if (!stack2.empty) stack2.clear()
         }
         onSubmitFailed: {
             messageDialog.visible = true;
@@ -94,6 +101,7 @@ Item {
                     height: 50
                     width: 200
                     Input{
+                        id: inputValue
                         anchors.fill: parent
                         digiOnly:( name === "Nơi sản xuất") ? false :true
                         initText: paravalue
@@ -139,9 +147,12 @@ Item {
                         var obj = {};
                         for (var i=0;i<repeat.count;i++)
                         {
-                            obj[repeat.model.get(i).name] = repeat.itemAt(i).text
+                            obj[repeat.model.get(i).name] = repeat.itemAt(i).children[0].text
                         }
                         HieuChinh.submitData(JSON.stringify(obj))
+                        HieuChinh.getDeviceData();
+//                        var msg = {'model': parameter_name,'key': HieuChinh.q_parameterList,'value': HieuChinh.q_parameterValueList};
+//                        worker.sendMessage(msg);
                     }
                 }
             },
@@ -154,6 +165,11 @@ Item {
             }
         ]
 
+    }
+    WorkerScript {
+       id: worker
+       source: "updateData.mjs"
+       onMessage: myText.text = messageObject.reply
     }
 }
 
