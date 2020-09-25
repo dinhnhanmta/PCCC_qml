@@ -81,6 +81,5 @@
         <file>Menu.qml</file>
         <file>thietbi.json</file>
         <file>CalibParam.qml</file>
-        <file>updateData.mjs</file>
     </qresource>
 </RCC>

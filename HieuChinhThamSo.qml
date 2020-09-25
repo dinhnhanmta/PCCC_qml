@@ -18,15 +18,6 @@ Item {
         }
 
     }
-
-//    Timer {
-//       interval: 10000; running: true; repeat: true
-//        onTriggered:{
-//            var msg = {'model': parameter_name,'key': HieuChinh.q_parameterList,'value': HieuChinh.q_parameterValueList};
-//            worker.sendMessage(msg);
-//        }
-//    }
-
     MessageDialog {
         id: messageDialog
         title: "Lỗi"
@@ -151,8 +142,6 @@ Item {
                         }
                         HieuChinh.submitData(JSON.stringify(obj))
                         HieuChinh.getDeviceData();
-//                        var msg = {'model': parameter_name,'key': HieuChinh.q_parameterList,'value': HieuChinh.q_parameterValueList};
-//                        worker.sendMessage(msg);
                     }
                 }
             },
@@ -165,11 +154,6 @@ Item {
             }
         ]
 
-    }
-    WorkerScript {
-       id: worker
-       source: "updateData.mjs"
-       onMessage: myText.text = messageObject.reply
     }
 }
 
